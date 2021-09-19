@@ -15,12 +15,7 @@ class Dienthoai extends Component {
   componentDidMount() {
     let token = localStorage.getItem("token");
     console.log(token);
-    Axios.get("http://localhost:8080/api/v2/products/", {
-      auth: {
-        username: "admin",
-        password: "123456",
-      },
-    }).then(
+    Axios.get("http://localhost:8080/api/v2/products").then(
       (response) => {
         console.log(response);
         let listphone = [];

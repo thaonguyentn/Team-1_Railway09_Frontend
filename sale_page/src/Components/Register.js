@@ -1,8 +1,37 @@
+import Axios from "axios";
 import React, { useState } from "react";
 import Modal from "react-modal";
 Modal.setAppElement("#root");
 function Register(props) {
   const [isopen, setisopen] = useState(false);
+  const [email, setemail] = useState("");
+  const [username, setusername] = useState("");
+  const [firstname, setfirstname] = useState("");
+  const [lastname, setlastname] = useState("");
+  const [phone, setphone] = useState("");
+  const [password, setpassword] = useState("");
+  const handleRegister = () => {
+    let body = {
+      username: username,
+      firstname: firstname,
+      lastname: lastname,
+      email: email,
+      phoneNumber: phone,
+      password: password,
+    };
+    console.log(body);
+    Axios.post("http://localhost:8080/api/v3/register", body).then(
+      (response) => {
+        setisopen(false);
+        alert(
+          response.data +
+            " Chúng tôi đã gửi một email xác nhận đến email " +
+            email +
+            " , vui lòng kiểm tra email của bạn để xác nhận tài khoản"
+        );
+      }
+    );
+  };
   return (
     <div>
       <button
@@ -41,9 +70,11 @@ function Register(props) {
                 id="Email_ID"
                 placeholder="example@email.com"
                 name="email"
+                value={email}
                 style={{
                   width: "225px",
                 }}
+                onChange={(event) => setemail(event.target.value)}
               />
             </div>
           </div>
@@ -56,24 +87,62 @@ function Register(props) {
                 id="Username_ID"
                 placeholder="Tên đăng nhập"
                 name="username"
+                value={username}
                 style={{
                   width: "225px",
                 }}
+                onChange={(event) => setusername(event.target.value)}
               />
             </div>
           </div>
           <div className="form-group">
-            <label className="col-sm-10">Họ và Tên</label>
+            <label className="col-sm-10">Họ</label>
             <div className="col-sm-10">
               <input
                 type="text"
                 className="form-control"
-                id="Fullname_ID"
-                placeholder="Nhập họ và tên"
-                name="username"
+                id="Fisstname_ID"
+                placeholder="Nhập họ"
+                name="firstname"
+                value={firstname}
                 style={{
                   width: "225px",
                 }}
+                onChange={(event) => setfirstname(event.target.value)}
+              />
+            </div>
+          </div>
+          <div className="form-group">
+            <label className="col-sm-10">Tên</label>
+            <div className="col-sm-10">
+              <input
+                type="text"
+                className="form-control"
+                id="Lastname_ID"
+                placeholder="Nhập tên"
+                name="lastname"
+                value={lastname}
+                style={{
+                  width: "225px",
+                }}
+                onChange={(event) => setlastname(event.target.value)}
+              />
+            </div>
+          </div>
+          <div className="form-group">
+            <label className="col-sm-10">Số điện thoại</label>
+            <div className="col-sm-10">
+              <input
+                type="text"
+                className="form-control"
+                id="Phone_ID"
+                placeholder="0123456789"
+                name="sdt"
+                value={phone}
+                style={{
+                  width: "225px",
+                }}
+                onChange={(event) => setphone(event.target.value)}
               />
             </div>
           </div>
@@ -86,15 +155,21 @@ function Register(props) {
                 className="form-control"
                 placeholder="Nhập mật khẩu của bạn"
                 name="pwd"
+                value={password}
                 style={{
                   width: "225px",
                 }}
+                onChange={(event) => setpassword(event.target.value)}
               />
             </div>
           </div>
           <div className="form-group">
             <div className="col-sm-12">
-              <button type="button" className="btn btn-success">
+              <button
+                type="button"
+                className="btn btn-success"
+                onClick={handleRegister}
+              >
                 Đăng ký
               </button>
             </div>

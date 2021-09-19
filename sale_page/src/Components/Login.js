@@ -1,11 +1,15 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
 import Axios from "axios";
+import { connect } from "react-redux";
+import { setlogin } from "../Actions";
+import { Redirect } from "react-router-dom";
 Modal.setAppElement("#root");
 function Login(props) {
   const [isopen, setisopen] = useState(false);
   const [user, setuser] = useState("");
   const [password, setpassword] = useState("");
+  const [role, setrole] = useState("");
   const Login = () => {
     let body = {
       username: user,
@@ -14,6 +18,14 @@ function Login(props) {
     Axios.post("http://localhost:8080/api/v1/login", body).then((response) => {
       console.log(response);
       localStorage.setItem("token", response.data.accessToken);
+      localStorage.setItem("user_login", JSON.stringify(body));
+      localStorage.setItem("role", JSON.stringify(response.data.role));
+      Axios.get("http://localhost:8080/api/v1/accounts/" + response.data.id, {
+        auth: body,
+      }).then((datalist) => {
+        localStorage.setItem("user_login_infor", JSON.stringify(datalist.data));
+        props.setlogin(true);
+      });
     });
   };
   return (
@@ -107,5 +119,14 @@ function Login(props) {
     </div>
   );
 }
-
-export default Login;
+const mapStateToProps = (state) => {
+  return state;
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setlogin: (islogin) => {
+      dispatch(setlogin(islogin));
+    },
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
