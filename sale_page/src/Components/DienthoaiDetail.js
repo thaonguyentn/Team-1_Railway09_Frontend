@@ -18,9 +18,14 @@ class DienthoaiDetail extends Component {
       localStorage.getItem("user_login_infor")
     );
     const user_login = JSON.parse(localStorage.getItem("user_login"));
-    if (user_login_infor) {
+    if (user_login_infor && this.state.product !== null && user_login_infor) {
+      let producid = this.state.product.id;
+      let accountId = user_login_infor.id;
       Axios.post(
-        "http://localhost:8080/api/v4/cartdetail?productId=1&accountId=3"
+        "http://localhost:8080/api/v4/cartdetail?productId=" +
+          producid +
+          "&accountId=" +
+          accountId
       ).then((response) => {
         console.log(response);
       });
@@ -60,8 +65,23 @@ class DienthoaiDetail extends Component {
           <p style={{ textAlign: "center" }}>
             {pr.name}({pr.ram}/{pr.memory})
           </p>
+          <p style={{ textAlign: "center", fontSize: "small" }}>
+            <span
+              style={{
+                textDecoration: "line-through",
+                paddingRight: "5px",
+              }}
+            >
+              {this.format2(pr.price)} đ{" "}
+            </span>
+
+            <span> -{pr.discount}%</span>
+          </p>
           <p style={{ textAlign: "center", fontSize: "larger" }}>
-            {this.format2(pr.price)} đ
+            {this.format2(
+              Number(pr.price) - (Number(pr.price) * Number(pr.discount)) / 100
+            )}{" "}
+            đ
           </p>
         </div>,
         <div>

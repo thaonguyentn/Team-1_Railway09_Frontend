@@ -1,44 +1,27 @@
 import React, { Component } from "react";
-import Axios from "axios";
 import { connect } from "react-redux";
+import getcart from "../Reducers/getcart";
+import { setcart } from "../Actions/index";
 class Giohang extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      cart: null,
-      user_login: JSON.parse(localStorage.getItem("user_login")),
-      user_login_infor: JSON.parse(localStorage.getItem("user_login_infor")),
-    };
-  }
   format2 = (n) => {
     if (n === undefined) {
       return null;
     }
     return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
-  componentDidMount() {}
-  static async getDerivedStateFromProps(nextprops, state) {
-    await console.log("gggggg");
-    const user_login = await JSON.parse(localStorage.getItem("user_login"));
-    const user_login_infor = await JSON.parse(
+  componentDidMount() {
+    const user_login_infor = JSON.parse(
       localStorage.getItem("user_login_infor")
     );
-    if (user_login_infor !== null && user_login !== null) {
-      await Axios.get(
-        "http://localhost:8080/api/v5/cart/" + user_login_infor.id,
-        {
-          auth: user_login,
-        }
-      ).then((response) => {
-        console.log(response.data);
-        return {
-          cart: response.data,
-        };
+    if (user_login_infor !== null) {
+      getcart(user_login_infor.id).then((response) => {
+        console.log(response);
+        this.props.setcart(response.data);
       });
     }
   }
-
   render() {
+    console.log(this.props.cart);
     console.log(this.props.location);
     const user_login = JSON.parse(localStorage.getItem("user_login"));
     const user_login_infor = JSON.parse(
@@ -51,10 +34,10 @@ class Giohang extends Component {
         </div>
       );
     }
-    const cart = this.state.cart;
+    const cart = this.props.cart;
     let quantity;
     let totalPrice;
-    if (cart !== null) {
+    if (cart !== undefined) {
       quantity = cart.quantity;
       totalPrice = cart.totalPrice;
     } else {
@@ -71,6 +54,14 @@ class Giohang extends Component {
 const mapStateToProps = (state) => {
   return {
     isLogin: state.loginreducer.isLogin,
+    cart: state.cart.cart,
   };
 };
-export default connect(mapStateToProps)(Giohang);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setcart: (cart) => {
+      dispatch(setcart(cart));
+    },
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Giohang);

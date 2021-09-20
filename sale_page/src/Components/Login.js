@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Modal from "react-modal";
 import Axios from "axios";
 import { connect } from "react-redux";
-import { setlogin } from "../Actions";
+import { setlogin, setprofile } from "../Actions";
 import { Redirect } from "react-router-dom";
 Modal.setAppElement("#root");
 function Login(props) {
@@ -25,6 +25,7 @@ function Login(props) {
       }).then((datalist) => {
         localStorage.setItem("user_login_infor", JSON.stringify(datalist.data));
         props.setlogin(true);
+        props.setprofile(datalist.data);
       });
     });
   };
@@ -126,6 +127,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     setlogin: (islogin) => {
       dispatch(setlogin(islogin));
+    },
+    setprofile: (account) => {
+      dispatch(setprofile(account));
     },
   };
 };

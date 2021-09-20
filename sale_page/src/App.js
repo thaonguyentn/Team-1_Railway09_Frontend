@@ -11,9 +11,10 @@ import { Component, useState } from "react";
 import Axios from "axios";
 import Admin from "./Components/Admin";
 import { connect } from "react-redux";
-import { setlogin } from "./Actions/index";
+import { setlogin, setcart, setprofile } from "./Actions/index";
 import Footer from "./Components/Footer";
 import Banner from "./Components/Banner";
+import Profile from "./Components/Profile";
 class App extends Component {
   constructor(props) {
     super(props);
@@ -25,6 +26,8 @@ class App extends Component {
     localStorage.removeItem("role");
     localStorage.removeItem("user_login");
     localStorage.removeItem("user_login_infor");
+    this.props.setcart(null);
+    this.props.setprofile(null);
   };
   render() {
     const user_login_infor = JSON.parse(
@@ -72,7 +75,7 @@ class App extends Component {
               </button>
               <ul className="dropdown-menu">
                 <li>
-                  <NavLink to="profile">Tài khoản của tôi</NavLink>
+                  <NavLink to="/profile">Tài khoản của tôi</NavLink>
                 </li>
                 <li>
                   <a style={{ cursor: "pointer" }} onClick={this.Logout}>
@@ -103,18 +106,29 @@ class App extends Component {
             <div id="logo">
               <NavLink
                 activeStyle={{
-                  backgroundColor: "bisque",
+                  backgroundColor: "none",
                 }}
                 exact
                 to="/"
               >
-                <span style={{ fontSize: "16px" }}>Home</span>
+                <span style={{ fontSize: "16px" }}>
+                  <img
+                    style={{
+                      width: "50px",
+                      height: "38.5px",
+                      borderRadius: "5px",
+                      padding: "3px",
+                    }}
+                    src={require("./Images/logo.jpg").default}
+                    alt=""
+                  />
+                </span>
               </NavLink>
             </div>
-            <div id="xkm">
+            {/* <div id="xkm">
               <p style={{ fontSize: "10px", margin: "0%" }}>Xem khuyến mãi</p>
               <p style={{ fontSize: "10px" }}>Toàn quốc</p>
-            </div>
+            </div> */}
             <div id="search">
               <div id="searchinput">
                 <input placeholder="Bạn muốn tìm gì" />
@@ -200,6 +214,7 @@ class App extends Component {
             <Route path="/phukien" component={Phukien} exact />
             <Route path="/dienthoai/:ID" component={DienthoaiDetail} exact />
             <Route path="/giohang/" component={Giohang} />
+            <Route path="/profile" component={Profile} />
           </Switch>
         </header>
         <footer>
@@ -219,6 +234,12 @@ const mapDispatchToProps = (dispatch) => {
   return {
     setlogin: (islogin) => {
       dispatch(setlogin(islogin));
+    },
+    setcart: (cart) => {
+      dispatch(setcart(cart));
+    },
+    setprofile: (account) => {
+      dispatch(setprofile(account));
     },
   };
 };

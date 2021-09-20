@@ -11,7 +11,7 @@ class Footer extends Component {
                 <a href="">Lịch sử mua hàng</a>
               </li>
               <li>
-                <a href="">Cộng tác bán hàng cùng TGDĐ</a>
+                <a href="">Cộng tác bán hàng cùng TGCT</a>
               </li>
               <li>
                 <a href="">Tìm hiểu về mua trả góp</a>
@@ -27,7 +27,7 @@ class Footer extends Component {
           <div className="footerdetail">
             <ul>
               <li>
-                <a href="">Giới thiệu công ty (MWG.vn)</a>
+                <a href="">Giới thiệu công ty </a>
               </li>
               <li>
                 <a href="">Tuyển dụng</a>
@@ -36,7 +36,7 @@ class Footer extends Component {
                 <a href="">Gửi góp ý, khiếu nại</a>
               </li>
               <li>
-                <a href="">Tìm siêu thị (2.294 shop)</a>
+                <a href="">Tìm siêu thị (4 shop)</a>
               </li>
               <li>
                 <a href="">Xem bản mobile</a>

@@ -58,7 +58,7 @@
   background-color: white;
   display: flex;
   background-color: white;
-  width: 60%;
+  width: 70%;
 }
 #searchinput {
   width: 90%;
@@ -114,8 +114,11 @@ footer {
   #lienhe {
     display: none;
   }
-  #logo {
+  /* #logo {
     display: none;
+  } */
+  #search {
+    width: 50%;
   }
 }
 .footerwaper {
@@ -145,4 +148,7 @@ select {
 #optionuser:focus {
   outline: none;
   box-shadow: none;
+}
+#buttonpage {
+  background-color: green;
 }
