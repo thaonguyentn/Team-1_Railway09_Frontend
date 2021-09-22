@@ -5,7 +5,7 @@ let listproduct = (page) => {
   }
   let get = Axios.get("http://localhost:8080/api/v2/products?page=" + page, {
     auth: {
-      username: "admin",
+      username: "adminaccount",
       password: "123456",
     },
   });

@@ -1,8 +1,8 @@
 import Axios from "axios";
-let getmemory = (id) => {
-  let get = Axios.get("http://localhost:8080/api/v5/cart/" + id, {
+let getmemory = () => {
+  let get = Axios.get("http://localhost:8080/api/v1/productmemorycontrollers", {
     auth: {
-      username: "admin",
+      username: "adminaccount",
       password: "123456",
     },
   });

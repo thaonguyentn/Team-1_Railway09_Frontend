@@ -74,7 +74,7 @@ class Profile extends Component {
         <div class="row">
           <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"></div>
           <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-            <h1>Profile</h1>
+            <h1>Thông tin tài khoản</h1>
             {row}
           </div>
 

@@ -1,8 +1,8 @@
 import Axios from "axios";
-let getram = (id) => {
-  let get = Axios.get("http://localhost:8080/api/v5/cart/" + id, {
+let getram = () => {
+  let get = Axios.get("http://localhost:8080/api/v1/productramcontrollers", {
     auth: {
-      username: "admin",
+      username: "adminaccount",
       password: "123456",
     },
   });

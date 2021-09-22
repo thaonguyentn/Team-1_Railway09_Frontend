@@ -11,7 +11,7 @@ import { Component, useState } from "react";
 import Axios from "axios";
 import Admin from "./Components/Admin";
 import { connect } from "react-redux";
-import { setlogin, setcart, setprofile } from "./Actions/index";
+import { setlogin, setcart, setprofile, setcartdetail } from "./Actions/index";
 import Footer from "./Components/Footer";
 import Banner from "./Components/Banner";
 import Profile from "./Components/Profile";
@@ -27,6 +27,7 @@ class App extends Component {
     localStorage.removeItem("user_login");
     localStorage.removeItem("user_login_infor");
     this.props.setcart(null);
+    this.props.setcartdetail(null);
     this.props.setprofile(null);
   };
   render() {
@@ -237,6 +238,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     setcart: (cart) => {
       dispatch(setcart(cart));
+    },
+    setcartdetail: (cartdetail) => {
+      dispatch(setcartdetail(cartdetail));
     },
     setprofile: (account) => {
       dispatch(setprofile(account));

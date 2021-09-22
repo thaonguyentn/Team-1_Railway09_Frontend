@@ -1,8 +1,8 @@
 import Axios from "axios";
 let getbrand = () => {
-  let get = Axios.get("http://localhost:8080/api/v5/cart/", {
+  let get = Axios.get("http://localhost:8080/api/v1/productbrandcontrollers", {
     auth: {
-      username: "admin",
+      username: "adminaccount",
       password: "123456",
     },
   });

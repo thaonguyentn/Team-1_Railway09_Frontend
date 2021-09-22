@@ -5,11 +5,16 @@ export const INCREMENT_CART_ITEM_QUANTITY = "INCREMENT_CART_ITEM_QUANTITY";
 export const DECREMENT_CART_ITEM_QUANTITY = "DECREMENT_CART_ITEM_QUANTITY";
 export const GET_CART = "GET_CART";
 export const SET_CART = "SET_CART";
+export const SET_CARTDETAIL = "SET_CARTDETAIL";
 export const SET_PROFILE = "SET_PROFILE";
 export const SETLISTPRODUCT = "SETLISTPRODUCT";
 export const SETRAM = "SETRAM";
 export const SETBRAND = "SETBRAND";
 export const SETMEMORY = "SETMEMORY";
+export const SETRAMFILTER = "SETRAMFILTER";
+export const SETBRANDFILTER = "SETBRANDFILTER";
+export const SETMEMORYFILTER = "SETMEMORYFILTER";
+export const SETORDER = "SETORDER";
 export const setlogin = (islogin) => {
   return { type: LOGIN, islogin: islogin };
 };
@@ -34,6 +39,12 @@ export const getCart = (id) => {
 export const setcart = (data) => {
   return {
     type: SET_CART,
+    data: data,
+  };
+};
+export const setcartdetail = (data) => {
+  return {
+    type: SET_CARTDETAIL,
     data: data,
   };
 };
@@ -65,6 +76,31 @@ export const setmemory = (data) => {
   return {
     type: SETMEMORY,
     data: data,
+  };
+};
+export const setramfilter = (data) => {
+  return {
+    type: SETRAMFILTER,
+    data: data,
+  };
+};
+export const setbrandfilter = (data) => {
+  return {
+    type: SETBRANDFILTER,
+    data: data,
+  };
+};
+export const setmemoryfilter = (data) => {
+  return {
+    type: SETMEMORYFILTER,
+    data: data,
+  };
+};
+export const setorder = (data, kind) => {
+  return {
+    type: SETORDER,
+    data: data,
+    kind: kind,
   };
 };
 export const incrementCartQuantity = (productId) => {

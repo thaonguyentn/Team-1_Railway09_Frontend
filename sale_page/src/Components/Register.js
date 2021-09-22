@@ -6,17 +6,13 @@ function Register(props) {
   const [isopen, setisopen] = useState(false);
   const [email, setemail] = useState("");
   const [username, setusername] = useState("");
-  const [firstname, setfirstname] = useState("");
-  const [lastname, setlastname] = useState("");
-  const [phone, setphone] = useState("");
+  const [fullname, setfirstname] = useState("");
   const [password, setpassword] = useState("");
   const handleRegister = () => {
     let body = {
       username: username,
-      firstname: firstname,
-      lastname: lastname,
+      fullname: fullname,
       email: email,
-      phoneNumber: phone,
       password: password,
     };
     console.log(body);
@@ -96,15 +92,15 @@ function Register(props) {
             </div>
           </div>
           <div className="form-group">
-            <label className="col-sm-10">Họ</label>
+            <label className="col-sm-10">Họ và Tên</label>
             <div className="col-sm-10">
               <input
                 type="text"
                 className="form-control"
                 id="Fisstname_ID"
-                placeholder="Nhập họ"
+                placeholder="Nhập Họ và Tên"
                 name="firstname"
-                value={firstname}
+                value={fullname}
                 style={{
                   width: "225px",
                 }}
@@ -112,24 +108,7 @@ function Register(props) {
               />
             </div>
           </div>
-          <div className="form-group">
-            <label className="col-sm-10">Tên</label>
-            <div className="col-sm-10">
-              <input
-                type="text"
-                className="form-control"
-                id="Lastname_ID"
-                placeholder="Nhập tên"
-                name="lastname"
-                value={lastname}
-                style={{
-                  width: "225px",
-                }}
-                onChange={(event) => setlastname(event.target.value)}
-              />
-            </div>
-          </div>
-          <div className="form-group">
+          {/* <div className="form-group">
             <label className="col-sm-10">Số điện thoại</label>
             <div className="col-sm-10">
               <input
@@ -145,7 +124,7 @@ function Register(props) {
                 onChange={(event) => setphone(event.target.value)}
               />
             </div>
-          </div>
+          </div> */}
           <div className="form-group">
             <label className="col-sm-10">Mật khẩu</label>
             <div className="col-sm-10">

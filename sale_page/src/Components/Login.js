@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import Modal from "react-modal";
 import Axios from "axios";
 import { connect } from "react-redux";
-import { setlogin, setprofile } from "../Actions";
+import { setcart, setcartdetail, setlogin, setprofile } from "../Actions";
 import { Redirect } from "react-router-dom";
+import getcart from "../Reducers/getcart";
+import getcartdetail from "../Reducers/getcartdetail";
 Modal.setAppElement("#root");
 function Login(props) {
   const [isopen, setisopen] = useState(false);
@@ -15,19 +17,43 @@ function Login(props) {
       username: user,
       password: password,
     };
-    Axios.post("http://localhost:8080/api/v1/login", body).then((response) => {
-      console.log(response);
-      localStorage.setItem("token", response.data.accessToken);
-      localStorage.setItem("user_login", JSON.stringify(body));
-      localStorage.setItem("role", JSON.stringify(response.data.role));
-      Axios.get("http://localhost:8080/api/v1/accounts/" + response.data.id, {
-        auth: body,
-      }).then((datalist) => {
-        localStorage.setItem("user_login_infor", JSON.stringify(datalist.data));
-        props.setlogin(true);
-        props.setprofile(datalist.data);
-      });
-    });
+    Axios.post("http://localhost:8080/api/v1/login", body).then(
+      (response) => {
+        console.log(response);
+        localStorage.setItem("token", response.data.accessToken);
+        localStorage.setItem("user_login", JSON.stringify(body));
+        localStorage.setItem("role", JSON.stringify(response.data.role));
+        getcart(response.data.id)
+          .then((response) => {
+            console.log(response);
+            props.setcart(response.data);
+          })
+          .then(() => {
+            getcartdetail(response.data.id).then((response) => {
+              console.log(response);
+              props.setcartdetail(response.data);
+            });
+          });
+        Axios.get("http://localhost:8080/api/v1/accounts/" + response.data.id, {
+          auth: body,
+        }).then(
+          (datalist) => {
+            localStorage.setItem(
+              "user_login_infor",
+              JSON.stringify(datalist.data)
+            );
+            props.setlogin(true);
+            props.setprofile(datalist.data);
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   };
   return (
     <div>
@@ -130,6 +156,12 @@ const mapDispatchToProps = (dispatch) => {
     },
     setprofile: (account) => {
       dispatch(setprofile(account));
+    },
+    setcart: (cart) => {
+      dispatch(setcart(cart));
+    },
+    setcartdetail: (cartdetail) => {
+      dispatch(setcartdetail(cartdetail));
     },
   };
 };

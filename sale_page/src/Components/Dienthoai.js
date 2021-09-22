@@ -13,19 +13,34 @@ import {
   setcart,
   setmemory,
   setram,
+  setramfilter,
+  setbrandfilter,
+  setmemoryfilter,
 } from "../Actions/index";
 class Dienthoai extends Component {
   Next = () => {
     console.log(this.props.currenpage + 1);
     if (this.props.totalpage !== this.props.currenpage + 1) {
-      getlistproduct(this.props.currenpage + 1 + 1).then((data) => {
+      getlistproduct(
+        this.props.currenpage + 1 + 1,
+        this.props.ramfilter,
+        this.props.brandfilter,
+        this.props.memoryfilter,
+        this.props.searchfilter
+      ).then((data) => {
         this.props.getlistproduct(data.data);
       });
     }
   };
   Previos = () => {
     if (this.props.currenpage !== 0) {
-      getlistproduct(this.props.currenpage).then((data) => {
+      getlistproduct(
+        this.props.currenpage,
+        this.props.ramfilter,
+        this.props.brandfilter,
+        this.props.memoryfilter,
+        this.props.searchfilter
+      ).then((data) => {
         this.props.getlistproduct(data.data);
       });
     }
@@ -33,8 +48,57 @@ class Dienthoai extends Component {
   format2 = (n) => {
     return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
+  handleChange = (event) => {
+    console.log(event.target.value);
+    switch (event.target.name) {
+      case "brand":
+        this.props.setbrandfilter(event.target.value);
+        getlistproduct(
+          this.props.currenpage,
+          this.props.ramfilter,
+          event.target.value,
+          this.props.memoryfilter,
+          this.props.searchfilter
+        ).then((data) => {
+          this.props.getlistproduct(data.data);
+        });
+        break;
+      case "memory":
+        this.props.setmemoryfilter(event.target.value);
+        getlistproduct(
+          this.props.currenpage,
+          this.props.ramfilter,
+          this.props.brandfilter,
+          event.target.value,
+          this.props.searchfilter
+        ).then((data) => {
+          this.props.getlistproduct(data.data);
+        });
+        break;
+      case "ram":
+        this.props.setramfilter(event.target.value);
+        getlistproduct(
+          this.props.currenpage,
+          event.target.value,
+          this.props.brandfilter,
+          this.props.memoryfilter,
+          this.props.searchfilter
+        ).then((data) => {
+          this.props.getlistproduct(data.data);
+        });
+        break;
+      default:
+        break;
+    }
+  };
   componentDidMount() {
-    getlistproduct(1).then((response) => {
+    getlistproduct(
+      1,
+      this.props.ramfilter,
+      this.props.brandfilter,
+      this.props.memoryfilter,
+      this.props.searchfilter
+    ).then((response) => {
       let listphone = [];
       response.data.content.forEach((element) => {
         if (element.category === "Phone") {
@@ -52,6 +116,11 @@ class Dienthoai extends Component {
     getram().then((response) => {
       this.props.setram(response.data);
     });
+  }
+  componentWillUnmount() {
+    this.props.setbrandfilter("");
+    this.props.setmemoryfilter("");
+    this.props.setramfilter("");
   }
   render() {
     let rows;
@@ -164,28 +233,28 @@ class Dienthoai extends Component {
     if (this.props.brand) {
       brand = this.props.brand.map((row, index) => {
         return (
-          <option value="" key={index}>
-            {row.name}
+          <option key={index} value={row.brandName}>
+            {row.brandName}
           </option>
         );
       });
     }
     let ram;
     if (this.props.ram) {
-      brand = this.props.ram.map((row, index) => {
+      ram = this.props.ram.map((row, index) => {
         return (
-          <option value="" key={index}>
-            {row.name}
+          <option key={index} value={row.ramName}>
+            {row.ramName}
           </option>
         );
       });
     }
     let memory;
     if (this.props.memory) {
-      brand = this.props.memory.map((row, index) => {
+      memory = this.props.memory.map((row, index) => {
         return (
-          <option value="" key={index}>
-            {row.name}
+          <option key={index} value={row.memoryName}>
+            {row.memoryName}
           </option>
         );
       });
@@ -194,58 +263,58 @@ class Dienthoai extends Component {
       <div>
         <div style={{ marginBottom: "20px" }}>
           <span style={{ fontSize: "larger" }}>Bộ lọc</span>
-          <select
+          <span
             style={{
               marginLeft: "50px",
               borderRadius: "5px",
+              // color: "black",
             }}
           >
-            <option
-              value=""
-              key=""
-              unselectable="on"
-              style={{ display: "none" }}
-            >
-              Hãng
-            </option>
+            Hãng :
+          </span>
+          <select name="brand" onChange={this.handleChange}>
+            <option value="">Tất cả</option>
             {brand}
           </select>
-          <select
+          <span
             style={{
               marginLeft: "50px",
               borderRadius: "5px",
             }}
           >
-            <option value="" key="" style={{ display: "none" }}>
-              Bộ nhớ trong
-            </option>
+            Bộ nhớ trong :
+          </span>
+          <select name="memory" onChange={this.handleChange}>
+            <option value="">Tất cả</option>
             {memory}
           </select>
-          <select
+          <span
             style={{
               marginLeft: "50px",
               borderRadius: "5px",
             }}
           >
-            <option value="" key="" style={{ display: "none" }}>
-              Ram
-            </option>
+            Ram:
+          </span>
+          <select name="ram" onChange={this.handleChange}>
+            <label>ram</label>
+            <option value="">Tất cả</option>
             {ram}
           </select>
-          <select
+          <span
             style={{
               marginLeft: "50px",
               borderRadius: "5px",
             }}
           >
-            <option value="" key="" style={{ display: "none" }}>
-              Giá
-            </option>
-            <option value="" key="">
-              Từ Cao - thấp
-            </option>
-            <option value="" key="">
+            Giá :{" "}
+          </span>
+          <select>
+            <option value="asc" key="">
               Từ Thấp - cao
+            </option>
+            <option value="desc" key="">
+              Từ Cao - thấp
             </option>
           </select>
         </div>
@@ -265,6 +334,10 @@ const mapStateToProps = (state) => {
     ram: state.productreducer.ram,
     brand: state.productreducer.brand,
     memory: state.productreducer.memory,
+    ramfilter: state.productreducer.ramfilter,
+    brandfilter: state.productreducer.brandfilter,
+    memoryfilter: state.productreducer.memoryfilter,
+    searchfilter: state.productreducer.searchfilter,
   };
 };
 const mapDispatchToProps = (dispath) => {
@@ -280,6 +353,15 @@ const mapDispatchToProps = (dispath) => {
     },
     setmemory: (memory) => {
       dispath(setmemory(memory));
+    },
+    setramfilter: (ram) => {
+      dispath(setramfilter(ram));
+    },
+    setbrandfilter: (brand) => {
+      dispath(setbrandfilter(brand));
+    },
+    setmemoryfilter: (memory) => {
+      dispath(setmemoryfilter(memory));
     },
   };
 };

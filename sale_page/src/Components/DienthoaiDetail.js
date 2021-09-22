@@ -83,6 +83,7 @@ class DienthoaiDetail extends Component {
             )}{" "}
             đ
           </p>
+          <h3>Số hàng trong kho : {pr.quantity}</h3>
         </div>,
         <div>
           <button onClick={this.addCartdetail}>Thêm vào giỏ hàng</button>

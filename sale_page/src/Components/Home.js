@@ -15,14 +15,26 @@ class Home extends Component {
   Next = () => {
     console.log(this.props.currenpage + 1);
     if (this.props.totalpage !== this.props.currenpage + 1) {
-      getlistproduct(this.props.currenpage + 1 + 1).then((data) => {
+      getlistproduct(
+        this.props.currenpage + 1 + 1,
+        this.props.ramfilter,
+        this.props.brandfilter,
+        this.props.memoryfilter,
+        this.props.searchfilter
+      ).then((data) => {
         this.props.getlistproduct(data.data);
       });
     }
   };
   Previos = () => {
     if (this.props.currenpage !== 0) {
-      getlistproduct(this.props.currenpage).then((data) => {
+      getlistproduct(
+        this.props.currenpage,
+        this.props.ramfilter,
+        this.props.brandfilter,
+        this.props.memoryfilter,
+        this.props.searchfilter
+      ).then((data) => {
         this.props.getlistproduct(data.data);
       });
     }
@@ -31,7 +43,13 @@ class Home extends Component {
     return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
   componentDidMount() {
-    getlistproduct(1).then((response) => {
+    getlistproduct(
+      1,
+      this.props.ramfilter,
+      this.props.brandfilter,
+      this.props.memoryfilter,
+      this.props.searchfilter
+    ).then((response) => {
       console.log(response);
       this.setState({
         listpro: response.data.content,
@@ -168,6 +186,13 @@ const mapStateToProps = (state) => {
     currenpage: state.productreducer.currenPage,
     listpro: state.productreducer.listproduct,
     // search_key: state.listfilter.search_key,
+    ram: state.productreducer.ram,
+    brand: state.productreducer.brand,
+    memory: state.productreducer.memory,
+    ramfilter: state.productreducer.ramfilter,
+    brandfilter: state.productreducer.brandfilter,
+    memoryfilter: state.productreducer.memoryfilter,
+    searchfilter: state.productreducer.searchfilter,
   };
 };
 const mapDispatchToProps = (dispath) => {

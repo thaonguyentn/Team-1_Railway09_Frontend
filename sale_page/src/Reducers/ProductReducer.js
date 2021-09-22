@@ -1,5 +1,25 @@
-import { SETLISTPRODUCT, SETBRAND, SETMEMORY, SETRAM } from "../Actions";
-const reducer = (state, action) => {
+import {
+  SETLISTPRODUCT,
+  SETBRAND,
+  SETMEMORY,
+  SETRAM,
+  SETRAMFILTER,
+  SETBRANDFILTER,
+  SETMEMORYFILTER,
+} from "../Actions";
+let ramfilter = "";
+let brandfilter = "";
+let memoryfilter = "";
+let searchfilter = "";
+const reducer = (
+  state = {
+    ramfilter: ramfilter,
+    brandfilter: brandfilter,
+    memoryfilter: memoryfilter,
+    searchfilter: searchfilter,
+  },
+  action
+) => {
   switch (action.type) {
     case SETLISTPRODUCT:
       let list = action.data.content;
@@ -29,6 +49,24 @@ const reducer = (state, action) => {
       return {
         ...state,
         ram: ram,
+      };
+    case SETRAMFILTER:
+      let ramfilternew = action.data;
+      return {
+        ...state,
+        ramfilter: ramfilternew,
+      };
+    case SETBRANDFILTER:
+      let brandfilternew = action.data;
+      return {
+        ...state,
+        brandfilter: brandfilternew,
+      };
+    case SETMEMORYFILTER:
+      let memoryfilternew = action.data;
+      return {
+        ...state,
+        memoryfilter: memoryfilternew,
       };
     default:
       return { ...state };
