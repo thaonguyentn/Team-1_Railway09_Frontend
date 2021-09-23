@@ -4,8 +4,8 @@ import Axios from "axios";
 import { connect } from "react-redux";
 import { setcart, setcartdetail, setlogin, setprofile } from "../Actions";
 import { Redirect } from "react-router-dom";
-import getcart from "../Reducers/getcart";
-import getcartdetail from "../Reducers/getcartdetail";
+import getcart from "../Reducers/Requestdata/getcart";
+import getcartdetail from "../Reducers/Requestdata/getcartdetail";
 Modal.setAppElement("#root");
 function Login(props) {
   const [isopen, setisopen] = useState(false);

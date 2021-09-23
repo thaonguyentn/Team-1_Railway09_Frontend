@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import listaccount from "./getlistaccount";
-import getlistproduct from "./getlistproduct";
+import listaccount from "./Requestdata/getlistaccount";
+import getlistproduct from "./Requestdata/getlistproduct";
 import { connect } from "react-redux";
 import { setlistproduct } from "../Actions/index";
 class Admin extends Component {

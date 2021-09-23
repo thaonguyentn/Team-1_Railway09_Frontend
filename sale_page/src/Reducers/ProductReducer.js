@@ -6,6 +6,7 @@ import {
   SETRAMFILTER,
   SETBRANDFILTER,
   SETMEMORYFILTER,
+  SETPRODUCT_IMAGE,
 } from "../Actions";
 let ramfilter = "";
 let brandfilter = "";
@@ -67,6 +68,12 @@ const reducer = (
       return {
         ...state,
         memoryfilter: memoryfilternew,
+      };
+    case SETPRODUCT_IMAGE:
+      let images = action.images;
+      return {
+        ...state,
+        images: images,
       };
     default:
       return { ...state };

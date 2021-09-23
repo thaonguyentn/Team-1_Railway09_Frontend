@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Axios from "axios";
 import { NavLink, Switch, Route } from "react-router-dom";
 import DienthoaiDetail from "./DienthoaiDetail";
-import getlistproduct from "./getlistproduct";
+import getlistproduct from "./Requestdata/getlistproduct";
 import { setlistproduct } from "../Actions/index";
 import { connect } from "react-redux";
 class Home extends Component {
@@ -88,7 +88,7 @@ class Home extends Component {
               }}
             >
               <img
-                src={require("../Images/dienthoai/" + row.image).default}
+                src={row.image}
                 alt=""
                 style={{ width: "260px", height: "auto" }}
               />

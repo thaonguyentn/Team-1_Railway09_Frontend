@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import getcart from "../Reducers/getcart";
+import getcart from "../Reducers/Requestdata/getcart";
 import { setcart, setcartdetail, setorder } from "../Actions/index";
-import getcartdetail from "../Reducers/getcartdetail";
-import { addquantity, minusquantity } from "./addquantity";
-import getcartdetailbyid from "./getcartdetailbyid";
+import getcartdetail from "../Reducers/Requestdata/getcartdetail";
+import { addquantity, minusquantity } from "./Requestdata/changequantity";
+import getcartdetailbyid from "./Requestdata/getcartdetailbyid";
 class Giohang extends Component {
   format2 = (n) => {
     if (n === undefined) {
@@ -137,9 +137,7 @@ class Giohang extends Component {
               }}
             >
               <img
-                src={
-                  require("../Images/dienthoai/" + row.product.image).default
-                }
+                src={row.product.image}
                 alt=""
                 style={{ width: "140px", height: "auto" }}
               />

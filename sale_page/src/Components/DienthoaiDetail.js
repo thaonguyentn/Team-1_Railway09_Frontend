@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import { Redirect } from "react-router";
 import Axios from "axios";
 import axios from "axios";
+import { setproductimages } from "../Actions";
+import { connect } from "react-redux";
+import slides from "./Carousel";
 class DienthoaiDetail extends Component {
   constructor(props) {
     super(props);
@@ -33,39 +36,56 @@ class DienthoaiDetail extends Component {
   };
   componentDidMount() {
     const id = this.props.location.state.id;
-    Axios.get("http://localhost:8080/api/v2/products/" + id).then(
-      (response) => {
+    Axios.get("http://localhost:8080/api/v2/products/" + id)
+      .then((response) => {
         console.log(response);
         this.setState({
           product: response.data,
         });
-      }
-    );
+      })
+      .then(() => {
+        Axios.get(
+          "http://localhost:8080/api/v2/products/" + id + "/images"
+        ).then((response) => {
+          console.log(response.data);
+          this.props.setproductimages(response.data);
+        });
+      });
   }
   render() {
+    console.log(this.props.images);
+    let slideshow;
+    if (this.props.images) {
+      slideshow = slides(this.props.images);
+      console.log(slideshow);
+    } else {
+      slideshow = "";
+    }
     let pr = this.state.product;
     let row;
+    let prname;
     if (pr !== null) {
+      prname = (
+        <div>
+          <h1>
+            Điện thoại {pr.name} {pr.memory}
+          </h1>
+        </div>
+      );
       row = [
-        <h1>{pr.name}</h1>,
         <div
-          id="sp"
           style={{
-            // margin: "30px",
+            marginLeft: "30px",
             backgroundColor: "white",
             width: "260px",
             float: "left",
           }}
         >
-          <img
-            src={require("../Images/dienthoai/" + pr.image).default}
-            alt=""
-            style={{ width: "260px", height: "auto" }}
-          />
-          <p style={{ textAlign: "center" }}>
-            {pr.name}({pr.ram}/{pr.memory})
-          </p>
-          <p style={{ textAlign: "center", fontSize: "small" }}>
+          <h4>Thông tin chi tiết sản phẩm :</h4>
+          <p>Dung lượng Ram : {pr.ram}</p>
+          <p>Bộ nhớ trong : {pr.memory}</p>
+          <p>Hãng sản xuất : {pr.brand}</p>
+          {/* <p>
             <span
               style={{
                 textDecoration: "line-through",
@@ -76,27 +96,54 @@ class DienthoaiDetail extends Component {
             </span>
 
             <span> -{pr.discount}%</span>
-          </p>
-          <p style={{ textAlign: "center", fontSize: "larger" }}>
+          </p> */}
+          {/* <p style={{ textAlign: "center", fontSize: "larger" }}>
+            {this.format2(
+              Number(pr.price) - (Number(pr.price) * Number(pr.discount)) / 100
+            )}{" "}
+            đ
+          </p> */}
+          <h4>còn lại : {pr.quantity}</h4>
+          <p>
+            Giá khuyến mãi :{" "}
             {this.format2(
               Number(pr.price) - (Number(pr.price) * Number(pr.discount)) / 100
             )}{" "}
             đ
           </p>
-          <h3>Số hàng trong kho : {pr.quantity}</h3>
-        </div>,
-        <div>
-          <button onClick={this.addCartdetail}>Thêm vào giỏ hàng</button>
+          <button type="button" class="btn btn-warning">
+            Mua ngay
+          </button>
+          <button
+            onClick={this.addCartdetail}
+            type="button"
+            class="btn btn-success"
+          >
+            Thêm vào giỏ hàng
+          </button>
         </div>,
       ];
     }
     return (
       <div>
+        {prname}
+        {slideshow}
         {row}
         <hr style={{ clear: "both" }} />
       </div>
     );
   }
 }
-
-export default DienthoaiDetail;
+const mapStateToProps = (state) => {
+  return {
+    images: state.productreducer.images,
+  };
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setproductimages: (images) => {
+      dispatch(setproductimages(images));
+    },
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(DienthoaiDetail);

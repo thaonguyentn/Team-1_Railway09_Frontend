@@ -15,6 +15,7 @@ export const SETRAMFILTER = "SETRAMFILTER";
 export const SETBRANDFILTER = "SETBRANDFILTER";
 export const SETMEMORYFILTER = "SETMEMORYFILTER";
 export const SETORDER = "SETORDER";
+export const SETPRODUCT_IMAGE = "SETPRODUCT_IMAGE";
 export const setlogin = (islogin) => {
   return { type: LOGIN, islogin: islogin };
 };
@@ -101,6 +102,12 @@ export const setorder = (data, kind) => {
     type: SETORDER,
     data: data,
     kind: kind,
+  };
+};
+export const setproductimages = (images) => {
+  return {
+    type: SETPRODUCT_IMAGE,
+    images: images,
   };
 };
 export const incrementCartQuantity = (productId) => {

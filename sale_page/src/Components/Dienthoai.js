@@ -3,10 +3,10 @@ import Axios from "axios";
 import { NavLink, Switch, Route } from "react-router-dom";
 import DienthoaiDetail from "./DienthoaiDetail";
 import { connect } from "react-redux";
-import getlistproduct from "./getlistproduct";
-import getram from "../Reducers/getram";
-import getbrand from "../Reducers/getbrand";
-import getmemory from "../Reducers/getmemory";
+import getlistproduct from "./Requestdata/getlistproduct";
+import getram from "../Reducers/Requestdata/getram";
+import getbrand from "../Reducers/Requestdata/getbrand";
+import getmemory from "../Reducers/Requestdata/getmemory";
 import {
   setlistproduct,
   setbrand,
@@ -148,7 +148,7 @@ class Dienthoai extends Component {
               }}
             >
               <img
-                src={require("../Images/dienthoai/" + row.image).default}
+                src={row.image}
                 alt=""
                 style={{ width: "260px", height: "auto" }}
               />
