@@ -7,6 +7,7 @@ import {
   SETBRANDFILTER,
   SETMEMORYFILTER,
   SETPRODUCT_IMAGE,
+  SET_SORT,
 } from "../Actions";
 let ramfilter = "";
 let brandfilter = "";
@@ -18,6 +19,7 @@ const reducer = (
     brandfilter: brandfilter,
     memoryfilter: memoryfilter,
     searchfilter: searchfilter,
+    sort: "",
   },
   action
 ) => {
@@ -74,6 +76,12 @@ const reducer = (
       return {
         ...state,
         images: images,
+      };
+    case SET_SORT:
+      let sort = action.kind;
+      return {
+        ...state,
+        sort: sort,
       };
     default:
       return { ...state };

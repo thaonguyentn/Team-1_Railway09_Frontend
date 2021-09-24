@@ -33,7 +33,7 @@ function Register(props) {
       <button
         onClick={() => setisopen(true)}
         style={{
-          backgroundColor: "blue",
+          backgroundColor: "rgb(141, 32, 13)",
           borderColor: "rgba(153, 74, 74, 0)",
         }}
       >
@@ -155,7 +155,7 @@ function Register(props) {
           </div>
         </form>
         <div style={{ marginBottom: "10px" }}>
-          <a href="">Đăng nhập</a>
+          <a href={null}>Đăng nhập</a>
         </div>
         <div>
           <span

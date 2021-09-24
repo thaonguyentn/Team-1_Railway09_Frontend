@@ -1,7 +1,5 @@
 import React, { Component, memo } from "react";
-import Axios from "axios";
-import { NavLink, Switch, Route } from "react-router-dom";
-import DienthoaiDetail from "./DienthoaiDetail";
+import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 import getlistproduct from "./Requestdata/getlistproduct";
 import getram from "../Reducers/Requestdata/getram";
@@ -10,7 +8,6 @@ import getmemory from "../Reducers/Requestdata/getmemory";
 import {
   setlistproduct,
   setbrand,
-  setcart,
   setmemory,
   setram,
   setramfilter,
@@ -207,7 +204,13 @@ class Dienthoai extends Component {
           id={this.props.currenpage === index ? "buttonpage" : "abc"}
           onClick={() => {
             console.log("1");
-            getlistproduct(index + 1).then((data) => {
+            getlistproduct(
+              index + 1,
+              this.props.ramfilter,
+              this.props.brandfilter,
+              this.props.memoryfilter,
+              this.props.searchfilter
+            ).then((data) => {
               this.props.getlistproduct(data.data);
             });
           }}
@@ -301,22 +304,6 @@ class Dienthoai extends Component {
             <option value="">Tất cả</option>
             {ram}
           </select>
-          <span
-            style={{
-              marginLeft: "50px",
-              borderRadius: "5px",
-            }}
-          >
-            Giá :{" "}
-          </span>
-          <select>
-            <option value="asc" key="">
-              Từ Thấp - cao
-            </option>
-            <option value="desc" key="">
-              Từ Cao - thấp
-            </option>
-          </select>
         </div>
         {rows}
         <hr style={{ clear: "both" }} />
@@ -330,7 +317,6 @@ const mapStateToProps = (state) => {
     totalpage: state.productreducer.totalPage,
     currenpage: state.productreducer.currenPage,
     listpro: state.productreducer.listproduct,
-    // search_key: state.listfilter.search_key,
     ram: state.productreducer.ram,
     brand: state.productreducer.brand,
     memory: state.productreducer.memory,

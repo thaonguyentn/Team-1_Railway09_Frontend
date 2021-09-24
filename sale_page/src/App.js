@@ -8,13 +8,14 @@ import Home from "./Components/Home";
 import DienthoaiDetail from "./Components/DienthoaiDetail";
 import Giohang from "./Components/Giohang";
 import { Component, useState } from "react";
-import Axios from "axios";
 import Admin from "./Components/Admin";
 import { connect } from "react-redux";
 import { setlogin, setcart, setprofile, setcartdetail } from "./Actions/index";
 import Footer from "./Components/Footer";
 import Banner from "./Components/Banner";
 import Profile from "./Components/Profile";
+import React from "react";
+import ActiveAccount from "./Components/ActiveAccount";
 class App extends Component {
   constructor(props) {
     super(props);
@@ -98,11 +99,56 @@ class App extends Component {
         <header>
           <Banner />
           <div id="loginlogout">
-            <div>
+            <div id="lienketcontainer">
+              <div id="lienhe">
+                Liên hệ với chúng tôi: <span>Hà nội: 0964385217</span>|{" "}
+                <span>TP.Hồ Chí Minh: 0705818277</span>
+              </div>
+
+              <div id="ketnoi">
+                <ul>
+                  <li>Kết nối:</li>
+                  <li>
+                    <a
+                      href="https://www.facebook.com/GHKSand/"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      <i className="fa fa-facebook"></i>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="">
+                      <i className="fa fa-google"></i>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="">
+                      <i className="fa fa-instagram"></i>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="">
+                      <i className="fa fa-twitter"></i>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="">
+                      <i className="fa fa-youtube"></i>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div style={{ float: "right" }}>
               {loginelement}
               {registerelement}
             </div>
+            {/* <React.Fragment style={{ clear: "both" }}> </React.Fragment> */}
+            <br style={{ clear: "both" }} />
           </div>
+
+          {/* <p ></p> */}
           <div id="searchwaper">
             <div id="logo">
               <NavLink
@@ -216,6 +262,7 @@ class App extends Component {
             <Route path="/dienthoai/:ID" component={DienthoaiDetail} exact />
             <Route path="/giohang/" component={Giohang} />
             <Route path="/profile" component={Profile} />
+            <Route path="/activeUser" component={ActiveAccount} />
           </Switch>
         </header>
         <footer>

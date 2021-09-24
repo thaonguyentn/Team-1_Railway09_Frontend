@@ -23,7 +23,7 @@ const slides = (images) => {
     rows = "";
   }
   return (
-    <div style={{ width: "800px", float: "left" }}>
+    <div style={{ width: "800px", float: "left", marginLeft: "20px" }}>
       <Carousel
         emulateTouch={true}
         showThumbs={false}

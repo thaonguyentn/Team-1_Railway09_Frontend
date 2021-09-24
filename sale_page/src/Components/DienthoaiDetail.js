@@ -66,7 +66,7 @@ class DienthoaiDetail extends Component {
     let prname;
     if (pr !== null) {
       prname = (
-        <div>
+        <div style={{ marginLeft: "20px" }}>
           <h1>
             Điện thoại {pr.name} {pr.memory}
           </h1>
@@ -77,14 +77,14 @@ class DienthoaiDetail extends Component {
           style={{
             marginLeft: "30px",
             backgroundColor: "white",
-            width: "260px",
+            width: "350px",
             float: "left",
           }}
         >
-          <h4>Thông tin chi tiết sản phẩm :</h4>
-          <p>Dung lượng Ram : {pr.ram}</p>
-          <p>Bộ nhớ trong : {pr.memory}</p>
-          <p>Hãng sản xuất : {pr.brand}</p>
+          <h3>Thông tin chi tiết sản phẩm :</h3>
+          <p style={{ fontSize: "20px" }}>Dung lượng Ram : {pr.ram}</p>
+          <p style={{ fontSize: "20px" }}>Bộ nhớ trong : {pr.memory}</p>
+          <p style={{ fontSize: "20px" }}>Hãng sản xuất : {pr.brand}</p>
           {/* <p>
             <span
               style={{
@@ -104,7 +104,7 @@ class DienthoaiDetail extends Component {
             đ
           </p> */}
           <h4>còn lại : {pr.quantity}</h4>
-          <p>
+          <p style={{ fontSize: "25px" }}>
             Giá khuyến mãi :{" "}
             {this.format2(
               Number(pr.price) - (Number(pr.price) * Number(pr.discount)) / 100

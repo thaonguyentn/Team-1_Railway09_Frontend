@@ -1,5 +1,4 @@
 import Axios from "axios";
-import { memo } from "react";
 let listproduct = (page, ram, brand, memory, search) => {
   if (page === undefined) {
     page = 1;

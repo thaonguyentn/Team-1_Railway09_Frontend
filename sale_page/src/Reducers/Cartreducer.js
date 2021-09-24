@@ -1,4 +1,4 @@
-import { GET_CART, SET_CART, SET_CARTDETAIL } from "../Actions/index";
+import { SET_CART, SET_CARTDETAIL } from "../Actions/index";
 let isLogin;
 if (localStorage.getItem("user_login")) {
   isLogin = true;

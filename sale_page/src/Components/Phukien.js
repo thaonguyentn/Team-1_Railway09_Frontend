@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { NavLink, Link, Switch, Route } from "react-router-dom";
+import { NavLink, Switch, Route } from "react-router-dom";
 
 class Laptop extends Component {
   render() {

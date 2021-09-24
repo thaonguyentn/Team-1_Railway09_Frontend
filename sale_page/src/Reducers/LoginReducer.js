@@ -1,4 +1,4 @@
-import { setlogin, LOGIN } from "../Actions/index";
+import { LOGIN } from "../Actions/index";
 let isLogin;
 if (localStorage.getItem("user_login")) {
   isLogin = true;
