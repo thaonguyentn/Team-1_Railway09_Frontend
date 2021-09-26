@@ -44,7 +44,15 @@ class Giohang extends Component {
         });
       });
   };
-  minusquantity = (id) => {
+  minusquantity = (id, quantity) => {
+    if (quantity === 1) {
+      if (
+        window.confirm("Bạn có chắc muốn xoá sản phẩm khỏi giỏ hàng") === false
+      ) {
+        return;
+      }
+    }
+
     minusquantity(id).then(() => {
       getcart(this.props.accountid)
         .then((response) => {
@@ -188,7 +196,7 @@ class Giohang extends Component {
                 <button
                   className="page-link"
                   onClick={() => {
-                    this.minusquantity(row.id);
+                    this.minusquantity(row.id, row.quantity);
                   }}
                 >
                   -

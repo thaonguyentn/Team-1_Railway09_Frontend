@@ -3,6 +3,7 @@ export const ADD_PRODUCT_TO_CART = "ADD_PRODUCT_TO_CART";
 export const REMOVE_PRODUCT_FROM_CART = "REMOVE_PRODUCT_FROM_CART";
 export const INCREMENT_CART_ITEM_QUANTITY = "INCREMENT_CART_ITEM_QUANTITY";
 export const DECREMENT_CART_ITEM_QUANTITY = "DECREMENT_CART_ITEM_QUANTITY";
+export const SET_ISOPEN_LOGIN = "SET_ISOPEN_LOGIN";
 export const GET_CART = "GET_CART";
 export const SET_CART = "SET_CART";
 export const SET_CARTDETAIL = "SET_CARTDETAIL";
@@ -17,6 +18,12 @@ export const SETMEMORYFILTER = "SETMEMORYFILTER";
 export const SETORDER = "SETORDER";
 export const SETPRODUCT_IMAGE = "SETPRODUCT_IMAGE";
 export const SET_SORT = "SET_SORT";
+export const setopenlogin = (data) => {
+  return {
+    type: SET_ISOPEN_LOGIN,
+    data: data,
+  };
+};
 export const setlogin = (islogin) => {
   return { type: LOGIN, islogin: islogin };
 };

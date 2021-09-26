@@ -16,17 +16,21 @@ function Register(props) {
       password: password,
     };
     console.log(body);
-    Axios.post("http://localhost:8080/api/v3/register", body).then(
-      (response) => {
+    Axios.post("http://localhost:8080/api/v3/register", body)
+      .then((response) => {
         setisopen(false);
         alert(
-          response.data +
-            " Chúng tôi đã gửi một email xác nhận đến email " +
+          " Chúng tôi đã gửi một email xác nhận đến email " +
             email +
             " , vui lòng kiểm tra email của bạn để xác nhận tài khoản"
         );
-      }
-    );
+      })
+      .catch((errors) => {
+        console.log(errors.response.data.errors);
+        errors.response.data.errors.forEach((element) => {
+          alert(element);
+        });
+      });
   };
   return (
     <div>

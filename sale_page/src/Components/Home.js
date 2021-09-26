@@ -3,7 +3,12 @@ import Axios from "axios";
 import { NavLink, Switch, Route } from "react-router-dom";
 import DienthoaiDetail from "./DienthoaiDetail";
 import getlistproduct from "./Requestdata/getlistproduct";
-import { setlistproduct, setsort } from "../Actions/index";
+import {
+  setlistproduct,
+  setlogin,
+  setopenlogin,
+  setsort,
+} from "../Actions/index";
 import { connect } from "react-redux";
 import { getlistproductsort } from "./Requestdata/getproductorder";
 class Home extends Component {
@@ -52,9 +57,13 @@ class Home extends Component {
     });
   }
   render() {
-    console.log(this.props.sort);
-    console.log(this.props.totalpage);
-    console.log(this.props.currenpage);
+    console.log(this.props.location);
+    if (this.props.location.state) {
+      console.log(this.props.location.state.active);
+      if (this.props.location.state.active === "activeed") {
+        this.props.setisopenlogin(true);
+      }
+    }
     let rows;
     if (this.props.listpro) {
       rows = this.props.listpro.map((row, index) => {
@@ -228,6 +237,12 @@ const mapDispatchToProps = (dispath) => {
     },
     setsort: (kind) => {
       dispath(setsort(kind));
+    },
+    setlogin: (islogin) => {
+      dispath(setlogin(islogin));
+    },
+    setisopenlogin: (data) => {
+      dispath(setopenlogin(data));
     },
   };
 };

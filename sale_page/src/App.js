@@ -69,11 +69,15 @@ class App extends Component {
               >
                 <span>{user_login_infor.fullname}</span>
                 <img
-                  style={{ width: "23px", height: "auto", borderRadius: "50%" }}
+                  style={{
+                    width: "23px",
+                    height: "auto",
+                    borderRadius: "50%",
+                    marginLeft: "5px",
+                  }}
                   src="https://scontent.fhan14-1.fna.fbcdn.net/v/t1.6435-9/211057898_3056832151205713_8380822449352218766_n.jpg?_nc_cat=107&_nc_rgb565=1&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=4mazPvoWXFoAX9YC86v&_nc_ht=scontent.fhan14-1.fna&oh=29fe316e4f1150d9e88b73626ad8b436&oe=616D398E"
                   alt="https://scontent.fhan14-1.fna.fbcdn.net/v/t1.6435-9/211057898_3056832151205713_8380822449352218766_n.jpg?_nc_cat=107&_nc_rgb565=1&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=4mazPvoWXFoAX9YC86v&_nc_ht=scontent.fhan14-1.fna&oh=29fe316e4f1150d9e88b73626ad8b436&oe=616D398E"
                 />
-                <span className="caret"></span>
               </button>
               <ul className="dropdown-menu">
                 <li>
@@ -253,7 +257,6 @@ class App extends Component {
               </ul>
             </div>
           </nav>
-
           <Switch>
             <Route path="/" component={Home} exact />
             <Route path="/admin" component={Admin} exact />
@@ -263,6 +266,7 @@ class App extends Component {
             <Route path="/giohang/" component={Giohang} />
             <Route path="/profile" component={Profile} />
             <Route path="/activeUser" component={ActiveAccount} />
+            <Route path="/login" component={Login} />
           </Switch>
         </header>
         <footer>

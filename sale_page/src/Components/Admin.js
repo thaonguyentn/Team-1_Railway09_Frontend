@@ -3,6 +3,7 @@ import listaccount from "./Requestdata/getlistaccount";
 import getlistproduct from "./Requestdata/getlistproduct";
 import { connect } from "react-redux";
 import { setlistproduct } from "../Actions/index";
+import axios from "axios";
 class Admin extends Component {
   constructor(props) {
     super(props);
@@ -14,17 +15,27 @@ class Admin extends Component {
   Next = () => {
     console.log(this.props.currenpage + 1);
     if (this.props.totalpage !== this.props.currenpage + 1) {
-      getlistproduct(this.props.currenpage + 1 + 1).then((data) => {
-        this.props.getlistproduct(data.data);
-      });
+      getlistproduct(this.props.currenpage + 1 + 1, "", "", "", "").then(
+        (data) => {
+          this.props.getlistproduct(data.data);
+        }
+      );
     }
   };
   Previos = () => {
     if (this.props.currenpage !== 0) {
-      getlistproduct(this.props.currenpage).then((data) => {
+      getlistproduct(this.props.currenpage, "", "", "", "").then((data) => {
         this.props.getlistproduct(data.data);
       });
     }
+  };
+  DeleteProduct = (id) => {
+    let token = localStorage.getItem("token");
+    axios.delete("http://localhost:8080/api/v2/products/" + id, {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    });
   };
   componentDidMount() {
     listaccount.then(
@@ -38,7 +49,7 @@ class Admin extends Component {
         console.log(error);
       }
     );
-    getlistproduct(1).then((response) => {
+    getlistproduct(1, "", "", "", "").then((response) => {
       console.log(response);
       this.props.getlistproduct(response.data);
     });
@@ -79,6 +90,17 @@ class Admin extends Component {
             <td>{row.image}</td>
             <td>{row.quantity}</td>
             <td>{row.enter_date}</td>
+            <td>
+              <button
+                type="button"
+                class="btn btn-danger"
+                onClick={() => {
+                  this.DeleteProduct(row.id);
+                }}
+              >
+                delete
+              </button>
+            </td>
           </tr>
         );
       });
@@ -111,7 +133,7 @@ class Admin extends Component {
           id={this.props.currenpage === index ? "buttonpage" : "abc"}
           onClick={() => {
             console.log("1");
-            getlistproduct(index + 1).then((data) => {
+            getlistproduct(index + 1, "", "", "", "").then((data) => {
               this.props.getlistproduct(data.data);
             });
           }}
@@ -152,6 +174,7 @@ class Admin extends Component {
               <th>avatar</th>
               <th>phone_number</th>
               <th>register_date</th>
+              <th>Delete</th>
             </tr>
           </thead>
           <tbody>{rows}</tbody>

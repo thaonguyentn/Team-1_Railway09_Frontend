@@ -8,6 +8,7 @@ const reducer = (state = { account: account1 }, action) => {
       account: account,
     };
   }
+
   return { ...state };
 };
 export default reducer;

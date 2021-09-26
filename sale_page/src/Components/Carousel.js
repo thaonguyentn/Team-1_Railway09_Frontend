@@ -31,6 +31,7 @@ const slides = (images) => {
         swipeable={true}
         infiniteLoop={true}
         showArrows={true}
+        autoPlay={false}
         renderArrowPrev={(onClickHandler, hasPrev, label) =>
           hasPrev && (
             <button

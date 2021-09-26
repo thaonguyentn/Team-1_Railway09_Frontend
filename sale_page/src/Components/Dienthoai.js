@@ -269,8 +269,8 @@ class Dienthoai extends Component {
           <span
             style={{
               marginLeft: "50px",
-              borderRadius: "5px",
-              // color: "black",
+              // borderRadius: "5px",
+              marginRight: "5px",
             }}
           >
             Hãng :
@@ -282,7 +282,7 @@ class Dienthoai extends Component {
           <span
             style={{
               marginLeft: "50px",
-              borderRadius: "5px",
+              marginRight: "5px",
             }}
           >
             Bộ nhớ trong :
@@ -294,10 +294,10 @@ class Dienthoai extends Component {
           <span
             style={{
               marginLeft: "50px",
-              borderRadius: "5px",
+              marginRight: "5px",
             }}
           >
-            Ram:
+            Ram :
           </span>
           <select name="ram" onChange={this.handleChange}>
             <label>ram</label>
