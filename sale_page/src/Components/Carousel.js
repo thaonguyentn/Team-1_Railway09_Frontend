@@ -23,15 +23,16 @@ const slides = (images) => {
     rows = "";
   }
   return (
-    <div style={{ width: "800px", float: "left", marginLeft: "20px" }}>
+    <div style={{ width: "397px", float: "left", marginLeft: "2px" }}>
       <Carousel
         emulateTouch={true}
-        showThumbs={false}
+        // showThumbs={false}
         showStatus={false}
         swipeable={true}
         infiniteLoop={true}
         showArrows={true}
         autoPlay={false}
+        useKeyboardArrows={true}
         renderArrowPrev={(onClickHandler, hasPrev, label) =>
           hasPrev && (
             <button

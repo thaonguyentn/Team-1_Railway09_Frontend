@@ -8,6 +8,10 @@ function Register(props) {
   const [username, setusername] = useState("");
   const [fullname, setfirstname] = useState("");
   const [password, setpassword] = useState("");
+  const [erroremail, seterroremail] = useState("");
+  const [errorusername, seterrorusername] = useState("");
+  const [errorfullname, seterrorfullname] = useState("");
+  const [errorpassword, seterrorpassword] = useState("");
   const handleRegister = () => {
     let body = {
       username: username,
@@ -15,6 +19,9 @@ function Register(props) {
       email: email,
       password: password,
     };
+    if (username === "") {
+      seterrorusername("* Không được để trống");
+    }
     console.log(body);
     Axios.post("http://localhost:8080/api/v3/register", body)
       .then((response) => {
@@ -26,7 +33,7 @@ function Register(props) {
         );
       })
       .catch((errors) => {
-        console.log(errors.response.data.errors);
+        console.log(errors.response.data.status);
         errors.response.data.errors.forEach((element) => {
           alert(element);
         });
@@ -74,8 +81,14 @@ function Register(props) {
                 style={{
                   width: "225px",
                 }}
-                onChange={(event) => setemail(event.target.value)}
+                onChange={(event) => {
+                  if (event.target.value !== "") {
+                    seterroremail("");
+                  }
+                  setemail(event.target.value);
+                }}
               />
+              <p style={{ color: "red", position: "fixed" }}>{erroremail}</p>
             </div>
           </div>
           <div className="form-group">
@@ -91,8 +104,14 @@ function Register(props) {
                 style={{
                   width: "225px",
                 }}
-                onChange={(event) => setusername(event.target.value)}
+                onChange={(event) => {
+                  if (event.target.value !== "") {
+                    seterrorusername("");
+                  }
+                  setusername(event.target.value);
+                }}
               />
+              <p style={{ color: "red", position: "fixed" }}>{errorusername}</p>
             </div>
           </div>
           <div className="form-group">
@@ -108,8 +127,14 @@ function Register(props) {
                 style={{
                   width: "225px",
                 }}
-                onChange={(event) => setfirstname(event.target.value)}
+                onChange={(event) => {
+                  if (event.target.value !== "") {
+                    seterrorfullname("");
+                  }
+                  setfirstname(event.target.value);
+                }}
               />
+              <p style={{ color: "red", position: "fixed" }}>{errorfullname}</p>
             </div>
           </div>
           {/* <div className="form-group">
@@ -142,8 +167,14 @@ function Register(props) {
                 style={{
                   width: "225px",
                 }}
-                onChange={(event) => setpassword(event.target.value)}
+                onChange={(event) => {
+                  if (event.target.value !== "") {
+                    seterrorpassword("");
+                  }
+                  setpassword(event.target.value);
+                }}
               />
+              <p style={{ color: "red", position: "fixed" }}>{errorpassword}</p>
             </div>
           </div>
           <div className="form-group">

@@ -3,13 +3,17 @@ import listaccount from "./Requestdata/getlistaccount";
 import getlistproduct from "./Requestdata/getlistproduct";
 import { connect } from "react-redux";
 import { setlistproduct } from "../Actions/index";
-import axios from "axios";
+import Axios from "axios";
+import slides from "./Carousel";
+import AddProduct from "./AddProduct";
 class Admin extends Component {
   constructor(props) {
     super(props);
     this.state = {
       listaccount: [],
       listproduct: [],
+      prid: 0,
+      isopenmodaladd: false,
     };
   }
   Next = () => {
@@ -31,11 +35,27 @@ class Admin extends Component {
   };
   DeleteProduct = (id) => {
     let token = localStorage.getItem("token");
-    axios.delete("http://localhost:8080/api/v2/products/" + id, {
+    Axios.delete("http://localhost:8080/api/v2/products/" + id, {
       headers: {
         Authorization: "Bearer " + token,
       },
+    }).then(() => {
+      getlistproduct(1, "", "", "", "").then((response) => {
+        console.log(response);
+        this.props.getlistproduct(response.data);
+      });
     });
+  };
+  showimageslide = (id) => {
+    if (id === this.state.prid) {
+      this.setState({
+        prid: 0,
+      });
+    } else {
+      this.setState({
+        prid: id,
+      });
+    }
   };
   componentDidMount() {
     listaccount.then(
@@ -60,15 +80,78 @@ class Admin extends Component {
       rows = this.state.listaccount.map((row, index) => {
         return (
           <tr key="index">
-            <td>{row.id}</td>
-            <td>{row.username}</td>
-            <td>{row.email}</td>
-            <td>{row.fullname}</td>
-            <td>{row.gender}</td>
-            <td>{row.address}</td>
-            <td>{row.avatar}</td>
-            <td>{row.phone_number}</td>
-            <td>{row.register_date}</td>
+            <td>
+              <input
+                size={row.id.toString().length}
+                style={{ border: "none", outline: "none", background: "none" }}
+                type="text"
+                defaultValue={row.id}
+              />
+            </td>
+            <td>
+              <input
+                size={row.username.toString().length}
+                style={{ border: "none", outline: "none", background: "none" }}
+                type="text"
+                defaultValue={row.username}
+              />
+            </td>
+            <td>
+              <input
+                size={row.email.toString().length}
+                style={{ border: "none", outline: "none", background: "none" }}
+                type="text"
+                defaultValue={row.email}
+              />
+            </td>
+            <td>
+              <input
+                size={row.fullname.toString().length}
+                style={{ border: "none", outline: "none", background: "none" }}
+                type="text"
+                defaultValue={row.fullname}
+              />
+            </td>
+            <td>
+              <input
+                size={row.gender.toString().length}
+                style={{ border: "none", outline: "none", background: "none" }}
+                type="text"
+                defaultValue={row.gender}
+              />
+            </td>
+            <td>
+              <input
+                size={5}
+                style={{ border: "none", outline: "none", background: "none" }}
+                type="text"
+                defaultValue={row.address}
+              />
+            </td>
+            <td>
+              <input
+                size={5}
+                style={{ border: "none", outline: "none", background: "none" }}
+                type="text"
+                defaultValue={row.avatar}
+              />
+            </td>
+            <td>
+              <input
+                size={row.phone_number.toString().length}
+                style={{ border: "none", outline: "none", background: "none" }}
+                type="text"
+                defaultValue={row.phone_number}
+              />
+            </td>
+            <td>
+              <input
+                size={row.register_date.toString().length}
+                style={{ border: "none", outline: "none", background: "none" }}
+                type="text"
+                defaultValue={row.register_date}
+              />
+            </td>
           </tr>
         );
       });
@@ -88,6 +171,27 @@ class Admin extends Component {
             <td>{row.ram}</td>
             <td>{row.memory}</td>
             <td>{row.image}</td>
+            <td>
+              <button onClick={() => this.showimageslide(row.id)}>
+                {row.listimage.length}
+              </button>
+              <div
+                style={{
+                  position: "absolute",
+                }}
+              >
+                <div
+                  className="showimage"
+                  style={
+                    this.state.prid === row.id
+                      ? { display: "inline-block" }
+                      : { display: "none" }
+                  }
+                >
+                  <div>{slides(row.listimage)}</div>
+                </div>
+              </div>
+            </td>
             <td>{row.quantity}</td>
             <td>{row.enter_date}</td>
             <td>
@@ -179,8 +283,26 @@ class Admin extends Component {
           </thead>
           <tbody>{rows}</tbody>
         </table>
-        <h1>Quản lý sản phẩm</h1>
 
+        <h1>Quản lý sản phẩm</h1>
+        <div style={{ fontSize: "30px", float: "right" }}>
+          <button
+            onClick={() => {
+              this.setState({ isopenmodaladd: true });
+            }}
+          >
+            <span class="glyphicon glyphicon-plus"></span>
+          </button>
+          <AddProduct
+            isopen={this.state.isopenmodaladd}
+            setisopenmodaladd={(data) =>
+              this.setState({ isopenmodaladd: data })
+            }
+          />
+          <button>
+            <span class="glyphicon glyphicon-trash"></span>
+          </button>
+        </div>
         <table class="table table-bordered table-hover">
           <thead>
             <tr>
@@ -194,6 +316,7 @@ class Admin extends Component {
               <th>ram</th>
               <th>memory</th>
               <th>image</th>
+              <th>imageslide</th>
               <th>quantity</th>
               <th>enter_date</th>
             </tr>

@@ -17,10 +17,10 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isopen: false,
+      erroruser: "",
+      errorpassword: "",
       user: "",
       password: "",
-      role: "",
     };
   }
 
@@ -29,9 +29,23 @@ class Login extends Component {
       username: this.state.user,
       password: this.state.password,
     };
+    if (this.state.user === "") {
+      this.setState({
+        erroruser: "* không được để trống",
+      });
+    }
+    if (this.state.password === "") {
+      this.setState({
+        errorpassword: "* không được để trống",
+      });
+    }
+    if (this.state.user === "" || this.state.password === "") {
+      return;
+    }
     Axios.post("http://localhost:8080/api/v1/login", body)
       .then(
         (response) => {
+          this.props.setisopen(false);
           console.log(response);
           localStorage.setItem("token", response.data.accessToken);
           localStorage.setItem("user_login", JSON.stringify(body));
@@ -70,9 +84,7 @@ class Login extends Component {
           console.log(error);
         }
       )
-      .then(() => {
-        this.props.setisopen(false);
-      });
+      .then(() => {});
   };
   render() {
     console.log(this.props.location);
@@ -109,6 +121,7 @@ class Login extends Component {
               </label>
               <div className="col-sm-10">
                 <input
+                  required={true}
                   type="text"
                   className="form-control"
                   id="lemail"
@@ -116,11 +129,18 @@ class Login extends Component {
                   name="setuser"
                   value={this.state.user}
                   onChange={(event) => {
+                    if (event.target.value !== "") {
+                      this.setState({ erroruser: "" });
+                    }
                     this.setState({ user: event.target.value });
                   }}
                 />
+                <p style={{ color: "red", position: "fixed" }}>
+                  {this.state.erroruser}
+                </p>
               </div>
             </div>
+
             <div className="form-group">
               <label className="col-sm-10" for="pwd">
                 Mật khẩu:
@@ -134,9 +154,15 @@ class Login extends Component {
                   name="setpassword"
                   value={this.state.password}
                   onChange={(event) => {
+                    if (event.target.value !== "") {
+                      this.setState({ errorpassword: "" });
+                    }
                     this.setState({ password: event.target.value });
                   }}
                 />
+                <p style={{ color: "red", position: "fixed" }}>
+                  {this.state.errorpassword}
+                </p>
               </div>
             </div>
             <div className="form-group">

@@ -145,3 +145,25 @@ footer {
 #buttonpage {
   background-color: rgb(131, 185, 201);
 }
+.showimage {
+  position: absolute;
+  background-color: aqua;
+  width: 402px;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  margin-right: 12px;
+  z-index: 1;
+  right: 105%;
+  top: -26px;
+}
+.showimage::after {
+  content: "";
+  position: absolute;
+  top: 8px;
+  left: 100%;
+  margin-top: -5px;
+  border-width: 6px;
+  border-style: solid;
+  border-color: transparent transparent transparent aqua;
+}

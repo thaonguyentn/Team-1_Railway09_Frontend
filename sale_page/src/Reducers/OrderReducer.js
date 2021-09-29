@@ -1,5 +1,4 @@
 import { SETORDER } from "../Actions/index";
-
 let order = [];
 const reducer = (state = { order: order }, action) => {
   switch (action.type) {
@@ -14,7 +13,6 @@ const reducer = (state = { order: order }, action) => {
           list.splice(index, 1, action.data);
         }
         console.log(list);
-
         console.log(list);
         return {
           ...state,

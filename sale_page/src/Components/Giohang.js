@@ -178,7 +178,7 @@ class Giohang extends Component {
                   Number(row.product.price) -
                     (Number(row.product.price) * Number(row.product.discount)) /
                       100
-                )}{" "}
+                )}
                 đ
               </p>
               <p>Số hàng còn lại : {row.product.quantity}</p>
