@@ -53,18 +53,18 @@ class Giohang extends Component {
       }
     }
 
-    minusquantity(id).then(() => {
-      getcart(this.props.accountid)
-        .then((response) => {
+    minusquantity(id)
+      .then(() => {
+        getcart(this.props.accountid).then((response) => {
           this.props.setcart(response.data);
-        })
-        .then(() => {
-          getcartdetail(this.props.accountid).then((response) => {
-            console.log(response);
-            this.props.setcartdetail(response.data);
-          });
         });
-    });
+      })
+      .then(() => {
+        getcartdetail(this.props.accountid).then((response) => {
+          console.log(response);
+          this.props.setcartdetail(response.data);
+        });
+      });
   };
   componentDidMount() {
     const user_login_infor = JSON.parse(

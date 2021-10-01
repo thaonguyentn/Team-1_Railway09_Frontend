@@ -15,10 +15,7 @@ CREATE TABLE `Account`(
     gender			ENUM('Male', 'Female', 'Unknow') DEFAULT 'Unknow',
     email			VARCHAR(100) NOT NULL UNIQUE KEY,
     phone_number	CHAR(12) UNIQUE KEY,
-    city			VARCHAR(50) ,
-    district		VARCHAR(50) ,
-    ward			VARCHAR(50) ,
-    street			VARCHAR(100),
+    address			VARCHAR(100),
     path_image		VARCHAR(100),
     `password`		VARCHAR(255) DEFAULT '$2a$12$xZUN2GTv3pg7x1YFq8CiSuXZTitxj1XvJggmuU9D5Dx65FD93jabm',
 	`role`			ENUM('Admin', 'User') DEFAULT 'User',
@@ -104,6 +101,7 @@ CREATE TABLE CartDetail(
     quantity			INT UNSIGNED NOT NULL,
     cart_id				INT UNSIGNED,
     product_id			INT UNSIGNED,
+    `status`			ENUM('Order', 'Not_Order') DEFAULT 'Not_Order' ,
 	FOREIGN KEY(cart_id)  REFERENCES Cart(cart_id),
     FOREIGN KEY(product_id)  REFERENCES Product(product_id) ON DELETE NO ACTION
 );
@@ -114,7 +112,7 @@ CREATE TABLE `Order`(
 	order_id		INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     quantity		SMALLINT UNSIGNED NOT NULL,
     total_price		DOUBLE UNSIGNED NOT NULL,
-    ship_address	VARCHAR(100),
+	address			VARCHAR(100),
     user_id			INT UNSIGNED NOT NULL,
     order_date		DATETIME DEFAULT NOW(),
     `Status`		ENUM('Active', 'Not_Active', 'End', 'Delete') DEFAULT 'Not_Active',
@@ -150,8 +148,10 @@ INSERT INTO `mock_project`.`account` (`username`, 		`fullname`, 	`email`, 		`pho
 VALUES 								('adminaccount', 'adminaccount', 'admin1@gmail.com', '0961271391', 'Admin', 'Active'),
 									('useraccount',  'useraccount', 'account1@gmail.com', '0983631931', 'User', 'Active');
                                     
-INSERT INTO `mock_project`.`cart` (`quantity`, `total_price`, `user_id`) VALUES ('0', '0', '1');
-INSERT INTO `mock_project`.`cart` (`quantity`, `total_price`, `user_id`) VALUES ('0', '0', '2');
+INSERT INTO `mock_project`.`cart` (`quantity`, `total_price`, `user_id`) 
+VALUES 								('3', 		'35490000', 	'1');
+INSERT INTO `mock_project`.`cart` (`quantity`, `total_price`, `user_id`) 
+VALUES 								('0', '0', '2');
 
 INSERT INTO `mock_project`.`productbrand` (`brand_name`) 
 VALUES 										('Apple'),
@@ -189,9 +189,11 @@ VALUES 								('Iphone 11 ', 			'15000000', 		'5', 				'5', 				'1', 		'Phone',
 
 UPDATE `mock_project`.`product` SET `path_image` = '1624773227391.jpg' WHERE (`product_id` = '1');							
 									
-INSERT INTO `mock_project`.`cartdetail` (`price`, `quantity`, `cart_id`, `product_id`) VALUES ('15000000', '1', '1', '1');
-INSERT INTO `mock_project`.`cartdetail` (`price`, `quantity`, `cart_id`, `product_id`) VALUES ('12490000', '1', '1', '2');
-INSERT INTO `mock_project`.`cartdetail` (`price`, `quantity`, `cart_id`, `product_id`) VALUES ('8000000', '1', '1', '3');
+INSERT INTO `mock_project`.`cartdetail` (`price`, `quantity`, `cart_id`, `product_id`, `status`) 
+VALUES 									('15000000', '1', 		'1', 		'1', 		'Order'),
+										('12490000', '1',		'1', 		'2', 		'Order'),
+                                        ('8000000',  '1', 		'1', 		'3', 		'Order');
+
 
 INSERT INTO `mock_project`.`productimage` (`path_image`, `product_id`) VALUES ('123', '1');
 INSERT INTO `mock_project`.`productimage` (`path_image`, `product_id`) VALUES ('456', '1');
@@ -199,18 +201,6 @@ INSERT INTO `mock_project`.`productimage` (`path_image`, `product_id`) VALUES ('
 
 INSERT INTO `mock_project`.`productimage` (`path_image`, `product_id`) VALUES ('246', '2');
 INSERT INTO `mock_project`.`productimage` (`path_image`, `product_id`) VALUES ('357', '2');
-
-
-UPDATE `mock_project`.`product` SET `path_image` = 'iphone-8-plus-hh-600x600-600x600.jpg' WHERE (`product_id` = '3');
-UPDATE `mock_project`.`product` SET `path_image` = 'iphone-11-den-600x600.jpg' WHERE (`product_id` = '1');
-UPDATE `mock_project`.`product` SET `path_image` = 'iphone-xr-hopmoi-den-600x600-2-600x600.jpg' WHERE (`product_id` = '2');
-UPDATE `mock_project`.`product` SET `path_image` = 'oppo-a74-blue-9-600x600.jpg' WHERE (`product_id` = '10');
-UPDATE `mock_project`.`product` SET `path_image` = 'oppo-reno6-5g-aurora-600x600.jpg' WHERE (`product_id` = '9');
-UPDATE `mock_project`.`product` SET `path_image` = 'redmi-10-white-600x600.jpg' WHERE (`product_id` = '4');
-UPDATE `mock_project`.`product` SET `path_image` = 'samsung-galaxy-s10-plus-128gb-bac-da-sac-600x600.jpg' WHERE (`product_id` = '8');
-UPDATE `mock_project`.`product` SET `path_image` = 'samsung-galaxy-z-fold-3-green-1-600x600.jpg' WHERE (`product_id` = '7');
-UPDATE `mock_project`.`product` SET `path_image` = 'vivo-1606-y53-hh-600x600.jpg' WHERE (`product_id` = '6');
-UPDATE `mock_project`.`product` SET `path_image` = 'xiaomi-mi-11-xanhduong-600x600-600x600.jpg' WHERE (`product_id` = '5');									
 INSERT INTO `mock_project`.`product` (`product_name`, 		`price`, 	`productRam_id`, `productMemory_id`, `productBrand_id`, `category`, 	`quantity`) 
 VALUES 								('Iphone 11 ', 			'15000000', 		'5', 				'5', 				'1', 		'Phone', 		'50'),
 									('Iphone XR',			'12490000', 		'4', 				'4', 				'1', 		'Phone', 		'50'),			
@@ -650,4 +640,4 @@ UPDATE `mock_project`.`product` SET `path_image` = 'https://cdn.tgdd.vn/Products
 UPDATE `mock_project`.`product` SET `path_image` = 'https://cdn.tgdd.vn/Products/Images/42/236186/oppo-reno6-5g-aurora-600x600.jpg' WHERE (`product_id` = '19');
 UPDATE `mock_project`.`product` SET `path_image` = 'https://cdn.tgdd.vn/Products/Images/42/236186/oppo-reno6-5g-aurora-600x600.jpg' WHERE (`product_id` = '29');
 UPDATE `mock_project`.`product` SET `path_image` = 'https://cdn.tgdd.vn/Products/Images/42/235653/oppo-a74-blue-9-600x600.jpg' WHERE (`product_id` = '20');
-UPDATE `mock_project`.`product` SET `path_image` = 'https://cdn.tgdd.vn/Products/Images/42/235653/oppo-a74-blue-9-600x600.jpg' WHERE (`product_id` = '30');									
+UPDATE `mock_project`.`product` SET `path_image` = 'https://cdn.tgdd.vn/Products/Images/42/235653/oppo-a74-blue-9-600x600.jpg' WHERE (`product_id` = '30');	

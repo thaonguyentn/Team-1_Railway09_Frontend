@@ -25,6 +25,7 @@ class App extends Component {
     this.props.setlogin(false);
     console.log("kkkkkk");
     localStorage.removeItem("role");
+    localStorage.removeItem("token");
     localStorage.removeItem("user_login");
     localStorage.removeItem("user_login_infor");
     this.props.setcart(null);
@@ -211,6 +212,19 @@ class App extends Component {
                   style={{ color: "white", margin: "7px" }}
                 ></i>
                 <span style={{ color: "white", margin: "7px" }}>Giỏ hàng</span>
+                <span
+                  style={{
+                    color: "white",
+                    position: "relative",
+                    left: "10px",
+                    bottom: "10px",
+                    backgroundColor: "blue",
+                    paddingInline: "6px",
+                    borderRadius: "50%",
+                  }}
+                >
+                  {this.props.cart ? this.props.cart.quantity : ""}
+                </span>
               </NavLink>
             </div>
           </div>
@@ -280,6 +294,7 @@ const mapStateToProps = (state) => {
   console.log("accountUpdate", state);
   return {
     isLogin: state.loginreducer.isLogin,
+    cart: state.cart.cart,
   };
 };
 const mapDispatchToProps = (dispatch) => {

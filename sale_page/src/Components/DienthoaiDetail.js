@@ -2,9 +2,10 @@ import React, { Component } from "react";
 import { Redirect } from "react-router";
 import Axios from "axios";
 import axios from "axios";
-import { setproductimages } from "../Actions";
+import { setcart, setproductimages } from "../Actions";
 import { connect } from "react-redux";
 import slides from "./Carousel";
+import getcart from "../Reducers/Requestdata/getcart";
 class DienthoaiDetail extends Component {
   constructor(props) {
     super(props);
@@ -31,6 +32,9 @@ class DienthoaiDetail extends Component {
           accountId
       ).then((response) => {
         console.log(response);
+        getcart(accountId).then((response) =>
+          this.props.setcart(response.data)
+        );
       });
     }
   };
@@ -56,7 +60,7 @@ class DienthoaiDetail extends Component {
     console.log(this.props.images);
     let slideshow;
     if (this.props.images) {
-      slideshow = slides(this.props.images);
+      slideshow = slides(this.props.images, "800px");
       console.log(slideshow);
     } else {
       slideshow = "";
@@ -143,6 +147,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     setproductimages: (images) => {
       dispatch(setproductimages(images));
+    },
+    setcart: (cart) => {
+      dispatch(setcart(cart));
     },
   };
 };

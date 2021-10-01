@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-const slides = (images) => {
+const slides = (images, width) => {
   const arrowStyles = {
     position: "absolute",
     zIndex: 2,
@@ -23,7 +23,7 @@ const slides = (images) => {
     rows = "";
   }
   return (
-    <div style={{ width: "397px", float: "left", marginLeft: "2px" }}>
+    <div style={{ width: width, float: "left", marginLeft: "2px" }}>
       <Carousel
         emulateTouch={true}
         // showThumbs={false}

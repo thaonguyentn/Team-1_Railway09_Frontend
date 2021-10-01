@@ -188,7 +188,7 @@ class Admin extends Component {
                       : { display: "none" }
                   }
                 >
-                  <div>{slides(row.listimage)}</div>
+                  <div>{slides(row.listimage, "400px")}</div>
                 </div>
               </div>
             </td>
