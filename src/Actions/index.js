@@ -18,6 +18,7 @@ export const SETMEMORYFILTER = "SETMEMORYFILTER";
 export const SETORDER = "SETORDER";
 export const SETPRODUCT_IMAGE = "SETPRODUCT_IMAGE";
 export const SET_SORT = "SET_SORT";
+export const SET_ALL_ORDER = "SET_ALL_ORDER";
 export const setopenlogin = (data) => {
   return {
     type: SET_ISOPEN_LOGIN,
@@ -110,6 +111,12 @@ export const setorder = (data, kind) => {
     type: SETORDER,
     data: data,
     kind: kind,
+  };
+};
+export const setallorder = (data) => {
+  return {
+    type: SET_ALL_ORDER,
+    data: data,
   };
 };
 export const setproductimages = (images) => {

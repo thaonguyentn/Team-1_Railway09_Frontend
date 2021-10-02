@@ -5,6 +5,8 @@ import { setcart, setcartdetail, setorder } from "../Actions/index";
 import getcartdetail from "../Reducers/Requestdata/getcartdetail";
 import { addquantity, minusquantity } from "./Requestdata/changequantity";
 import getcartdetailbyid from "./Requestdata/getcartdetailbyid";
+import { NavLink } from "react-router-dom";
+
 class Giohang extends Component {
   format2 = (n) => {
     if (n === undefined) {
@@ -20,10 +22,10 @@ class Giohang extends Component {
       this.props.setorder(JSON.parse(event.target.value), "increament");
     }
     if (event.target.checked === false) {
-      this.props.setorder(JSON.parse(event.target.value), "decreament");
+      this.props.setorder(JSON.parse(event.target.value), "remove");
     }
   };
-  addquantiti = (id) => {
+  addquantiti = (id, ischeck) => {
     addquantity(id)
       .then(() => {
         getcart(this.props.accountid)
@@ -40,16 +42,25 @@ class Giohang extends Component {
       .then(() => {
         getcartdetailbyid(id).then((response) => {
           console.log("hhahaha", response);
-          this.props.setorder(response.data, "increament");
+          if (ischeck === true) {
+            this.props.setorder(response.data, "increament");
+          }
         });
       });
   };
-  minusquantity = (id, quantity) => {
+  minusquantity = (id, quantity, ischeck) => {
     if (quantity === 1) {
       if (
         window.confirm("Bạn có chắc muốn xoá sản phẩm khỏi giỏ hàng") === false
       ) {
         return;
+      } else {
+        getcartdetailbyid(id).then((response) => {
+          console.log("hhahaha", response);
+          if (ischeck === true) {
+            this.props.setorder(response.data, "remove");
+          }
+        });
       }
     }
 
@@ -63,6 +74,14 @@ class Giohang extends Component {
         getcartdetail(this.props.accountid).then((response) => {
           console.log(response);
           this.props.setcartdetail(response.data);
+        });
+      })
+      .then(() => {
+        getcartdetailbyid(id).then((response) => {
+          console.log("hhahaha", response);
+          if (ischeck === true) {
+            this.props.setorder(response.data, "decreament");
+          }
         });
       });
   };
@@ -113,24 +132,28 @@ class Giohang extends Component {
     if (this.props.cartdetail) {
       cartdetail = this.props.cartdetail.map((row, index) => {
         return (
-          <div>
-            <div
-              style={{
-                backgroundColor: "white",
-                width: "100px",
-                float: "left",
-              }}
-            ></div>
+          <div
+            style={{
+              backgroundColor: "white",
+              float: "left",
+            }}
+          >
             <div
               style={{
                 backgroundColor: "white",
                 width: "20px",
-                float: "left",
               }}
             >
               <input
                 type="checkbox"
-                // checked={true}
+                style={{ width: "20px", height: "20px" }}
+                checked={
+                  this.props.order
+                    ? this.props.order.findIndex(
+                        (element) => element.id === row.id
+                      ) !== -1
+                    : false
+                }
                 value={JSON.stringify(row)}
                 onChange={this.handleChange}
               />
@@ -144,11 +167,20 @@ class Giohang extends Component {
                 float: "left",
               }}
             >
-              <img
-                src={row.product.image}
-                alt=""
-                style={{ width: "140px", height: "auto" }}
-              />
+              <NavLink
+                to={{
+                  pathname: "/dienthoai/" + row.id,
+                  state: {
+                    id: row.id,
+                  },
+                }}
+              >
+                <img
+                  src={row.product.image}
+                  alt=""
+                  style={{ width: "140px", height: "auto" }}
+                />
+              </NavLink>
             </div>
             <div
               style={{
@@ -158,10 +190,10 @@ class Giohang extends Component {
                 float: "left",
               }}
             >
-              <p style={{ textAlign: "center" }}>
+              <p>
                 {row.product.name}({row.product.ram}/{row.product.memory})
               </p>
-              <p style={{ textAlign: "center", fontSize: "small" }}>
+              <p style={{ fontSize: "small" }}>
                 <span
                   style={{
                     textDecoration: "line-through",
@@ -173,7 +205,7 @@ class Giohang extends Component {
 
                 <span> -{row.product.discount}%</span>
               </p>
-              <p style={{ textAlign: "center", fontSize: "larger" }}>
+              <p style={{ fontSize: "larger" }}>
                 {this.format2(
                   Number(row.product.price) -
                     (Number(row.product.price) * Number(row.product.discount)) /
@@ -196,7 +228,15 @@ class Giohang extends Component {
                 <button
                   className="page-link"
                   onClick={() => {
-                    this.minusquantity(row.id, row.quantity);
+                    this.minusquantity(
+                      row.id,
+                      row.quantity,
+                      this.props.order
+                        ? this.props.order.findIndex(
+                            (element) => element.id === row.id
+                          ) !== -1
+                        : false
+                    );
                   }}
                 >
                   -
@@ -205,7 +245,14 @@ class Giohang extends Component {
                 <button
                   // className="page-link"
                   onClick={() => {
-                    this.addquantiti(row.id);
+                    this.addquantiti(
+                      row.id,
+                      this.props.order
+                        ? this.props.order.findIndex(
+                            (element) => element.id === row.id
+                          ) !== -1
+                        : false
+                    );
                   }}
                 >
                   +
@@ -228,20 +275,29 @@ class Giohang extends Component {
     }
     return (
       <div style={{ marginLeft: "100px" }}>
-        <h1>Giỏ hàng của bạn</h1>
+        <h1>
+          Giỏ hàng của bạn ({this.props.cart ? this.props.cart.quantity : "0"}{" "}
+          sản phẩm)
+        </h1>
         {cartdetail}
-        <div style={{ float: "left" }}>
-          <h4>Số lượng mặt hàng {quantity}</h4>
-          <h4>Tổng giá tiền {this.format2(totalprice)} đ</h4>
-        </div>
-        <div
-          style={{ float: "left", paddingLeft: "100px", marginBlock: "10px" }}
-        >
-          <button type="button" class="btn btn-success">
-            Đặt hàng
+        <br style={{ clear: "both" }} />
+        <div style={{}}>
+          <span style={{ fontSize: "20px" }}>
+            Tổng thanh toán ({quantity} sản phẩm) : {this.format2(totalprice)} đ
+          </span>
+          <button
+            style={{
+              paddingInline: "70px",
+              paddingBlock: "14px",
+              margin: "10px",
+              fontSize: "20px",
+            }}
+            type="button"
+            class="btn btn-danger"
+          >
+            Mua hàng
           </button>
         </div>
-        <br style={{ clear: "both" }} />
       </div>
     );
   }

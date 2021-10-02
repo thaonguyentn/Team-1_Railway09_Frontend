@@ -212,19 +212,22 @@ class App extends Component {
                   style={{ color: "white", margin: "7px" }}
                 ></i>
                 <span style={{ color: "white", margin: "7px" }}>Giỏ hàng</span>
-                <span
+                <div
                   style={{
                     color: "white",
-                    position: "relative",
-                    left: "10px",
-                    bottom: "10px",
+                    position: "absolute",
                     backgroundColor: "blue",
-                    paddingInline: "6px",
+                    width: "20px",
+                    height: "20px",
+                    textAlign: "center",
+                    // paddingInline: "6px",
+                    left: "90px",
+                    bottom: "20px",
                     borderRadius: "50%",
                   }}
                 >
                   {this.props.cart ? this.props.cart.quantity : ""}
-                </span>
+                </div>
               </NavLink>
             </div>
           </div>
@@ -278,7 +281,7 @@ class App extends Component {
             <Route path="/phukien" component={Phukien} exact />
             <Route path="/dienthoai/:ID" component={DienthoaiDetail} exact />
             <Route path="/giohang/" component={Giohang} />
-            <Route path="/profile" component={Profile} />
+            <Route path="/profile/" component={Profile} />
             <Route path="/activeUser" component={ActiveAccount} />
             <Route path="/login" component={Login} />
           </Switch>

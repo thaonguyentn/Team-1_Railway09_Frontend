@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import listaccount from "./Requestdata/getlistaccount";
 import getlistproduct from "./Requestdata/getlistproduct";
 import { connect } from "react-redux";
-import { setlistproduct } from "../Actions/index";
+import { setlistproduct, setallorder } from "../Actions/index";
+import { getallorder } from "../Reducers/Requestdata/getorder";
 import Axios from "axios";
 import slides from "./Carousel";
 import AddProduct from "./AddProduct";
@@ -72,6 +73,9 @@ class Admin extends Component {
     getlistproduct(1, "", "", "", "").then((response) => {
       console.log(response);
       this.props.getlistproduct(response.data);
+    });
+    getallorder().then((response) => {
+      this.props.setallorder(response.data);
     });
   }
   render() {
@@ -259,6 +263,18 @@ class Admin extends Component {
         <ul className="pagination" id="pagination"></ul>
       </nav>
     );
+    let rows3;
+    if (this.props.allorder) {
+      rows3 = this.props.allorder.map((row, index) => {
+        return (
+          <tr key={index}>
+            <td>{row.totalPrice}</td>
+            <td>{row.status}</td>
+            <td>{row.orderDate}</td>
+          </tr>
+        );
+      });
+    }
     return (
       <div>
         <h1 style={{ color: "red" }}>
@@ -324,6 +340,18 @@ class Admin extends Component {
           <tbody>{rows2}</tbody>
         </table>
         <div style={{ textAlign: "center" }}>{nav}</div>
+        <h1>Quản lý đơn hàng</h1>
+
+        <table class="table table-bordered table-hover">
+          <thead>
+            <tr>
+              <th>Tổng giá</th>
+              <th>Trạng thái</th>
+              <th>Ngày đặt hàng</th>
+            </tr>
+          </thead>
+          <tbody>{rows3}</tbody>
+        </table>
       </div>
     );
   }
@@ -333,13 +361,18 @@ const mapStateToProps = (state) => {
     totalpage: state.productreducer.totalPage,
     currenpage: state.productreducer.currenPage,
     listpro: state.productreducer.listproduct,
-    // search_key: state.listfilter.search_key,
+    totalpageorder: state.orderreducer.totalPage,
+    currenpageorder: state.orderreducer.currenPage,
+    allorder: state.orderreducer.allorder,
   };
 };
 const mapDispatchToProps = (dispath) => {
   return {
     getlistproduct: (list) => {
       dispath(setlistproduct(list));
+    },
+    setallorder: (allorder) => {
+      dispath(setallorder(allorder));
     },
   };
 };

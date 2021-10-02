@@ -81,41 +81,183 @@ class DienthoaiDetail extends Component {
           style={{
             marginLeft: "30px",
             backgroundColor: "white",
-            width: "350px",
+            width: "500px",
             float: "left",
           }}
         >
           <h3>Thông tin chi tiết sản phẩm :</h3>
-          <p style={{ fontSize: "20px" }}>Dung lượng Ram : {pr.ram}</p>
-          <p style={{ fontSize: "20px" }}>Bộ nhớ trong : {pr.memory}</p>
-          <p style={{ fontSize: "20px" }}>Hãng sản xuất : {pr.brand}</p>
-          {/* <p>
+          <p
+            style={{
+              fontSize: "20px",
+              backgroundColor: "bisque",
+              paddingBlock: "5px",
+              margin: 0,
+              position: "relative",
+            }}
+          >
+            Dung lượng Ram{" "}
+            <span style={{ position: "absolute", left: "170px" }}>
+              : {pr.ram}
+            </span>
+          </p>
+          <p
+            style={{
+              fontSize: "20px",
+              paddingBlock: "5px",
+              margin: 0,
+              position: "relative",
+            }}
+          >
+            Bộ nhớ trong
+            <span style={{ position: "absolute", left: "170px" }}>
+              : {pr.memory}
+            </span>
+          </p>
+          <p
+            style={{
+              fontSize: "20px",
+              backgroundColor: "bisque",
+              paddingBlock: "5px",
+              margin: 0,
+              position: "relative",
+            }}
+          >
+            Hãng sản xuất{" "}
             <span
               style={{
-                textDecoration: "line-through",
-                paddingRight: "5px",
+                position: "absolute",
+                left: "170px",
               }}
             >
-              {this.format2(pr.price)} đ{" "}
+              : {pr.brand}
             </span>
+          </p>
+          <p
+            style={{
+              fontSize: "20px",
+              paddingBlock: "5px",
+              margin: 0,
+              position: "relative",
+            }}
+          >
+            Camera
+            <span style={{ position: "absolute", left: "170px" }}>
+              : {pr.camera}
+            </span>
+          </p>
+          <p
+            style={{
+              fontSize: "20px",
+              backgroundColor: "bisque",
+              paddingBlock: "5px",
+              margin: 0,
+              position: "relative",
+            }}
+          >
+            Màu
+            <span style={{ position: "absolute", left: "170px" }}>
+              : {pr.color}
+            </span>
+          </p>
+          <p
+            style={{
+              fontSize: "20px",
+              paddingBlock: "5px",
+              margin: 0,
+              position: "relative",
+            }}
+          >
+            Kích cỡ màn hình{" "}
+            <span style={{ position: "absolute", left: "170px" }}>
+              : {pr.screenSize}
+            </span>
+          </p>
+          <p
+            style={{
+              fontSize: "20px",
+              backgroundColor: "bisque",
+              paddingBlock: "5px",
+              margin: 0,
+              position: "relative",
+            }}
+          >
+            Hệ điều hành{" "}
+            <span style={{ position: "absolute", left: "170px" }}>
+              : {pr.operatingSystem}
+            </span>
+          </p>
+          <p
+            style={{
+              fontSize: "20px",
+              paddingBlock: "5px",
+              margin: 0,
+              position: "relative",
+            }}
+          >
+            Dung lượng pin{" "}
+            <span style={{ position: "absolute", left: "170px" }}>
+              : {pr.battery}
+            </span>
+          </p>
+          <p
+            style={{
+              fontSize: "20px",
+              backgroundColor: "bisque",
+              paddingBlock: "5px",
+              margin: 0,
+              position: "relative",
+            }}
+          >
+            Chip xử lý{" "}
+            <span style={{ position: "absolute", left: "170px" }}>
+              : {pr.chip}
+            </span>
+          </p>
+          <p
+            style={{
+              fontSize: "20px",
+              paddingBlock: "5px",
+              margin: 0,
+              position: "relative",
+            }}
+          >
+            Loại sim hỗ trợ{" "}
+            <span style={{ position: "absolute", left: "170px" }}>
+              : {pr.sim}
+            </span>
+          </p>
 
-            <span> -{pr.discount}%</span>
-          </p> */}
-          {/* <p style={{ textAlign: "center", fontSize: "larger" }}>
-            {this.format2(
-              Number(pr.price) - (Number(pr.price) * Number(pr.discount)) / 100
-            )}{" "}
-            đ
-          </p> */}
-          <h4>còn lại : {pr.quantity}</h4>
-          <p style={{ fontSize: "25px" }}>
+          <p style={{ fontSize: "25px", position: "relative" }}>
             Giá khuyến mãi :{" "}
+            <span
+              style={{
+                color: "red",
+                position: "absolute",
+                bottom: "25px",
+                fontSize: "12px",
+              }}
+            >
+              <span
+                style={{
+                  textDecoration: "line-through",
+                  paddingRight: "5px",
+                }}
+              >
+                {this.format2(pr.price)} đ{" "}
+              </span>
+              <span> -{pr.discount}%</span>
+            </span>
             {this.format2(
               Number(pr.price) - (Number(pr.price) * Number(pr.discount)) / 100
             )}{" "}
             đ
           </p>
-          <button type="button" class="btn btn-warning">
+          <h4>Hàng có sẵn : {pr.quantity} sản phẩm</h4>
+          <button
+            type="button"
+            class="btn btn-warning"
+            style={{ marginRight: "20px" }}
+          >
             Mua ngay
           </button>
           <button
