@@ -7,6 +7,8 @@ import { getallorder } from "../Reducers/Requestdata/getorder";
 import Axios from "axios";
 import slides from "./Carousel";
 import AddProduct from "./AddProduct";
+import Addimageslide from "./AddImageSlide";
+import ReactModal from "react-modal";
 class Admin extends Component {
   constructor(props) {
     super(props);
@@ -15,6 +17,8 @@ class Admin extends Component {
       listproduct: [],
       prid: 0,
       isopenmodaladd: false,
+      isopenmodaladdslide: false,
+      isopenid: null,
     };
   }
   Next = () => {
@@ -168,33 +172,62 @@ class Admin extends Component {
             <td>{row.id}</td>
             <td>{row.name}</td>
             <td>{row.price}</td>
-            <td>{row.discount}</td>
+            <td>{row.discount}%</td>
             <td>{row.brand}</td>
             <td>{row.category}</td>
             <td>{row.description}</td>
             <td>{row.ram}</td>
             <td>{row.memory}</td>
-            <td>{row.image}</td>
+            <td>{row.camera}</td>
+            <td>{row.color}</td>
+            <td>{row.screenSize}</td>
+            <td>{row.operatingSystem}</td>
+            <td>{row.chip}</td>
+            <td>{row.battery} mAh</td>
+            <td>{row.sim}</td>
+            <td>
+              <button onClick={() => this.setState({ isopenid: row.id })}>
+                Xem
+              </button>
+              <ReactModal
+                style={{
+                  overlay: {},
+                  content: {
+                    width: "600px",
+                    margin: "auto",
+                  },
+                }}
+                isOpen={this.state.isopenid === row.id}
+                onRequestClose={() => this.setState({ isopenid: null })}
+              >
+                <img style={{ width: "535px" }} src={row.image} alt="" />
+              </ReactModal>
+            </td>
             <td>
               <button onClick={() => this.showimageslide(row.id)}>
-                {row.listimage.length}
+                {row.listimage ? row.listimage.length : 0}
               </button>
-              <div
+              <ReactModal
                 style={{
-                  position: "absolute",
+                  overlay: {},
+                  content: { width: "650px", margin: "auto", height: "auto" },
                 }}
+                isOpen={this.state.prid === row.id}
+                onRequestClose={() => this.setState({ prid: 0 })}
               >
-                <div
-                  className="showimage"
-                  style={
-                    this.state.prid === row.id
-                      ? { display: "inline-block" }
-                      : { display: "none" }
-                  }
-                >
-                  <div>{slides(row.listimage, "400px")}</div>
-                </div>
-              </div>
+                {slides(row.listimage, "600px")}
+              </ReactModal>
+              <button
+                onClick={() => this.setState({ isopenmodaladdslide: true })}
+              >
+                <span class="glyphicon glyphicon-plus"></span>
+              </button>
+              <Addimageslide
+                isopenmodaladdslide={this.state.isopenmodaladdslide}
+                setisopenmodaladdslide={(data) => {
+                  this.setState({ isopenmodaladdslide: data });
+                }}
+              />
             </td>
             <td>{row.quantity}</td>
             <td>{row.enter_date}</td>
@@ -322,19 +355,27 @@ class Admin extends Component {
         <table class="table table-bordered table-hover">
           <thead>
             <tr>
-              <th>id</th>
-              <th>name</th>
-              <th>price</th>
-              <th>discount</th>
-              <th>brand</th>
-              <th>category</th>
-              <th>description</th>
-              <th>ram</th>
-              <th>memory</th>
-              <th>image</th>
-              <th>imageslide</th>
-              <th>quantity</th>
-              <th>enter_date</th>
+              <th>Id</th>
+              <th>Tên sp</th>
+              <th>Giá</th>
+              <th>KM</th>
+              <th>Hãng</th>
+              <th>Loại</th>
+              <th>Mô tả</th>
+              <th>Ram</th>
+              <th>Bộ nhớ trong</th>
+              <th>Camera</th>
+              <th>Màu</th>
+              <th>KT màn hình</th>
+              <th>HĐH</th>
+              <th>Chip</th>
+              <th>Pin</th>
+              <th>Loại sim hỗ trợ</th>
+              <th>Avatar</th>
+              <th>SlideShow</th>
+              <th>Hàng trong kho</th>
+
+              <th>Ngày nhập hàng</th>
             </tr>
           </thead>
           <tbody>{rows2}</tbody>

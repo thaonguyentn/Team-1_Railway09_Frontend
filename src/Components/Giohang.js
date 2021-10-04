@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import getcart from "../Reducers/Requestdata/getcart";
-import { setcart, setcartdetail, setorder } from "../Actions/index";
+import { setcart, setcartdetail } from "../Actions/index";
 import getcartdetail from "../Reducers/Requestdata/getcartdetail";
 import { addquantity, minusquantity } from "./Requestdata/changequantity";
 import getcartdetailbyid from "./Requestdata/getcartdetailbyid";
 import { NavLink } from "react-router-dom";
-
+import changestatuscart from "./Requestdata/changestatuscart";
 class Giohang extends Component {
   format2 = (n) => {
     if (n === undefined) {
@@ -15,38 +15,30 @@ class Giohang extends Component {
     return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
   handleChange = (event) => {
-    console.log(JSON.parse(event.target.value));
-
+    console.log(JSON.parse(event.target.value).id);
+    let id = JSON.parse(event.target.value).id;
     console.log(event.target.checked);
-    if (event.target.checked === true) {
-      this.props.setorder(JSON.parse(event.target.value), "increament");
-    }
-    if (event.target.checked === false) {
-      this.props.setorder(JSON.parse(event.target.value), "remove");
-    }
+    changestatuscart(id).then((response) => {
+      console.log(response);
+      getcartdetail(this.props.accountid).then((response) => {
+        console.log("gggggg", response);
+        this.props.setcartdetail(response.data);
+      });
+    });
   };
   addquantiti = (id, ischeck) => {
-    addquantity(id)
-      .then(() => {
-        getcart(this.props.accountid)
-          .then((response) => {
-            this.props.setcart(response.data);
-          })
-          .then(() => {
-            getcartdetail(this.props.accountid).then((response) => {
-              console.log("gggggg", response);
-              this.props.setcartdetail(response.data);
-            });
+    addquantity(id).then(() => {
+      getcart(this.props.accountid)
+        .then((response) => {
+          this.props.setcart(response.data);
+        })
+        .then(() => {
+          getcartdetail(this.props.accountid).then((response) => {
+            console.log("gggggg", response);
+            this.props.setcartdetail(response.data);
           });
-      })
-      .then(() => {
-        getcartdetailbyid(id).then((response) => {
-          console.log("hhahaha", response);
-          if (ischeck === true) {
-            this.props.setorder(response.data, "increament");
-          }
         });
-      });
+    });
   };
   minusquantity = (id, quantity, ischeck) => {
     if (quantity === 1) {
@@ -75,14 +67,6 @@ class Giohang extends Component {
           console.log(response);
           this.props.setcartdetail(response.data);
         });
-      })
-      .then(() => {
-        getcartdetailbyid(id).then((response) => {
-          console.log("hhahaha", response);
-          if (ischeck === true) {
-            this.props.setorder(response.data, "decreament");
-          }
-        });
       });
   };
   componentDidMount() {
@@ -106,20 +90,21 @@ class Giohang extends Component {
   componentWillUnmount() {}
   render() {
     console.log(this.props.cart);
-    console.log(this.props.order);
     console.log(this.props.cartdetail);
     let totalprice = 0;
     let quantity = 0;
-    const list = this.props.order;
+    const list = this.props.cartdetail ? this.props.cartdetail : [];
     for (let index = 0; index < list.length; index++) {
-      quantity = quantity + list[index].quantity;
-      totalprice =
-        totalprice +
-        (Number(list[index].product.price) -
-          (Number(list[index].product.price) *
-            Number(list[index].product.discount)) /
-            100) *
-          Number(list[index].quantity);
+      if (list[index].status === "Order") {
+        quantity = quantity + list[index].quantity;
+        totalprice =
+          totalprice +
+          (Number(list[index].product.price) -
+            (Number(list[index].product.price) *
+              Number(list[index].product.discount)) /
+              100) *
+            Number(list[index].quantity);
+      }
     }
     if (this.props.isLogin === false) {
       return (
@@ -147,13 +132,7 @@ class Giohang extends Component {
               <input
                 type="checkbox"
                 style={{ width: "20px", height: "20px" }}
-                checked={
-                  this.props.order
-                    ? this.props.order.findIndex(
-                        (element) => element.id === row.id
-                      ) !== -1
-                    : false
-                }
+                checked={row.status === "Order"}
                 value={JSON.stringify(row)}
                 onChange={this.handleChange}
               />
@@ -267,6 +246,7 @@ class Giohang extends Component {
                 )}
                 đ
               </p>
+              <p>Trạng thái : {row.status}</p>
             </div>
             <hr style={{ clear: "both" }} />
           </div>
@@ -285,18 +265,28 @@ class Giohang extends Component {
           <span style={{ fontSize: "20px" }}>
             Tổng thanh toán ({quantity} sản phẩm) : {this.format2(totalprice)} đ
           </span>
-          <button
-            style={{
-              paddingInline: "70px",
-              paddingBlock: "14px",
-              margin: "10px",
-              fontSize: "20px",
+          <NavLink
+            exact
+            to={{
+              pathname: "/order",
+              state: {
+                listcart: this.props.cartdetail,
+              },
             }}
-            type="button"
-            class="btn btn-danger"
           >
-            Mua hàng
-          </button>
+            <button
+              style={{
+                paddingInline: "70px",
+                paddingBlock: "14px",
+                margin: "10px",
+                fontSize: "20px",
+              }}
+              type="button"
+              class="btn btn-danger"
+            >
+              Mua hàng
+            </button>
+          </NavLink>
         </div>
       </div>
     );
@@ -311,7 +301,6 @@ const mapStateToProps = (state) => {
     isLogin: state.loginreducer.isLogin,
     cart: state.cart.cart,
     cartdetail: state.cart.cartdetail,
-    order: state.orderreducer.order,
   };
 };
 const mapDispatchToProps = (dispatch) => {
@@ -321,9 +310,6 @@ const mapDispatchToProps = (dispatch) => {
     },
     setcartdetail: (cartdetail) => {
       dispatch(setcartdetail(cartdetail));
-    },
-    setorder: (a, b) => {
-      dispatch(setorder(a, b));
     },
   };
 };

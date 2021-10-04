@@ -15,7 +15,6 @@ export const SETMEMORY = "SETMEMORY";
 export const SETRAMFILTER = "SETRAMFILTER";
 export const SETBRANDFILTER = "SETBRANDFILTER";
 export const SETMEMORYFILTER = "SETMEMORYFILTER";
-export const SETORDER = "SETORDER";
 export const SETPRODUCT_IMAGE = "SETPRODUCT_IMAGE";
 export const SET_SORT = "SET_SORT";
 export const SET_ALL_ORDER = "SET_ALL_ORDER";
@@ -104,13 +103,6 @@ export const setmemoryfilter = (data) => {
   return {
     type: SETMEMORYFILTER,
     data: data,
-  };
-};
-export const setorder = (data, kind) => {
-  return {
-    type: SETORDER,
-    data: data,
-    kind: kind,
   };
 };
 export const setallorder = (data) => {

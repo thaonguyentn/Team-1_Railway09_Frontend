@@ -157,7 +157,6 @@ class Changeprofile extends Component {
               alt={"no image"}
             />
           </div>
-
           <div style={{ width: "80px", margin: "auto" }}>
             <label class="btn btn-default btn-file">
               Chọn ảnh{" "}

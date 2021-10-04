@@ -10,35 +10,6 @@ class AddProduct extends Component {
     };
   }
   render() {
-    let slide;
-    if (this.state.slide !== []) {
-      slide = this.state.slide.map((element, index) => {
-        return (
-          <span style={{ display: "inline-block" }}>
-            <img
-              src={element}
-              alt="no image"
-              style={{ width: "100px", margin: "3px" }}
-            />
-            <a
-              onClick={() => {
-                let list = this.state.slide;
-                let index = list.findIndex((row) => row === element);
-                if (index !== -1) {
-                  list.splice(index, 1);
-                  this.setState({
-                    slide: list,
-                  });
-                }
-              }}
-              style={{ position: "relative", bottom: "25px", right: "5px" }}
-            >
-              <span class="glyphicon glyphicon-remove-sign"></span>
-            </a>
-          </span>
-        );
-      });
-    }
     return (
       <>
         <Modal
@@ -48,8 +19,14 @@ class AddProduct extends Component {
             overlay: {
               background: "none",
             },
+            content: {
+              backgroundColor: "aquamarine",
+            },
           }}
         >
+          <div style={{ textAlign: "center" }}>
+            <h1>Thêm mới sản phẩm</h1>
+          </div>
           <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
             <h3>Chọn ảnh đại diện</h3>
             <input
@@ -66,7 +43,6 @@ class AddProduct extends Component {
             />
           </div>
           <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-            <h1>Thêm mới sản phẩm</h1>
             <p
               style={{
                 borderBottom: "1px solid",
@@ -76,9 +52,54 @@ class AddProduct extends Component {
             >
               <span>Tên sản phẩm :</span>
               <br />
-              <input style={{ border: "none", outline: "none" }} type="text" />
+              <input
+                style={{
+                  border: "none",
+                  outline: "none",
+                  width: "100%",
+                  backgroundColor: "aquamarine",
+                }}
+                type="text"
+              />
             </p>
+            <p
+              style={{
+                borderBottom: "1px solid",
 
+                marginBottom: "10px",
+              }}
+            >
+              <span>Hãng :</span>
+              <br />
+              <input
+                style={{
+                  border: "none",
+                  outline: "none",
+                  width: "100%",
+                  backgroundColor: "aquamarine",
+                }}
+                type="text"
+              />
+            </p>
+            <p
+              style={{
+                borderBottom: "1px solid",
+
+                marginBottom: "10px",
+              }}
+            >
+              <span>Mô tả :</span>
+              <br />
+              <input
+                style={{
+                  border: "none",
+                  outline: "none",
+                  width: "100%",
+                  backgroundColor: "aquamarine",
+                }}
+                type="text"
+              />
+            </p>
             <p
               style={{
                 borderBottom: "1px solid",
@@ -89,7 +110,12 @@ class AddProduct extends Component {
               <span>Giá bán trước khuyễn mãi :</span>
               <br />
               <input
-                style={{ border: "none", outline: "none" }}
+                style={{
+                  border: "none",
+                  outline: "none",
+                  width: "100%",
+                  backgroundColor: "aquamarine",
+                }}
                 type="number"
               />
             </p>
@@ -103,7 +129,12 @@ class AddProduct extends Component {
               <span>Tỉ lệ giảm giá :</span>
               <br />
               <input
-                style={{ border: "none", outline: "none" }}
+                style={{
+                  border: "none",
+                  outline: "none",
+                  width: "100%",
+                  backgroundColor: "aquamarine",
+                }}
                 type="number"
               />
             </p>
@@ -117,7 +148,12 @@ class AddProduct extends Component {
               <span>Giá bán sau khuyến mãi :</span>
               <br />
               <input
-                style={{ border: "none", outline: "none" }}
+                style={{
+                  border: "none",
+                  outline: "none",
+                  width: "100%",
+                  backgroundColor: "aquamarine",
+                }}
                 type="number"
               />
             </p>
@@ -130,7 +166,12 @@ class AddProduct extends Component {
               <span>Số lượng mặt hàng trong kho :</span>
               <br />
               <input
-                style={{ border: "none", outline: "none" }}
+                style={{
+                  border: "none",
+                  outline: "none",
+                  width: "100%",
+                  backgroundColor: "aquamarine",
+                }}
                 type="number"
               />
             </p>
@@ -143,7 +184,14 @@ class AddProduct extends Component {
             >
               <span>Ram :</span>
               <br />
-              <select style={{ border: "none", outline: "none" }}>
+              <select
+                style={{
+                  border: "none",
+                  outline: "none",
+                  width: "100%",
+                  backgroundColor: "aquamarine",
+                }}
+              >
                 <option value="" key="">
                   --Select--
                 </option>
@@ -156,6 +204,9 @@ class AddProduct extends Component {
               </select>
               {/* <input style={{ border: "none", outline: "none" }} type="text" /> */}
             </p>
+          </div>
+
+          <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
             <p
               style={{
                 borderBottom: "1px solid",
@@ -165,7 +216,14 @@ class AddProduct extends Component {
             >
               <span>Bộ nhớ trong :</span>
               <br />
-              <select style={{ border: "none", outline: "none" }}>
+              <select
+                style={{
+                  border: "none",
+                  outline: "none",
+                  width: "100%",
+                  backgroundColor: "aquamarine",
+                }}
+              >
                 <option value="" key="">
                   --Select--
                 </option>
@@ -186,7 +244,15 @@ class AddProduct extends Component {
             >
               <span>Camera trước,sau :</span>
               <br />
-              <input style={{ border: "none", outline: "none" }} type="text" />
+              <input
+                style={{
+                  border: "none",
+                  outline: "none",
+                  width: "100%",
+                  backgroundColor: "aquamarine",
+                }}
+                type="text"
+              />
             </p>
             <p
               style={{
@@ -197,7 +263,15 @@ class AddProduct extends Component {
             >
               <span>Màu :</span>
               <br />
-              <input style={{ border: "none", outline: "none" }} type="text" />
+              <input
+                style={{
+                  border: "none",
+                  outline: "none",
+                  width: "100%",
+                  backgroundColor: "aquamarine",
+                }}
+                type="text"
+              />
             </p>
             <p
               style={{
@@ -208,7 +282,15 @@ class AddProduct extends Component {
             >
               <span>Kích thước màn hình :</span>
               <br />
-              <input style={{ border: "none", outline: "none" }} type="text" />
+              <input
+                style={{
+                  border: "none",
+                  outline: "none",
+                  width: "100%",
+                  backgroundColor: "aquamarine",
+                }}
+                type="text"
+              />
             </p>
             <p
               style={{
@@ -219,7 +301,14 @@ class AddProduct extends Component {
             >
               <span>Hệ điều hành :</span>
               <br />
-              <select style={{ border: "none", outline: "none" }}>
+              <select
+                style={{
+                  border: "none",
+                  outline: "none",
+                  width: "100%",
+                  backgroundColor: "aquamarine",
+                }}
+              >
                 <option value="" key="">
                   --Select--
                 </option>
@@ -239,7 +328,15 @@ class AddProduct extends Component {
             >
               <span>Chip :</span>
               <br />
-              <input style={{ border: "none", outline: "none" }} type="text" />
+              <input
+                style={{
+                  border: "none",
+                  outline: "none",
+                  width: "100%",
+                  backgroundColor: "aquamarine",
+                }}
+                type="text"
+              />
             </p>
             <p
               style={{
@@ -250,7 +347,12 @@ class AddProduct extends Component {
               <span>Dung lượng pin :</span>
               <br />
               <input
-                style={{ border: "none", outline: "none" }}
+                style={{
+                  border: "none",
+                  outline: "none",
+                  width: "100%",
+                  backgroundColor: "aquamarine",
+                }}
                 type="number"
               />{" "}
               <span>mAh</span>
@@ -263,7 +365,14 @@ class AddProduct extends Component {
             >
               <span>Loại SIM được hỗ trợ :</span>
               <br />
-              <select style={{ border: "none", outline: "none" }}>
+              <select
+                style={{
+                  border: "none",
+                  outline: "none",
+                  width: "100%",
+                  backgroundColor: "aquamarine",
+                }}
+              >
                 <option value="" key="">
                   --Select--
                 </option>
@@ -281,38 +390,6 @@ class AddProduct extends Component {
                 </option>
               </select>
             </p>
-          </div>
-          <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-            <h3>Chọn ảnh SlideShow</h3>
-            <input
-              value={this.state.imageslide}
-              type="text"
-              onChange={(event) => {
-                this.setState({
-                  imageslide: event.target.value,
-                });
-              }}
-            />
-            <button
-              onClick={() => {
-                let list = this.state.slide;
-                list.push(this.state.imageslide);
-                this.setState({
-                  slide: list,
-                  imageslide: "",
-                });
-              }}
-            >
-              add
-            </button>
-            <br />
-            <img
-              style={{ width: "400px" }}
-              src={this.state.imageslide}
-              alt="no image"
-            />
-            <hr />
-            {slide}
           </div>
         </Modal>
       </>

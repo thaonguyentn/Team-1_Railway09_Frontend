@@ -16,6 +16,7 @@ import Banner from "./Components/Banner";
 import Profile from "./Components/Profile";
 import React from "react";
 import ActiveAccount from "./Components/ActiveAccount";
+import Order from "./Components/Order";
 class App extends Component {
   constructor(props) {
     super(props);
@@ -220,10 +221,10 @@ class App extends Component {
                     width: "20px",
                     height: "20px",
                     textAlign: "center",
-                    // paddingInline: "6px",
                     left: "90px",
                     bottom: "20px",
                     borderRadius: "50%",
+                    display: this.props.cart ? "" : "none",
                   }}
                 >
                   {this.props.cart ? this.props.cart.quantity : ""}
@@ -284,6 +285,7 @@ class App extends Component {
             <Route path="/profile/" component={Profile} />
             <Route path="/activeUser" component={ActiveAccount} />
             <Route path="/login" component={Login} />
+            <Route path="/order" component={Order} />
           </Switch>
         </header>
         <footer>
