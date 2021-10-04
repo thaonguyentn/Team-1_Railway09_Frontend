@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import ReactModal from "react-modal";
 import { getorder } from "../Reducers/Requestdata/getorder";
 class Orderuser extends Component {
   constructor(props) {
@@ -26,7 +27,7 @@ class Orderuser extends Component {
     if (this.state.listorder !== []) {
       order = this.state.listorder.map((row, index) => {
         return (
-          <div key={index} style={{ backgroundColor: "aqua" }}>
+          <div key={index} style={{ backgroundColor: "burlywood" }}>
             <div style={{ marginBlock: "20px" }}>
               <div
                 style={{
@@ -64,7 +65,8 @@ class Orderuser extends Component {
               >
                 <span>Ngày đặt hàng</span>
               </div>
-              {row.orderDate}
+              <a style={{ cursor: "pointer" }}> {row.orderDate}</a>
+              <ReactModal></ReactModal>
             </div>
           </div>
         );
@@ -82,7 +84,7 @@ class Orderuser extends Component {
           >
             <span>Tất cả</span>
           </div>
-          <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+          {/* <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
             <span>Chờ duyệt</span>
           </div>
           <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
@@ -93,7 +95,7 @@ class Orderuser extends Component {
           </div>
           <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
             <span>Đã huỷ</span>
-          </div>
+          </div> */}
         </div>
 
         {order}

@@ -84,6 +84,19 @@ class Changeprofile extends Component {
               marginRight: "25px",
             }}
           >
+            <span>Địa chỉ</span>
+          </div>
+          {state.account.address} <a style={{ cursor: "pointer" }}>Thay đổi</a>
+        </div>,
+        <div style={{ marginBottom: "20px" }}>
+          <div
+            style={{
+              width: "160px",
+              display: "inline-block",
+              textAlign: "right",
+              marginRight: "25px",
+            }}
+          >
             <span>Giới tính</span>
           </div>
 

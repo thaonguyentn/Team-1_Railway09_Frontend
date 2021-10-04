@@ -45,6 +45,7 @@ class Order extends Component {
     return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
   render() {
+    let user_login_infor = JSON.parse(localStorage.getItem("user_login_infor"));
     let list = this.props.location.state
       ? this.props.location.state.listcart
       : [];
@@ -147,6 +148,14 @@ class Order extends Component {
 
                 <hr class="mt-1" />
               </div>
+              <div class="row mt-3 mx-4">
+                <div class="col-12">
+                  <h3>
+                    Họ và Tên người nhận hàng :{" "}
+                    {user_login_infor ? user_login_infor.fullname : "no person"}
+                  </h3>
+                </div>
+              </div>
               <div class="col-12">
                 <div class="row mt-3 mx-4">
                   <div class="col-12">
@@ -206,7 +215,7 @@ class Order extends Component {
           </div>
         </section>
         <div style={{ marginLeft: "50px" }}>
-          <h2>Sản phẩm</h2>
+          <h2>Sản phẩm ({quantity} sản phẩm)</h2>
           {rows}
         </div>
 
