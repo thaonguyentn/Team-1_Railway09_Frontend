@@ -38,13 +38,8 @@ class App extends Component {
       localStorage.getItem("user_login_infor")
     );
     const user_login = JSON.parse(localStorage.getItem("user_login"));
-    const role = JSON.parse(localStorage.getItem("role"));
-    if (role) {
-      if (role === "Admin") {
-        return <div>nonono</div>;
-      }
-    }
 
+    const role = JSON.parse(localStorage.getItem("role"));
     console.log(this.props.isLogin);
     let loginelement;
     let registerelement;

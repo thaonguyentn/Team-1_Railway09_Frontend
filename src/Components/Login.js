@@ -42,7 +42,7 @@ class Login extends Component {
     if (this.state.user === "" || this.state.password === "") {
       return;
     }
-    Axios.post("http://localhost:8080/api/v1/login", body)
+    Axios.post("https://thegioicamtayapi.herokuapp.com/api/v1/login", body)
       .then(
         (response) => {
           this.props.setisopen(false);
