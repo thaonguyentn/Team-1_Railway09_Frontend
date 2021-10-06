@@ -1,12 +1,15 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import getcart from "../Reducers/Requestdata/getcart";
+import { getcart } from "../Requestdata/CallAPI";
 import { setcart, setcartdetail } from "../Actions/index";
-import getcartdetail from "../Reducers/Requestdata/getcartdetail";
-import { addquantity, minusquantity } from "./Requestdata/changequantity";
-import getcartdetailbyid from "./Requestdata/getcartdetailbyid";
+import {
+  getcartdetail,
+  getcartdetailbyid,
+  addquantity,
+  minusquantity,
+  changestatuscart,
+} from "../Requestdata/CallAPI";
 import { Link } from "react-router-dom";
-import changestatuscart from "./Requestdata/changestatuscart";
 class Giohang extends Component {
   format2 = (n) => {
     if (n === undefined) {

@@ -4,6 +4,7 @@ import { NavLink, Switch, Route, Redirect } from "react-router-dom";
 import Adress from "./Adress";
 import Changeprofile from "./ChangeProfile";
 import Orderuser from "./OrderUser";
+import Orderuserdetail from "./OrderUserDetail";
 class Profile extends Component {
   constructor(props) {
     super(props);
@@ -151,12 +152,18 @@ class Profile extends Component {
               class="col-xs-8 col-sm-8 col-md-8 col-lg-8"
               style={{
                 backgroundColor: "#e8e8e8",
+                minHeight: "500px",
               }}
             >
               <Switch>
-                <Route path="/profile/change" component={Changeprofile} />
-                <Route path="/profile/adress" component={Adress} />
-                <Route path="/profile/orderuser" component={Orderuser} />
+                <Route path="/profile/change" component={Changeprofile} exact />
+                <Route path="/profile/adress" component={Adress} exact />
+                <Route path="/profile/orderuser" component={Orderuser} exact />
+                <Route
+                  path="/profile/orderuser/detail"
+                  component={Orderuserdetail}
+                  exact
+                />
               </Switch>
             </div>
           </div>

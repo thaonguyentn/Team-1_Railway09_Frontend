@@ -1,6 +1,12 @@
 import React, { Component } from "react";
-import getlistaccount from "./Requestdata/getlistaccount";
-import getlistproduct from "./Requestdata/getlistproduct";
+import {
+  getlistproduct,
+  getlistaccount,
+  getallorder,
+  deleteproduct,
+  cancelorder,
+  updateorder,
+} from "../Requestdata/CallAPI";
 import { connect } from "react-redux";
 import {
   setlistproduct,
@@ -11,13 +17,10 @@ import {
   setprofile,
   setlistaccount,
 } from "../Actions/index";
-import { getallorder } from "../Reducers/Requestdata/getorder";
-import Axios from "axios";
 import slides from "./Carousel";
 import AddProduct from "./AddProduct";
 import Addimageslide from "./AddImageSlide";
 import ReactModal from "react-modal";
-import { Redirect } from "react-router";
 class Admin extends Component {
   constructor(props) {
     super(props);
@@ -26,7 +29,10 @@ class Admin extends Component {
       isopenmodaladd: false,
       isopenmodaladdslide: false,
       isopenid: null,
+      isopenmodaldeleteorder: false,
       isavtiveclass: 1,
+      why: "",
+      whyalert: "",
     };
   }
   logout = () => {
@@ -89,12 +95,7 @@ class Admin extends Component {
     }
   };
   DeleteProduct = (id) => {
-    let token = localStorage.getItem("token");
-    Axios.delete("http://localhost:8080/api/v2/products/" + id, {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    }).then(() => {
+    deleteproduct(id).then(() => {
       getlistproduct(1, "", "", "", "").then((response) => {
         console.log(response);
         this.props.getlistproduct(response.data);
@@ -111,6 +112,43 @@ class Admin extends Component {
         prid: id,
       });
     }
+  };
+  updateorder = (id, status) => {
+    if (
+      window.confirm(
+        status === "Not_Active"
+          ? "Xác nhận duyệt đơn hàng"
+          : status === "Active"
+          ? "Xác nhận đã giao hàng"
+          : status === "End"
+          ? "Đã giao"
+          : status === "Delete"
+          ? "Đã huỷ"
+          : ""
+      )
+    ) {
+      updateorder(id).then(() => {
+        getallorder().then((response) => {
+          this.props.setallorder(response.data);
+        });
+      });
+    }
+  };
+  cancelorder = (id) => {
+    if (this.state.why === "") {
+      this.setState({ whyalert: "* bạn chưa nhập lý do" });
+      return;
+    }
+    let body = { description: "Huỷ : " + this.state.why };
+    cancelorder(id, body).then(() => {
+      getallorder().then((response) => {
+        this.props.setallorder(response.data);
+        this.setState({ isopenmodaldeleteorder: false });
+      });
+    });
+  };
+  format2 = (n) => {
+    return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
   componentDidMount() {
     getlistaccount(1).then(
@@ -217,7 +255,10 @@ class Admin extends Component {
     }
     let Previosaccount;
     let Nextaccount;
-    if (this.props.currenpageaccount === 0) {
+    if (
+      this.props.currenpageaccount === 0 ||
+      this.props.currenpageaccount === undefined
+    ) {
       Previosaccount = "";
     } else {
       Previosaccount = (
@@ -226,7 +267,10 @@ class Admin extends Component {
         </button>
       );
     }
-    if (this.props.totalpageaccount === this.props.currenpageaccount + 1) {
+    if (
+      this.props.totalpageaccount === this.props.currenpageaccount + 1 ||
+      this.props.currenpageaccount === undefined
+    ) {
       Nextaccount = "";
     } else {
       Nextaccount = (
@@ -348,7 +392,10 @@ class Admin extends Component {
     }
     let Previosproduct;
     let Nextproduct;
-    if (this.props.currenpageproduct === 0) {
+    if (
+      this.props.currenpageproduct === 0 ||
+      this.props.currenpageproduct === undefined
+    ) {
       Previosproduct = "";
     } else {
       Previosproduct = (
@@ -357,7 +404,10 @@ class Admin extends Component {
         </button>
       );
     }
-    if (this.props.totalpageproduct === this.props.currenpageproduct + 1) {
+    if (
+      this.props.totalpageproduct === this.props.currenpageproduct + 1 ||
+      this.props.currenpageproduct === undefined
+    ) {
       Nextproduct = "";
     } else {
       Nextproduct = (
@@ -401,16 +451,121 @@ class Admin extends Component {
       rows3 = this.props.allorder.map((row, index) => {
         return (
           <tr key={index}>
-            <td>{row.totalPrice}</td>
-            <td>{row.status}</td>
+            <td>{row.orderID}</td>
+            <td>{row.fullname}</td>
+            <td>{row.address}</td>
+            <td>{row.phone}</td>
+            <td>{this.format2(row.totalPrice)} đ</td>
+            <td>
+              {row.status === "Not_Active"
+                ? "Chờ duyệt"
+                : row.status === "Active"
+                ? "Đang giao"
+                : row.status === "End"
+                ? "Đã giao"
+                : row.status === "Delete"
+                ? "Đã huỷ"
+                : ""}{" "}
+              <button
+                type="button"
+                class="btn btn-info"
+                onClick={() => this.updateorder(row.orderID, row.status)}
+                style={{
+                  display:
+                    row.status === "End"
+                      ? "none"
+                      : row.status === "Delete"
+                      ? "none"
+                      : "",
+                }}
+              >
+                {row.status === "Not_Active"
+                  ? "Duyệt đơn hàng"
+                  : row.status === "Active"
+                  ? "Hoàn tất đơn hàng"
+                  : ""}
+              </button>
+              <button
+                type="button"
+                class="btn btn-danger"
+                onClick={() => this.setState({ isopenmodaldeleteorder: true })}
+                style={{
+                  display:
+                    row.status === "End"
+                      ? "none"
+                      : row.status === "Delete"
+                      ? "none"
+                      : "",
+                }}
+              >
+                Huỷ đơn hàng
+              </button>
+            </td>
+
             <td>{row.orderDate}</td>
+            <td>
+              {row.description}
+
+              {/* <button
+                onClick={() => this.setState({ isopenmodaldeleteorder: true })}
+                style={{
+                  display:
+                    row.status === "End"
+                      ? "none"
+                      : row.status === "Delete"
+                      ? "none"
+                      : "",
+                }}
+              >
+                Huỷ đơn hàng
+              </button> */}
+              <ReactModal
+                isOpen={this.state.isopenmodaldeleteorder}
+                onRequestClose={() =>
+                  this.setState({ isopenmodaldeleteorder: false })
+                }
+                style={{
+                  overlay: { background: "none" },
+                  content: {
+                    backgroundColor: "orange",
+                    width: "500px",
+                    height: "300px",
+                    margin: "auto",
+                    textAlign: "center",
+                  },
+                }}
+              >
+                <h3>Hãy nhập lý do huỷ đơn hàng</h3>
+                <textarea
+                  name="why"
+                  value={this.state.why}
+                  onChange={(event) =>
+                    this.setState({ why: event.target.value, whyalert: "" })
+                  }
+                  cols="40"
+                  rows="5"
+                ></textarea>
+                <p style={{ color: "red" }}>{this.state.whyalert}</p>
+                <p>
+                  <button
+                    style={{ padding: "5px", backgroundColor: "red" }}
+                    onClick={() => this.cancelorder(row.orderID)}
+                  >
+                    Xác nhận huỷ
+                  </button>
+                </p>
+              </ReactModal>
+            </td>
           </tr>
         );
       });
     }
     let Previosorder;
     let Nextorder;
-    if (this.props.currenpageorder === 0) {
+    if (
+      this.props.currenpageorder === 0 ||
+      this.props.currenpageorder === undefined
+    ) {
       Previosorder = "";
     } else {
       Previosorder = (
@@ -419,7 +574,12 @@ class Admin extends Component {
         </button>
       );
     }
-    if (this.props.totalpageorder === this.props.currenpageorder + 1) {
+    console.log(this.props.totalpageorder);
+    if (
+      this.props.totalpageorder === this.props.currenpageorder + 1 ||
+      this.props.currenpageorder === undefined ||
+      this.props.totalpageorder === 0
+    ) {
       Nextproduct = "";
     } else {
       Nextorder = (
@@ -587,9 +747,14 @@ class Admin extends Component {
           <table className="table table-bordered table-hover">
             <thead>
               <tr>
+                <th>Id</th>
+                <th>Tên người nhận</th>
+                <th>Địa chỉ người nhận</th>
+                <th>SĐT người nhận</th>
                 <th>Tổng giá</th>
                 <th>Trạng thái</th>
                 <th>Ngày đặt hàng</th>
+                <th>Ghi chú</th>
               </tr>
             </thead>
             <tbody>{rows3}</tbody>

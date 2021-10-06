@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import ReactModal from "react-modal";
-import { getorder } from "../Reducers/Requestdata/getorder";
+import { NavLink, Switch, Route, Redirect } from "react-router-dom";
+import { getorder } from "../Requestdata/CallAPI";
 class Orderuser extends Component {
   constructor(props) {
     super(props);
@@ -8,6 +9,9 @@ class Orderuser extends Component {
       listorder: [],
     };
   }
+  format2 = (n) => {
+    return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  };
   componentDidMount() {
     const user_login_infor = JSON.parse(
       localStorage.getItem("user_login_infor")
@@ -39,7 +43,7 @@ class Orderuser extends Component {
               >
                 <span>Tổng giá tiền</span>
               </div>
-              {row.totalPrice}
+              {this.format2(row.totalPrice)} đ
             </div>
             <div style={{ marginBottom: "20px" }}>
               <div
@@ -52,7 +56,15 @@ class Orderuser extends Component {
               >
                 <span>Trạng thái</span>
               </div>
-              {row.status}
+              {row.status === "Not_Active"
+                ? "Chờ duyệt"
+                : row.status === "Active"
+                ? "Đang giao"
+                : row.status === "End"
+                ? "Đã giao"
+                : row.status === "Delete"
+                ? "Đã huỷ"
+                : ""}
             </div>
             <div style={{ marginBottom: "20px" }}>
               <div
@@ -65,7 +77,15 @@ class Orderuser extends Component {
               >
                 <span>Ngày đặt hàng</span>
               </div>
-              <a style={{ cursor: "pointer" }}> {row.orderDate}</a>
+              <NavLink
+                to={{
+                  pathname: "/profile/orderuser/detail",
+                  state: { order: row },
+                }}
+              >
+                {row.orderDate}
+              </NavLink>
+              {/* <a style={{ cursor: "pointer" }}> </a> */}
               <ReactModal></ReactModal>
             </div>
           </div>

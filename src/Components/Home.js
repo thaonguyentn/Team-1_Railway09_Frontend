@@ -1,8 +1,5 @@
 import React, { Component } from "react";
-import Axios from "axios";
-import { NavLink, Switch, Route } from "react-router-dom";
-import DienthoaiDetail from "./DienthoaiDetail";
-import getlistproduct from "./Requestdata/getlistproduct";
+import { NavLink } from "react-router-dom";
 import {
   setlistproduct,
   setlogin,
@@ -10,7 +7,7 @@ import {
   setsort,
 } from "../Actions/index";
 import { connect } from "react-redux";
-import { getlistproductsort } from "./Requestdata/getproductorder";
+import { getlistproductsort } from "../Requestdata/CallAPI";
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -57,7 +54,7 @@ class Home extends Component {
     });
   }
   render() {
-    console.log(this.props.location);
+    console.log(this.props.listpro);
     if (this.props.location.state) {
       console.log(this.props.location.state.active);
       if (this.props.location.state.active === "activeed") {
@@ -72,17 +69,12 @@ class Home extends Component {
           <div
             id="sp"
             style={{
-              // margin: "30px",
               backgroundColor: "white",
               width: "260px",
               float: "left",
             }}
           >
             <NavLink
-              // to={"/dienthoai/" + row.id}
-              // exact
-              // {...row.id}
-              // style={{ backgroundColor: "blue" }}
               to={{
                 pathname: "/dienthoai/" + row.id,
                 state: {
@@ -124,7 +116,7 @@ class Home extends Component {
     }
     let Previos;
     let Next;
-    if (this.props.currenpage === 0) {
+    if (this.props.currenpage === 0 || this.props.currenpage === undefined) {
       Previos = "";
     } else {
       Previos = (
@@ -137,7 +129,10 @@ class Home extends Component {
         </button>
       );
     }
-    if (this.props.totalpage === this.props.currenpage + 1) {
+    if (
+      this.props.totalpage === this.props.currenpage + 1 ||
+      this.props.currenpage === undefined
+    ) {
       Next = "";
     } else {
       Next = (

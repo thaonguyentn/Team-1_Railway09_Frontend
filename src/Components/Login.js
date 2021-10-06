@@ -1,6 +1,6 @@
 import React, { Component, useState } from "react";
 import Modal from "react-modal";
-import Axios from "axios";
+import { getlogin, getprofile } from "../Requestdata/CallAPI";
 import { connect } from "react-redux";
 import {
   setcart,
@@ -9,9 +9,7 @@ import {
   setopenlogin,
   setprofile,
 } from "../Actions";
-import { Redirect } from "react-router-dom";
-import getcart from "../Reducers/Requestdata/getcart";
-import getcartdetail from "../Reducers/Requestdata/getcartdetail";
+import { getcart, getcartdetail } from "../Requestdata/CallAPI";
 Modal.setAppElement("#root");
 class Login extends Component {
   constructor(props) {
@@ -19,6 +17,7 @@ class Login extends Component {
     this.state = {
       erroruser: "",
       errorpassword: "",
+      errorlogin: "",
       user: "",
       password: "",
     };
@@ -42,7 +41,7 @@ class Login extends Component {
     if (this.state.user === "" || this.state.password === "") {
       return;
     }
-    Axios.post("http://localhost:8080/api/v1/login", body)
+    getlogin(body)
       .then(
         (response) => {
           this.props.setisopen(false);
@@ -61,12 +60,7 @@ class Login extends Component {
                 this.props.setcartdetail(response.data);
               });
             });
-          Axios.get(
-            "http://localhost:8080/api/v1/accounts/" + response.data.id,
-            {
-              auth: body,
-            }
-          ).then(
+          getprofile(response.data.id, body).then(
             (datalist) => {
               localStorage.setItem(
                 "user_login_infor",
@@ -82,6 +76,7 @@ class Login extends Component {
         },
         (error) => {
           console.log(error);
+          this.setState({ errorlogin: "Sai tài khoản hoặc mật khẩu !" });
         }
       )
       .then(() => {});
@@ -119,7 +114,7 @@ class Login extends Component {
               <label className="col-sm-10" for="email">
                 Tên đăng nhập:
               </label>
-              <div className="col-sm-10">
+              <div className="col-sm-12">
                 <input
                   required={true}
                   type="text"
@@ -145,7 +140,7 @@ class Login extends Component {
               <label className="col-sm-10" for="pwd">
                 Mật khẩu:
               </label>
-              <div className="col-sm-10">
+              <div className="col-sm-12">
                 <input
                   type="password"
                   className="form-control"
@@ -166,11 +161,14 @@ class Login extends Component {
               </div>
             </div>
             <div className="form-group">
-              <div className="col-sm-offset-2 col-sm-10"></div>
+              <div style={{ color: "red" }} className="col-sm-10">
+                {this.state.errorlogin}
+              </div>
             </div>
             <div className="form-group">
-              <div className="col-sm-10">
+              <div className="col-sm-12">
                 <button
+                  style={{ width: "100%" }}
                   type="button"
                   className="btn btn-success"
                   onClick={this.Login}
@@ -180,7 +178,7 @@ class Login extends Component {
               </div>
             </div>
           </form>
-          <div>
+          {/* <div>
             <span
               style={{
                 backgroundColor: "blue",
@@ -192,7 +190,7 @@ class Login extends Component {
               <i class="fa fa-facebook"></i>
             </span>
             <a href=""> Đăng nhập bằng facebook</a>
-          </div>
+          </div> */}
         </Modal>
       </div>
     );

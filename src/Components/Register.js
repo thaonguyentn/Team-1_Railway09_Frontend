@@ -1,6 +1,6 @@
-import Axios from "axios";
 import React, { useState } from "react";
 import Modal from "react-modal";
+import { register } from "../Requestdata/CallAPI";
 Modal.setAppElement("#root");
 function Register(props) {
   const [isopen, setisopen] = useState(false);
@@ -22,8 +22,17 @@ function Register(props) {
     if (username === "") {
       seterrorusername("* Không được để trống");
     }
+    if (fullname === "") {
+      seterrorfullname("* Không được để trống");
+    }
+    if (email === "") {
+      seterroremail("* Không được để trống");
+    }
+    if (password === "") {
+      seterrorpassword("* Không được để trống");
+    }
     console.log(body);
-    Axios.post("http://localhost:8080/api/v3/register", body)
+    register(body)
       .then((response) => {
         setisopen(false);
         alert(
@@ -35,9 +44,11 @@ function Register(props) {
       .catch((errors) => {
         if (errors.response) {
           console.log(errors.response.data.status);
+          let erroralert = "";
           errors.response.data.errors.forEach((element) => {
-            alert(element);
+            erroralert += element;
           });
+          alert(erroralert);
         }
       });
   };
@@ -65,14 +76,16 @@ function Register(props) {
             margin: "auto",
             height: "90%",
             color: "blue",
+            position: "relative",
           },
         }}
       >
         <h3>Đăng ký tài khoản</h3>
+        <div id="erroralert">error</div>
         <form className="form-horizontal">
           <div className="form-group">
             <label className="col-sm-3">Email</label>
-            <div className="col-sm-10">
+            <div className="col-sm-12">
               <input
                 type="email"
                 className="form-control"
@@ -80,9 +93,7 @@ function Register(props) {
                 placeholder="example@email.com"
                 name="email"
                 value={email}
-                style={{
-                  width: "225px",
-                }}
+                style={{ width: "100%" }}
                 onChange={(event) => {
                   if (event.target.value !== "") {
                     seterroremail("");
@@ -95,7 +106,7 @@ function Register(props) {
           </div>
           <div className="form-group">
             <label className="col-sm-10">Tên đăng nhập</label>
-            <div className="col-sm-10">
+            <div className="col-sm-12">
               <input
                 type="text"
                 className="form-control"
@@ -103,9 +114,7 @@ function Register(props) {
                 placeholder="Tên đăng nhập"
                 name="username"
                 value={username}
-                style={{
-                  width: "225px",
-                }}
+                style={{ width: "100%" }}
                 onChange={(event) => {
                   if (event.target.value !== "") {
                     seterrorusername("");
@@ -118,7 +127,7 @@ function Register(props) {
           </div>
           <div className="form-group">
             <label className="col-sm-10">Họ và Tên</label>
-            <div className="col-sm-10">
+            <div className="col-sm-12">
               <input
                 type="text"
                 className="form-control"
@@ -126,9 +135,7 @@ function Register(props) {
                 placeholder="Nhập Họ và Tên"
                 name="firstname"
                 value={fullname}
-                style={{
-                  width: "225px",
-                }}
+                style={{ width: "100%" }}
                 onChange={(event) => {
                   if (event.target.value !== "") {
                     seterrorfullname("");
@@ -139,26 +146,9 @@ function Register(props) {
               <p style={{ color: "red", position: "fixed" }}>{errorfullname}</p>
             </div>
           </div>
-          {/* <div className="form-group">
-            <label className="col-sm-10">Số điện thoại</label>
-            <div className="col-sm-10">
-              <input
-                type="text"
-                className="form-control"
-                id="Phone_ID"
-                placeholder="0123456789"
-                name="sdt"
-                value={phone}
-                style={{
-                  width: "225px",
-                }}
-                onChange={(event) => setphone(event.target.value)}
-              />
-            </div>
-          </div> */}
           <div className="form-group">
             <label className="col-sm-10">Mật khẩu</label>
-            <div className="col-sm-10">
+            <div className="col-sm-12">
               <input
                 type="password"
                 id="Password_ID"
@@ -166,9 +156,7 @@ function Register(props) {
                 placeholder="Nhập mật khẩu của bạn"
                 name="pwd"
                 value={password}
-                style={{
-                  width: "225px",
-                }}
+                style={{ width: "100%" }}
                 onChange={(event) => {
                   if (event.target.value !== "") {
                     seterrorpassword("");
@@ -182,6 +170,7 @@ function Register(props) {
           <div className="form-group">
             <div className="col-sm-12">
               <button
+                style={{ width: "100%", marginTop: "10px" }}
                 type="button"
                 className="btn btn-success"
                 onClick={handleRegister}
@@ -191,7 +180,7 @@ function Register(props) {
             </div>
           </div>
         </form>
-        <div style={{ marginBottom: "10px" }}>
+        {/* <div style={{ marginBottom: "10px" }}>
           <a href={null}>Đăng nhập</a>
         </div>
         <div>
@@ -206,7 +195,7 @@ function Register(props) {
             <i class="fa fa-facebook"></i>
           </span>
           <a href=""> Đăng ký bằng facebook</a>
-        </div>
+        </div> */}
       </Modal>
     </div>
   );

@@ -1,11 +1,9 @@
-import axios from "axios";
+import { createproduct } from "../Requestdata/CallAPI";
 import React, { Component } from "react";
 import Modal from "react-modal";
 import { connect } from "react-redux";
 import { setbrand, setmemory, setram } from "../Actions";
-import getbrand from "../Reducers/Requestdata/getbrand";
-import getmemory from "../Reducers/Requestdata/getmemory";
-import getram from "../Reducers/Requestdata/getram";
+import { getbrand, getmemory, getram } from "../Requestdata/CallAPI";
 class AddProduct extends Component {
   constructor(props) {
     super(props);
@@ -55,11 +53,9 @@ class AddProduct extends Component {
       discount: this.state.discount,
     };
     console.log(body);
-    axios
-      .post("http://localhost:8080/api/v2/products", body)
-      .then((response) => {
-        console.log(response);
-      });
+    createproduct(body).then((response) => {
+      console.log(response);
+    });
   };
   componentDidMount() {
     getbrand().then((response) => {

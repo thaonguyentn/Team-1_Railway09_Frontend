@@ -1,6 +1,6 @@
-import axios from "axios";
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
+import { activeaccount } from "../Requestdata/CallAPI";
 class ActiveAccount extends Component {
   constructor(props) {
     super(props);
@@ -10,15 +10,11 @@ class ActiveAccount extends Component {
   }
   componentDidMount() {
     setTimeout(() => {
-      axios
-        .get(
-          "http://localhost:8080/api/v3/register" +
-            this.props.location.pathname +
-            this.props.location.search
-        )
-        .then((response) => {
-          console.log(response);
-        });
+      activeaccount(
+        this.props.location.pathname + this.props.location.search
+      ).then((response) => {
+        console.log(response);
+      });
       this.setState({
         a: 5,
       });

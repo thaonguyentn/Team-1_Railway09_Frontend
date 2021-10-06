@@ -1,8 +1,7 @@
-import axios from "axios";
 import React, { Component } from "react";
 import ReactModal from "react-modal";
 import { Link } from "react-router-dom";
-
+import { createorder } from "../Requestdata/CallAPI";
 class Order extends Component {
   user_login_infor1 = JSON.parse(localStorage.getItem("user_login_infor"));
   constructor(props) {
@@ -48,13 +47,10 @@ class Order extends Component {
       this.setState({ isopenmodalalert: "true" });
       return;
     }
-    let user_login_infor = JSON.parse(localStorage.getItem("user_login_infor"));
-    axios
-      .post("http://localhost:8080/api/v5/orders/" + user_login_infor.id, body)
-      .then((response) => {
-        console.log(response);
-        alert(response.data);
-      });
+    createorder(body).then((response) => {
+      console.log(response);
+      alert(response.data);
+    });
   };
   format2 = (n) => {
     if (n === undefined) {
@@ -63,7 +59,6 @@ class Order extends Component {
     return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
   render() {
-    let user_login_infor = JSON.parse(localStorage.getItem("user_login_infor"));
     let list = this.props.location.state
       ? this.props.location.state.listcart
       : [];

@@ -1,10 +1,12 @@
 import React, { Component, memo } from "react";
 import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
-import getlistproduct from "./Requestdata/getlistproduct";
-import getram from "../Reducers/Requestdata/getram";
-import getbrand from "../Reducers/Requestdata/getbrand";
-import getmemory from "../Reducers/Requestdata/getmemory";
+import {
+  getbrand,
+  getmemory,
+  getram,
+  getlistproduct,
+} from "../Requestdata/CallAPI";
 import {
   setlistproduct,
   setbrand,

@@ -1,11 +1,8 @@
 import React, { Component } from "react";
-import { Redirect } from "react-router";
-import Axios from "axios";
-import axios from "axios";
 import { setcart, setproductimages } from "../Actions";
 import { connect } from "react-redux";
 import slides from "./Carousel";
-import getcart from "../Reducers/Requestdata/getcart";
+import { getcart, getproductbyid, addcartdetail } from "../Requestdata/CallAPI";
 class DienthoaiDetail extends Component {
   constructor(props) {
     super(props);
@@ -17,22 +14,15 @@ class DienthoaiDetail extends Component {
     return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
   addCartdetail = () => {
-    const id = this.props.location.state.id;
     const user_login_infor = JSON.parse(
       localStorage.getItem("user_login_infor")
     );
-    const user_login = JSON.parse(localStorage.getItem("user_login"));
     if (user_login_infor && this.state.product !== null && user_login_infor) {
-      let producid = this.state.product.id;
-      let accountId = user_login_infor.id;
-      Axios.post(
-        "http://localhost:8080/api/v4/cartdetail?productId=" +
-          producid +
-          "&accountId=" +
-          accountId
-      ).then((response) => {
+      let productid = this.state.product.id;
+      let accountid = user_login_infor.id;
+      addcartdetail(productid, accountid).then((response) => {
         console.log(response);
-        getcart(accountId).then((response) =>
+        getcart(accountid).then((response) =>
           this.props.setcart(response.data)
         );
       });
@@ -40,21 +30,13 @@ class DienthoaiDetail extends Component {
   };
   componentDidMount() {
     const id = this.props.location.state.id;
-    Axios.get("http://localhost:8080/api/v2/products/" + id)
-      .then((response) => {
-        console.log(response);
-        this.setState({
-          product: response.data,
-        });
-      })
-      .then(() => {
-        Axios.get(
-          "http://localhost:8080/api/v2/products/" + id + "/images"
-        ).then((response) => {
-          console.log(response.data);
-          this.props.setproductimages(response.data);
-        });
+    getproductbyid(id).then((response) => {
+      console.log(response);
+      this.setState({
+        product: response.data,
       });
+      this.props.setproductimages(response.data.listResponse);
+    });
   }
   render() {
     console.log(this.props.images);

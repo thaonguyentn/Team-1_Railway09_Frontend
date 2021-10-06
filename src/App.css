@@ -301,3 +301,7 @@ footer {
 .linoactive {
   opacity: 0.2;
 }
+#erroralert {
+  position: absolute;
+  right: 90%;
+}
