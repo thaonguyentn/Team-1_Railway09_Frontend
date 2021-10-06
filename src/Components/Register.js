@@ -23,7 +23,7 @@ function Register(props) {
       seterrorusername("* Không được để trống");
     }
     console.log(body);
-    Axios.post("https://thegioicamtayapi.herokuapp.com/api/v3/register", body)
+    Axios.post("http://localhost:8080/api/v3/register", body)
       .then((response) => {
         setisopen(false);
         alert(
@@ -33,7 +33,10 @@ function Register(props) {
         );
       })
       .catch((errors) => {
-        console.log(errors);
+        console.log(errors.response.data.status);
+        errors.response.data.errors.forEach((element) => {
+          alert(element);
+        });
       });
   };
   return (

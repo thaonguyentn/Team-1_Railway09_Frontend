@@ -40,6 +40,20 @@ class App extends Component {
     const user_login = JSON.parse(localStorage.getItem("user_login"));
 
     const role = JSON.parse(localStorage.getItem("role"));
+    if (role === "Admin") {
+      return (
+        <>
+          <Redirect
+            to={{
+              pathname: "/admin",
+            }}
+          ></Redirect>
+          <Switch>
+            <Route path="/admin" component={Admin} exact />
+          </Switch>
+        </>
+      );
+    }
     console.log(this.props.isLogin);
     let loginelement;
     let registerelement;
@@ -168,21 +182,16 @@ class App extends Component {
                 <span style={{ fontSize: "16px" }}>
                   <img
                     style={{
-                      width: "50px",
                       height: "38.5px",
                       borderRadius: "5px",
                       padding: "3px",
                     }}
-                    src={require("./Images/logo.jpg").default}
+                    src={require("./Images/logonew.jpg").default}
                     alt=""
                   />
                 </span>
               </NavLink>
             </div>
-            {/* <div id="xkm">
-              <p style={{ fontSize: "10px", margin: "0%" }}>Xem khuyến mãi</p>
-              <p style={{ fontSize: "10px" }}>Toàn quốc</p>
-            </div> */}
             <div id="search">
               <div id="searchinput">
                 <input placeholder="Bạn muốn tìm gì" />
@@ -234,7 +243,7 @@ class App extends Component {
             </div>
           </div>
 
-          <nav className="navbar navbar-default" role="navigation">
+          <nav className="navbar navbar-dark bg-primary" role="navigation">
             <div className="navbar-header">
               <button
                 type="button"
@@ -248,29 +257,32 @@ class App extends Component {
               </button>
               <span className="navbar-brand">Danh mục sản phẩm</span>
             </div>
-
             <div className="collapse navbar-collapse navbar-ex1-collapse">
-              <ul className="nav navbar-nav">
+              <ul className="nav navbar-nav" id="menusp">
                 <li>
                   <NavLink
                     activeStyle={{
-                      backgroundColor: "bisque",
+                      backgroundColor: "brown",
                     }}
                     exact
                     to="/dienthoai"
                   >
-                    <span style={{ fontSize: "16px" }}>Điện thoại</span>
+                    <span style={{ fontSize: "16px", color: "white" }}>
+                      Điện thoại
+                    </span>
                   </NavLink>
                 </li>
                 <li>
                   <NavLink
                     activeStyle={{
-                      backgroundColor: "bisque",
+                      backgroundColor: "brown",
                     }}
                     exact
                     to="/phukien"
                   >
-                    <span style={{ fontSize: "16px" }}>Phụ kiện</span>
+                    <span style={{ fontSize: "16px", color: "white" }}>
+                      Phụ kiện
+                    </span>
                   </NavLink>
                 </li>
               </ul>
@@ -278,7 +290,7 @@ class App extends Component {
           </nav>
           <Switch>
             <Route path="/" component={Home} exact />
-            <Route path="/admin" component={Admin} exact />
+
             <Route path="/dienthoai" component={Dienthoai} exact />
             <Route path="/phukien" component={Phukien} exact />
             <Route path="/dienthoai/:ID" component={DienthoaiDetail} exact />

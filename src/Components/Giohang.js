@@ -5,7 +5,7 @@ import { setcart, setcartdetail } from "../Actions/index";
 import getcartdetail from "../Reducers/Requestdata/getcartdetail";
 import { addquantity, minusquantity } from "./Requestdata/changequantity";
 import getcartdetailbyid from "./Requestdata/getcartdetailbyid";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import changestatuscart from "./Requestdata/changestatuscart";
 class Giohang extends Component {
   format2 = (n) => {
@@ -89,13 +89,13 @@ class Giohang extends Component {
   }
   componentWillUnmount() {}
   render() {
-    console.log(this.props.cart);
-    console.log(this.props.cartdetail);
+    let isorderempty = true;
     let totalprice = 0;
     let quantity = 0;
     const list = this.props.cartdetail ? this.props.cartdetail : [];
     for (let index = 0; index < list.length; index++) {
       if (list[index].status === "Order") {
+        isorderempty = false;
         quantity = quantity + list[index].quantity;
         totalprice =
           totalprice +
@@ -146,7 +146,7 @@ class Giohang extends Component {
                 float: "left",
               }}
             >
-              <NavLink
+              <Link
                 to={{
                   pathname: "/dienthoai/" + row.id,
                   state: {
@@ -159,7 +159,7 @@ class Giohang extends Component {
                   alt=""
                   style={{ width: "140px", height: "auto" }}
                 />
-              </NavLink>
+              </Link>
             </div>
             <div
               style={{
@@ -265,13 +265,19 @@ class Giohang extends Component {
           <span style={{ fontSize: "20px" }}>
             Tổng thanh toán ({quantity} sản phẩm) : {this.format2(totalprice)} đ
           </span>
-          <NavLink
+          <Link
             exact
             to={{
-              pathname: "/order",
+              pathname: isorderempty === false ? "/order" : "/giohang",
               state: {
                 listcart: this.props.cartdetail,
               },
+            }}
+            // style={{ display: "none" }}
+            onClick={() => {
+              if (isorderempty === true) {
+                alert("Bạn vui lòng chọn sản phẩm trước khi đặt hàng");
+              }
             }}
           >
             <button
@@ -286,7 +292,7 @@ class Giohang extends Component {
             >
               Mua hàng
             </button>
-          </NavLink>
+          </Link>
         </div>
       </div>
     );

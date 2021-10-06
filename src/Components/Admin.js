@@ -1,40 +1,90 @@
 import React, { Component } from "react";
-import listaccount from "./Requestdata/getlistaccount";
+import getlistaccount from "./Requestdata/getlistaccount";
 import getlistproduct from "./Requestdata/getlistproduct";
 import { connect } from "react-redux";
-import { setlistproduct, setallorder } from "../Actions/index";
+import {
+  setlistproduct,
+  setallorder,
+  setlogin,
+  setcart,
+  setcartdetail,
+  setprofile,
+  setlistaccount,
+} from "../Actions/index";
 import { getallorder } from "../Reducers/Requestdata/getorder";
 import Axios from "axios";
 import slides from "./Carousel";
 import AddProduct from "./AddProduct";
 import Addimageslide from "./AddImageSlide";
 import ReactModal from "react-modal";
+import { Redirect } from "react-router";
 class Admin extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      listaccount: [],
-      listproduct: [],
       prid: 0,
       isopenmodaladd: false,
       isopenmodaladdslide: false,
       isopenid: null,
+      isavtiveclass: 1,
     };
   }
-  Next = () => {
-    console.log(this.props.currenpage + 1);
-    if (this.props.totalpage !== this.props.currenpage + 1) {
-      getlistproduct(this.props.currenpage + 1 + 1, "", "", "", "").then(
+  logout = () => {
+    console.log("kkkkkk");
+    localStorage.removeItem("role");
+    localStorage.removeItem("token");
+    localStorage.removeItem("user_login");
+    localStorage.removeItem("user_login_infor");
+    this.props.setcart(null);
+    this.props.setcartdetail(null);
+    this.props.setprofile(null);
+    this.props.setlogin(false);
+  };
+  Nextproduct = () => {
+    console.log(this.props.currenpageproduct + 1);
+    if (this.props.totalpageproduct !== this.props.currenpageproduct + 1) {
+      getlistproduct(this.props.currenpageproduct + 1 + 1, "", "", "", "").then(
         (data) => {
           this.props.getlistproduct(data.data);
         }
       );
     }
   };
-  Previos = () => {
-    if (this.props.currenpage !== 0) {
-      getlistproduct(this.props.currenpage, "", "", "", "").then((data) => {
-        this.props.getlistproduct(data.data);
+  Previosproduct = () => {
+    if (this.props.currenpageproduct !== 0) {
+      getlistproduct(this.props.currenpageproduct, "", "", "", "").then(
+        (data) => {
+          this.props.getlistproduct(data.data);
+        }
+      );
+    }
+  };
+  Nextaccount = () => {
+    console.log(this.props.currenpageaccount + 1);
+    if (this.props.totalpageaccount !== this.props.currenpageaccount + 1) {
+      getlistaccount(this.props.currenpageproduct + 1 + 1).then((data) => {
+        this.props.setlistaccount(data.data);
+      });
+    }
+  };
+  Previosaccount = () => {
+    if (this.props.currenpageaccount !== 0) {
+      getlistaccount(this.props.currenpageaccount).then((data) => {
+        this.props.setlistaccount(data.data);
+      });
+    }
+  };
+  Nextorder = () => {
+    if (this.props.totalpageorder !== this.props.currenpageorder + 1) {
+      getallorder(this.props.currenpageorder + 1 + 1).then((data) => {
+        this.props.setallorder(data.data);
+      });
+    }
+  };
+  Previosorder = () => {
+    if (this.props.totalpageorder !== 0) {
+      getallorder(this.props.currenpageorder).then((data) => {
+        this.props.setallorder(data.data);
       });
     }
   };
@@ -63,12 +113,9 @@ class Admin extends Component {
     }
   };
   componentDidMount() {
-    listaccount.then(
+    getlistaccount(1).then(
       (response) => {
-        console.log(response);
-        this.setState({
-          listaccount: response.data.content,
-        });
+        this.props.setlistaccount(response.data);
       },
       (error) => {
         console.log(error);
@@ -82,10 +129,14 @@ class Admin extends Component {
       this.props.setallorder(response.data);
     });
   }
+  componentWillUnmount() {
+    console.log(this.props);
+    this.props.history.replace("/");
+  }
   render() {
     let rows;
-    if (this.state.listaccount !== []) {
-      rows = this.state.listaccount.map((row, index) => {
+    if (this.props.listaccount) {
+      rows = this.props.listaccount.map((row, index) => {
         return (
           <tr key="index">
             <td>
@@ -164,6 +215,55 @@ class Admin extends Component {
         );
       });
     }
+    let Previosaccount;
+    let Nextaccount;
+    if (this.props.currenpageaccount === 0) {
+      Previosaccount = "";
+    } else {
+      Previosaccount = (
+        <button className="page-link" onClick={this.Previosaccount}>
+          Previous
+        </button>
+      );
+    }
+    if (this.props.totalpageaccount === this.props.currenpageaccount + 1) {
+      Nextaccount = "";
+    } else {
+      Nextaccount = (
+        <button className="page-link" onClick={this.Nextaccount}>
+          Next
+        </button>
+      );
+    }
+    let pageaccount = [];
+    for (let index = 0; index < this.props.totalpageaccount; index++) {
+      let button = (
+        <button
+          className="page-link"
+          id={this.props.currenpageaccount === index ? "buttonpage" : "abc"}
+          onClick={() => {
+            getlistaccount(index + 1).then((data) => {
+              this.props.setlistaccount(data.data);
+            });
+          }}
+        >
+          {index + 1}
+        </button>
+      );
+      pageaccount.push(button);
+    }
+    let navaccount = (
+      <nav aria-label="Page navigation example">
+        <ul className="pagination">
+          <li className="page-item" id="show">
+            {Previosaccount}
+            {pageaccount}
+            {Nextaccount}
+          </li>
+        </ul>
+        <ul className="pagination" id="pagination"></ul>
+      </nav>
+    );
     let rows2;
     if (this.props.listpro) {
       rows2 = this.props.listpro.map((row, index) => {
@@ -205,7 +305,7 @@ class Admin extends Component {
             </td>
             <td>
               <button onClick={() => this.showimageslide(row.id)}>
-                {row.listimage ? row.listimage.length : 0}
+                {row.listResponse ? row.listResponse.length : 0}
               </button>
               <ReactModal
                 style={{
@@ -215,12 +315,12 @@ class Admin extends Component {
                 isOpen={this.state.prid === row.id}
                 onRequestClose={() => this.setState({ prid: 0 })}
               >
-                {slides(row.listimage, "600px")}
+                {slides(row.listResponse, "600px")}
               </ReactModal>
               <button
                 onClick={() => this.setState({ isopenmodaladdslide: true })}
               >
-                <span class="glyphicon glyphicon-plus"></span>
+                <span className="glyphicon glyphicon-plus"></span>
               </button>
               <Addimageslide
                 isopenmodaladdslide={this.state.isopenmodaladdslide}
@@ -234,7 +334,7 @@ class Admin extends Component {
             <td>
               <button
                 type="button"
-                class="btn btn-danger"
+                className="btn btn-danger"
                 onClick={() => {
                   this.DeleteProduct(row.id);
                 }}
@@ -246,32 +346,32 @@ class Admin extends Component {
         );
       });
     }
-    let Previos;
-    let Next;
-    if (this.props.currenpage === 0) {
-      Previos = "";
+    let Previosproduct;
+    let Nextproduct;
+    if (this.props.currenpageproduct === 0) {
+      Previosproduct = "";
     } else {
-      Previos = (
-        <button className="page-link" onClick={this.Previos}>
+      Previosproduct = (
+        <button className="page-link" onClick={this.Previosproduct}>
           Previous
         </button>
       );
     }
-    if (this.props.totalpage === this.props.currenpage + 1) {
-      Next = "";
+    if (this.props.totalpageproduct === this.props.currenpageproduct + 1) {
+      Nextproduct = "";
     } else {
-      Next = (
-        <button className="page-link" onClick={this.Next}>
+      Nextproduct = (
+        <button className="page-link" onClick={this.Nextproduct}>
           Next
         </button>
       );
     }
     let page = [];
-    for (let index = 0; index < this.props.totalpage; index++) {
+    for (let index = 0; index < this.props.totalpageproduct; index++) {
       let button = (
         <button
           className="page-link"
-          id={this.props.currenpage === index ? "buttonpage" : "abc"}
+          id={this.props.currenpageproduct === index ? "buttonpage" : "abc"}
           onClick={() => {
             console.log("1");
             getlistproduct(index + 1, "", "", "", "").then((data) => {
@@ -288,9 +388,9 @@ class Admin extends Component {
       <nav aria-label="Page navigation example">
         <ul className="pagination">
           <li className="page-item" id="show">
-            {Previos}
+            {Previosproduct}
             {page}
-            {Next}
+            {Nextproduct}
           </li>
         </ul>
         <ul className="pagination" id="pagination"></ul>
@@ -308,103 +408,211 @@ class Admin extends Component {
         );
       });
     }
+    let Previosorder;
+    let Nextorder;
+    if (this.props.currenpageorder === 0) {
+      Previosorder = "";
+    } else {
+      Previosorder = (
+        <button className="page-link" onClick={this.Previosorder}>
+          Previous
+        </button>
+      );
+    }
+    if (this.props.totalpageorder === this.props.currenpageorder + 1) {
+      Nextproduct = "";
+    } else {
+      Nextorder = (
+        <button className="page-link" onClick={this.Nextorder}>
+          Next
+        </button>
+      );
+    }
+    let pageorder = [];
+    for (let index = 0; index < this.props.totalpageorder; index++) {
+      let button = (
+        <button
+          className="page-link"
+          id={this.props.currenpageorder === index ? "buttonpage" : "abc"}
+          onClick={() => {
+            getallorder(index + 1).then((data) => {
+              this.props.setallorder(data.data);
+            });
+          }}
+        >
+          {index + 1}
+        </button>
+      );
+      pageorder.push(button);
+    }
+    let navorder = (
+      <nav aria-label="Page navigation example">
+        <ul className="pagination">
+          <li className="page-item" id="show">
+            {Previosorder}
+            {pageorder}
+            {Nextorder}
+          </li>
+        </ul>
+        <ul className="pagination" id="pagination"></ul>
+      </nav>
+    );
     return (
       <div>
-        <h1 style={{ color: "red" }}>
-          Warning! Đây là trang của Admin không phận sự miễn vào
-        </h1>
-        <h1>Quản lý Account</h1>
-
-        <table class="table table-bordered table-hover">
-          <thead>
-            <tr>
-              <th>id</th>
-              <th>username</th>
-              <th>email</th>
-              <th>fullname</th>
-              <th>gender</th>
-              <th>address</th>
-              <th>avatar</th>
-              <th>phone_number</th>
-              <th>register_date</th>
-              <th>Delete</th>
-            </tr>
-          </thead>
-          <tbody>{rows}</tbody>
-        </table>
-
-        <h1>Quản lý sản phẩm</h1>
-        <div style={{ fontSize: "30px", float: "right" }}>
+        <div style={{}}>
           <button
-            onClick={() => {
-              this.setState({ isopenmodaladd: true });
-            }}
+            style={{ width: "100%" }}
+            type="button"
+            className="btn btn-primary"
+            onClick={this.logout}
           >
-            <span class="glyphicon glyphicon-plus"></span>
-          </button>
-          <AddProduct
-            isopen={this.state.isopenmodaladd}
-            setisopenmodaladd={(data) =>
-              this.setState({ isopenmodaladd: data })
-            }
-          />
-          <button>
-            <span class="glyphicon glyphicon-trash"></span>
+            Đăng xuất
           </button>
         </div>
-        <table class="table table-bordered table-hover">
-          <thead>
-            <tr>
-              <th>Id</th>
-              <th>Tên sp</th>
-              <th>Giá</th>
-              <th>KM</th>
-              <th>Hãng</th>
-              <th>Loại</th>
-              <th>Mô tả</th>
-              <th>Ram</th>
-              <th>Bộ nhớ trong</th>
-              <th>Camera</th>
-              <th>Màu</th>
-              <th>KT màn hình</th>
-              <th>HĐH</th>
-              <th>Chip</th>
-              <th>Pin</th>
-              <th>Loại sim hỗ trợ</th>
-              <th>Avatar</th>
-              <th>SlideShow</th>
-              <th>Hàng trong kho</th>
+        <marquee direction="left">
+          <h1 style={{ color: "red" }}>
+            Warning! Đây là trang của Admin không phận sự miễn vào !
+          </h1>
+        </marquee>
+        <ul className="navadmin">
+          <li
+            className={
+              this.state.isavtiveclass === 1 ? "liactive" : "linoactive"
+            }
+          >
+            <a onClick={() => this.setState({ isavtiveclass: 1 })}>
+              <h1>Quản lý Account</h1>
+            </a>
+          </li>
+          <li
+            className={
+              this.state.isavtiveclass === 2 ? "liactive" : "linoactive"
+            }
+          >
+            <a onClick={() => this.setState({ isavtiveclass: 2 })}>
+              <h1>Quản lý sản phẩm</h1>
+            </a>
+          </li>
+          <li
+            className={
+              this.state.isavtiveclass === 3 ? "liactive" : "linoactive"
+            }
+          >
+            <a onClick={() => this.setState({ isavtiveclass: 3 })}>
+              <h1>Quản lý đơn hàng</h1>
+            </a>
+          </li>
+        </ul>
 
-              <th>Ngày nhập hàng</th>
-            </tr>
-          </thead>
-          <tbody>{rows2}</tbody>
-        </table>
-        <div style={{ textAlign: "center" }}>{nav}</div>
-        <h1>Quản lý đơn hàng</h1>
-
-        <table class="table table-bordered table-hover">
-          <thead>
-            <tr>
-              <th>Tổng giá</th>
-              <th>Trạng thái</th>
-              <th>Ngày đặt hàng</th>
-            </tr>
-          </thead>
-          <tbody>{rows3}</tbody>
-        </table>
+        <div
+          className={
+            this.state.isavtiveclass === 1 ? "navactive" : "navnoactive"
+          }
+        >
+          <table className="table table-bordered table-hover">
+            <thead>
+              <tr>
+                <th>Id</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Họ Tên</th>
+                <th>Giới tính</th>
+                <th>Địa chỉ</th>
+                <th>Avatar</th>
+                <th>SĐT</th>
+                <th>Ngày đăng Ký</th>
+                <th>Xoá</th>
+              </tr>
+            </thead>
+            <tbody>{rows}</tbody>
+          </table>
+          <div style={{ textAlign: "center" }}>{navaccount}</div>
+        </div>
+        <div
+          className={
+            this.state.isavtiveclass === 2 ? "navactive" : "navnoactive"
+          }
+        >
+          <div style={{ fontSize: "30px" }}>
+            <button
+              onClick={() => {
+                this.setState({ isopenmodaladd: true });
+              }}
+              style={{ backgroundColor: "aqua" }}
+            >
+              <span className="glyphicon glyphicon-plus"></span>{" "}
+              <span>Thêm Sản Phẩm Mới</span>
+            </button>
+            <AddProduct
+              isopen={this.state.isopenmodaladd}
+              setisopenmodaladd={(data) =>
+                this.setState({ isopenmodaladd: data })
+              }
+            />
+          </div>
+          <table className="table table-bordered table-hover">
+            <thead>
+              <tr>
+                <th>Id</th>
+                <th>Tên sp</th>
+                <th>Giá</th>
+                <th>KM</th>
+                <th>Hãng</th>
+                <th>Loại</th>
+                <th>Mô tả</th>
+                <th>Ram</th>
+                <th>Bộ nhớ trong</th>
+                <th>Camera</th>
+                <th>Màu</th>
+                <th>KT màn hình</th>
+                <th>HĐH</th>
+                <th>Chip</th>
+                <th>Pin</th>
+                <th>Loại sim hỗ trợ</th>
+                <th>Avatar</th>
+                <th>SlideShow</th>
+                <th>Hàng trong kho</th>
+                <th>Ngày nhập hàng</th>
+              </tr>
+            </thead>
+            <tbody>{rows2}</tbody>
+          </table>{" "}
+          <div style={{ textAlign: "center" }}>{nav}</div>
+        </div>
+        <div
+          className={
+            this.state.isavtiveclass === 3 ? "navactive" : "navnoactive"
+          }
+        >
+          <table className="table table-bordered table-hover">
+            <thead>
+              <tr>
+                <th>Tổng giá</th>
+                <th>Trạng thái</th>
+                <th>Ngày đặt hàng</th>
+              </tr>
+            </thead>
+            <tbody>{rows3}</tbody>
+          </table>
+          <div style={{ textAlign: "center" }}>{navorder}</div>
+        </div>
       </div>
     );
   }
 }
 const mapStateToProps = (state) => {
+  console.log(state);
   return {
-    totalpage: state.productreducer.totalPage,
-    currenpage: state.productreducer.currenPage,
+    totalpageproduct: state.productreducer.totalPage,
+    currenpageproduct: state.productreducer.currenPage,
     listpro: state.productreducer.listproduct,
     totalpageorder: state.orderreducer.totalPage,
     currenpageorder: state.orderreducer.currenPage,
     allorder: state.orderreducer.allorder,
+    islogin: state.loginreducer.isLogin,
+    totalpageaccount: state.accountreducer.totalPage,
+    currenpageaccount: state.accountreducer.currenPage,
+    listaccount: state.accountreducer.listaccount,
   };
 };
 const mapDispatchToProps = (dispath) => {
@@ -414,6 +622,21 @@ const mapDispatchToProps = (dispath) => {
     },
     setallorder: (allorder) => {
       dispath(setallorder(allorder));
+    },
+    setlogin: (islogin) => {
+      dispath(setlogin(islogin));
+    },
+    setcart: (cart) => {
+      dispath(setcart(cart));
+    },
+    setcartdetail: (cartdetail) => {
+      dispath(setcartdetail(cartdetail));
+    },
+    setprofile: (account) => {
+      dispath(setprofile(account));
+    },
+    setlistaccount: (data) => {
+      dispath(setlistaccount(data));
     },
   };
 };

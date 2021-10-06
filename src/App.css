@@ -103,6 +103,12 @@ footer {
   display: flex;
   background-color: rgb(141, 32, 13);
 }
+#menusp li :hover {
+  background: none;
+}
+#menusp li a:hover {
+  color: red;
+}
 @media only screen and (max-width: 1213px) {
   #xkm {
     display: none;
@@ -252,4 +258,46 @@ footer {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
+}
+.navadmin {
+  display: inline-flex;
+  list-style: none;
+  width: 100%;
+  padding-block: 10px;
+  background-color: aqua;
+}
+.navadmin li {
+  width: 33%;
+  text-align: center;
+}
+.navadmin li a {
+  text-decoration: none;
+  cursor: pointer;
+}
+.navadmin li:hover {
+  background-color: rgb(0, 255, 0);
+}
+.navadmin li a:active {
+  color: red;
+}
+.navactive {
+  animation-name: translateleft;
+  animation-duration: 0.3s;
+}
+.navnoactive {
+  display: none;
+}
+@keyframes translateleft {
+  0% {
+    transform: translate(0%, 100%);
+  }
+  100% {
+    transform: translate(0%, 0%);
+  }
+}
+.liactive {
+  background-color: rgb(0, 255, 0);
+}
+.linoactive {
+  opacity: 0.2;
 }

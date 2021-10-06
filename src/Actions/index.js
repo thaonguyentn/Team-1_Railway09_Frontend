@@ -18,6 +18,13 @@ export const SETMEMORYFILTER = "SETMEMORYFILTER";
 export const SETPRODUCT_IMAGE = "SETPRODUCT_IMAGE";
 export const SET_SORT = "SET_SORT";
 export const SET_ALL_ORDER = "SET_ALL_ORDER";
+export const SET_LIST_ACCOUNT = "SET_LIST_ACCOUNT";
+export const setlistaccount = (data) => {
+  return {
+    type: SET_LIST_ACCOUNT,
+    data: data,
+  };
+};
 export const setopenlogin = (data) => {
   return {
     type: SET_ISOPEN_LOGIN,

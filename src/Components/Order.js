@@ -1,8 +1,10 @@
 import axios from "axios";
 import React, { Component } from "react";
-import { NavLink } from "react-router-dom";
+import ReactModal from "react-modal";
+import { Link } from "react-router-dom";
 
 class Order extends Component {
+  user_login_infor1 = JSON.parse(localStorage.getItem("user_login_infor"));
   constructor(props) {
     super(props);
     this.state = {
@@ -11,6 +13,10 @@ class Order extends Component {
       villgage: "",
       home: "",
       phone: "",
+      fullname: this.user_login_infor1
+        ? this.user_login_infor1.fullname
+        : "no person",
+      isopenmodalalert: false,
     };
   }
   handleChange = (event) => {
@@ -21,6 +27,7 @@ class Order extends Component {
   buy = (quantity, totalprice) => {
     let body = {
       description: "",
+      fullname: this.state.fullname,
       quantity: quantity,
       totalPrice: totalprice,
       address:
@@ -30,6 +37,17 @@ class Order extends Component {
         this.state.province,
       phone: this.state.phone,
     };
+    if (
+      this.state.fullname === "" ||
+      this.state.phone === "" ||
+      this.state.home === "" ||
+      this.state.villgage === "" ||
+      this.state.district === "" ||
+      this.state.province === ""
+    ) {
+      this.setState({ isopenmodalalert: "true" });
+      return;
+    }
     let user_login_infor = JSON.parse(localStorage.getItem("user_login_infor"));
     axios
       .post("http://localhost:8080/api/v5/orders/" + user_login_infor.id, body)
@@ -66,23 +84,9 @@ class Order extends Component {
     let rows = list.map((row, index) => {
       if (row.status === "Order") {
         return (
-          <div
-            style={{
-              backgroundColor: "white",
-              float: "left",
-            }}
-          >
-            <div
-              id="sp"
-              style={{
-                // margin: "30px",
-                backgroundColor: "white",
-                width: "150px",
-                float: "left",
-                borderLeft: "1px solid gray",
-              }}
-            >
-              <NavLink
+          <tr key={index}>
+            <td>
+              <Link
                 to={{
                   pathname: "/dienthoai/" + row.id,
                   state: {
@@ -93,47 +97,31 @@ class Order extends Component {
                 <img
                   src={row.product.image}
                   alt=""
-                  style={{ width: "140px", height: "auto" }}
+                  style={{ width: "70px", height: "auto" }}
                 />
-              </NavLink>
-            </div>
-            <div
-              style={{
-                // margin: "30px",
-                backgroundColor: "white",
-                width: "200px",
-                float: "left",
-              }}
-            >
-              <p>
+              </Link>
+              <span>
                 {row.product.name}({row.product.ram}/{row.product.memory})
-              </p>
-
-              <p>
-                Đơn giá :
-                {this.format2(
-                  Number(row.product.price) -
-                    (Number(row.product.price) * Number(row.product.discount)) /
-                      100
-                )}
-                đ
-              </p>
-              <p>
-                Số lượng :{" "}
-                <span style={{ paddingInline: "5px" }}>{row.quantity}</span>
-              </p>
-              <p>
-                Thành tiền :
-                {this.format2(
-                  (Number(row.price) -
-                    (Number(row.price) * Number(row.product.discount)) / 100) *
-                    Number(row.quantity)
-                )}
-                đ
-              </p>
-            </div>
-            <hr style={{ clear: "both" }} />
-          </div>
+              </span>
+            </td>
+            <td>
+              {this.format2(
+                Number(row.product.price) -
+                  (Number(row.product.price) * Number(row.product.discount)) /
+                    100
+              )}
+              đ
+            </td>
+            <td>{row.quantity}</td>
+            <td>
+              {this.format2(
+                (Number(row.price) -
+                  (Number(row.price) * Number(row.product.discount)) / 100) *
+                  Number(row.quantity)
+              )}
+              đ
+            </td>
+          </tr>
         );
       }
     });
@@ -145,68 +133,144 @@ class Order extends Component {
             <div class="row">
               <div class="col-12">
                 <h2>Vui lòng nhập thông tin</h2>
-
                 <hr class="mt-1" />
               </div>
-              <div class="row mt-3 mx-4">
-                <div class="col-12">
-                  <h3>
-                    Họ và Tên người nhận hàng :{" "}
-                    {user_login_infor ? user_login_infor.fullname : "no person"}
-                  </h3>
-                </div>
-              </div>
+              <br />
               <div class="col-12">
                 <div class="row mt-3 mx-4">
-                  <div class="col-12">
+                  <div
+                    class="col-12"
+                    style={{ position: "relative", fontSize: "15px" }}
+                  >
                     <label class="order-form-label">
-                      Số điện thoại nhận hàng
+                      Họ và Tên người nhận hàng :
                     </label>
+                    <span style={{ position: "absolute", left: "300px" }}>
+                      <input
+                        class="order-form-input"
+                        name="fullname"
+                        value={this.state.fullname}
+                        onChange={this.handleChange}
+                      />
+                      <span
+                        style={{
+                          position: "relative",
+                          bottom: "5px",
+                          color: "red",
+                        }}
+                      >
+                        {" "}
+                        *
+                      </span>
+                    </span>
                   </div>
-                  <div class="col-12">
-                    <input
-                      class="order-form-input"
-                      placeholder="0123456789"
-                      name="phone"
-                      value={this.state.phone}
-                      onChange={this.handleChange}
-                    />
+                  <br />
+                  <div
+                    class="col-12"
+                    style={{ position: "relative", fontSize: "15px" }}
+                  >
+                    <label class="order-form-label">
+                      Số điện thoại nhận hàng :
+                    </label>
+                    <span style={{ position: "absolute", left: "300px" }}>
+                      <input
+                        class="order-form-input"
+                        placeholder="0123456789"
+                        name="phone"
+                        value={this.state.phone}
+                        onChange={this.handleChange}
+                      />
+                      <span
+                        style={{
+                          position: "relative",
+                          bottom: "5px",
+                          color: "red",
+                        }}
+                      >
+                        {" "}
+                        *
+                      </span>
+                    </span>
                   </div>
-                  <div class="col-12">
-                    <label class="order-form-label">Địa chỉ nhận hàng</label>
-                  </div>
-                  <div class="col-12">
-                    <input
-                      class="order-form-input"
-                      placeholder="Tỉnh / Thành phố"
-                      name="province"
-                      value={this.state.province}
-                      onChange={this.handleChange}
-                    />
-                    <input
-                      class="order-form-input"
-                      placeholder="Huyện"
-                      name="district"
-                      value={this.state.district}
-                      style={{ marginLeft: "20px" }}
-                      onChange={this.handleChange}
-                    />
-                    <input
-                      class="order-form-input"
-                      placeholder="Xã"
-                      name="villgage"
-                      value={this.state.villgage}
-                      style={{ marginLeft: "20px" }}
-                      onChange={this.handleChange}
-                    />
-                    <input
-                      class="order-form-input"
-                      placeholder="Tên đường / Thôn / Xóm"
-                      name="home"
-                      value={this.state.home}
-                      style={{ marginLeft: "20px" }}
-                      onChange={this.handleChange}
-                    />
+                  <br />
+                  <div
+                    class="col-12"
+                    style={{ position: "relative", fontSize: "15px" }}
+                  >
+                    <label class="order-form-label">Địa chỉ nhận hàng : </label>
+                    <span style={{ position: "absolute", left: "300px" }}>
+                      <input
+                        class="order-form-input"
+                        placeholder="Tỉnh / Thành phố"
+                        name="province"
+                        value={this.state.province}
+                        onChange={this.handleChange}
+                      />
+                      <span
+                        style={{
+                          position: "relative",
+                          bottom: "5px",
+                          color: "red",
+                        }}
+                      >
+                        {" "}
+                        *
+                      </span>
+                      <input
+                        class="order-form-input"
+                        placeholder="Huyện"
+                        name="district"
+                        value={this.state.district}
+                        style={{ marginLeft: "20px" }}
+                        onChange={this.handleChange}
+                      />
+                      <span
+                        style={{
+                          position: "relative",
+                          bottom: "5px",
+                          color: "red",
+                        }}
+                      >
+                        {" "}
+                        *
+                      </span>
+                      <input
+                        class="order-form-input"
+                        placeholder="Xã"
+                        name="villgage"
+                        value={this.state.villgage}
+                        style={{ marginLeft: "20px" }}
+                        onChange={this.handleChange}
+                      />
+                      <span
+                        style={{
+                          position: "relative",
+                          bottom: "5px",
+                          color: "red",
+                        }}
+                      >
+                        {" "}
+                        *
+                      </span>
+                      <input
+                        class="order-form-input"
+                        placeholder="Tên đường / Thôn / Xóm"
+                        name="home"
+                        value={this.state.home}
+                        style={{ marginLeft: "20px" }}
+                        onChange={this.handleChange}
+                      />
+                      <span
+                        style={{
+                          position: "relative",
+                          bottom: "5px",
+                          color: "red",
+                        }}
+                      >
+                        {" "}
+                        *
+                      </span>
+                    </span>
                   </div>
                 </div>
                 <hr />
@@ -214,9 +278,22 @@ class Order extends Component {
             </div>
           </div>
         </section>
-        <div style={{ marginLeft: "50px" }}>
+        <div style={{ marginLeft: "50px", fontSize: "17px" }}>
           <h2>Sản phẩm ({quantity} sản phẩm)</h2>
-          {rows}
+
+          <div class="table-responsive">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>Thông tin sản phẩm</th>
+                  <th>Đơn giá</th>
+                  <th>Số lượng</th>
+                  <th>Thành tiền</th>
+                </tr>
+              </thead>
+              <tbody>{rows}</tbody>
+            </table>
+          </div>
         </div>
 
         <hr style={{ clear: "both" }} />
@@ -261,6 +338,23 @@ class Order extends Component {
                 Đặt hàng
               </button>
             </span>
+            <ReactModal
+              isOpen={this.state.isopenmodalalert}
+              onRequestClose={() => this.setState({ isopenmodalalert: false })}
+              style={{
+                overlay: { background: "none" },
+                content: {
+                  width: "400px",
+                  height: "80px",
+                  margin: "auto",
+                  backgroundColor: "red",
+                  color: "white",
+                  fontSize: "17px",
+                },
+              }}
+            >
+              Bạn vui lòng kiểm tra lại thông tin nhận hàng !
+            </ReactModal>
           </p>
         </div>
       </div>

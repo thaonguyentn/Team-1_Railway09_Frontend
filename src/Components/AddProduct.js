@@ -1,13 +1,76 @@
+import axios from "axios";
 import React, { Component } from "react";
 import Modal from "react-modal";
+import { connect } from "react-redux";
+import { setbrand, setmemory, setram } from "../Actions";
+import getbrand from "../Reducers/Requestdata/getbrand";
+import getmemory from "../Reducers/Requestdata/getmemory";
+import getram from "../Reducers/Requestdata/getram";
 class AddProduct extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      avatar: "",
-      imageslide: "",
-      slide: [],
+      name: "",
+      description: "",
+      price: 0.0,
+      ram: "",
+      memory: "",
+      brand: "",
+      category: "",
+      quantity: 1,
+      camera: "",
+      color: "",
+      screenSize: "",
+      operatingSystem: "",
+      chip: "",
+      battery: "",
+      sim: "",
+      image: "",
+      discount: 0,
     };
+  }
+  handleChange = (event) => {
+    this.setState({
+      [event.target.name]: event.target.value,
+    });
+  };
+  saveProduct = () => {
+    let body = {
+      name: this.state.name,
+      description: this.state.description,
+      price: this.state.price,
+      ram: this.state.ram,
+      memory: this.state.memory,
+      brand: this.state.brand,
+      category: this.state.category,
+      quantity: this.state.quantity,
+      camera: this.state.camera,
+      color: this.state.color,
+      screenSize: this.state.screenSize,
+      operatingSystem: this.state.operatingSystem,
+      chip: this.state.chip,
+      battery: this.state.battery,
+      sim: this.state.sim,
+      image: this.state.image,
+      discount: this.state.discount,
+    };
+    console.log(body);
+    axios
+      .post("http://localhost:8080/api/v2/products", body)
+      .then((response) => {
+        console.log(response);
+      });
+  };
+  componentDidMount() {
+    getbrand().then((response) => {
+      this.props.setbrand(response.data);
+    });
+    getmemory().then((response) => {
+      this.props.setmemory(response.data);
+    });
+    getram().then((response) => {
+      this.props.setram(response.data);
+    });
   }
   render() {
     return (
@@ -31,14 +94,14 @@ class AddProduct extends Component {
             <h3>Chọn ảnh đại diện</h3>
             <input
               type="text"
-              onChange={(event) =>
-                this.setState({ avatar: event.target.value })
-              }
+              name="image"
+              value={this.state.image}
+              onChange={this.handleChange}
             />
             <hr />
             <img
               style={{ width: "200px" }}
-              src={this.state.avatar}
+              src={this.state.image}
               alt="no image"
             />
           </div>
@@ -46,7 +109,6 @@ class AddProduct extends Component {
             <p
               style={{
                 borderBottom: "1px solid",
-
                 marginBottom: "10px",
               }}
             >
@@ -60,7 +122,36 @@ class AddProduct extends Component {
                   backgroundColor: "aquamarine",
                 }}
                 type="text"
+                name="name"
+                value={this.state.name}
+                onChange={this.handleChange}
               />
+            </p>
+            <p
+              style={{
+                borderBottom: "1px solid",
+                marginBottom: "10px",
+              }}
+            >
+              <span>Loại sản phẩm :</span>
+              <br />
+              <select
+                style={{
+                  border: "none",
+                  outline: "none",
+                  width: "100%",
+                  backgroundColor: "aquamarine",
+                }}
+                name="category"
+                value={this.state.category}
+                onChange={this.handleChange}
+              >
+                <option value="" key="">
+                  Tuỳ chọn
+                </option>
+                <option value="Phone">Điện thoại</option>
+                <option value="Accessory">Phụ kiện</option>
+              </select>
             </p>
             <p
               style={{
@@ -71,15 +162,30 @@ class AddProduct extends Component {
             >
               <span>Hãng :</span>
               <br />
-              <input
+              <select
                 style={{
                   border: "none",
                   outline: "none",
                   width: "100%",
                   backgroundColor: "aquamarine",
                 }}
-                type="text"
-              />
+                name="brand"
+                value={this.state.brand}
+                onChange={this.handleChange}
+              >
+                <option value="" key="">
+                  Tuỳ chọn
+                </option>
+                {this.props.brand
+                  ? this.props.brand.map((row, index) => {
+                      return (
+                        <option value={row.brandName} key={index}>
+                          {row.brandName}
+                        </option>
+                      );
+                    })
+                  : ""}
+              </select>
             </p>
             <p
               style={{
@@ -98,6 +204,9 @@ class AddProduct extends Component {
                   backgroundColor: "aquamarine",
                 }}
                 type="text"
+                name="description"
+                value={this.state.description}
+                onChange={this.handleChange}
               />
             </p>
             <p
@@ -117,6 +226,9 @@ class AddProduct extends Component {
                   backgroundColor: "aquamarine",
                 }}
                 type="number"
+                name="price"
+                value={this.state.price}
+                onChange={this.handleChange}
               />
             </p>
             <p
@@ -136,9 +248,12 @@ class AddProduct extends Component {
                   backgroundColor: "aquamarine",
                 }}
                 type="number"
+                name="discount"
+                value={this.state.discount}
+                onChange={this.handleChange}
               />
             </p>
-            <p
+            {/* <p
               style={{
                 borderBottom: "1px solid",
 
@@ -155,8 +270,10 @@ class AddProduct extends Component {
                   backgroundColor: "aquamarine",
                 }}
                 type="number"
-              />
-            </p>
+                name=""
+                value={this.state.}
+                onChange={this.handleChange}/>
+            </p> */}
             <p
               style={{
                 borderBottom: "1px solid",
@@ -173,6 +290,9 @@ class AddProduct extends Component {
                   backgroundColor: "aquamarine",
                 }}
                 type="number"
+                name="quantity"
+                value={this.state.quantity}
+                onChange={this.handleChange}
               />
             </p>
             <p
@@ -191,16 +311,22 @@ class AddProduct extends Component {
                   width: "100%",
                   backgroundColor: "aquamarine",
                 }}
+                name="ram"
+                value={this.state.ram}
+                onChange={this.handleChange}
               >
                 <option value="" key="">
-                  --Select--
+                  Tuỳ chọn
                 </option>
-                <option value="" key="">
-                  2GB
-                </option>{" "}
-                <option value="" key="">
-                  4GB
-                </option>
+                {this.props.ram
+                  ? this.props.ram.map((row, index) => {
+                      return (
+                        <option value={row.ramName} key={index}>
+                          {row.ramName}
+                        </option>
+                      );
+                    })
+                  : ""}
               </select>
               {/* <input style={{ border: "none", outline: "none" }} type="text" /> */}
             </p>
@@ -223,22 +349,27 @@ class AddProduct extends Component {
                   width: "100%",
                   backgroundColor: "aquamarine",
                 }}
+                name="memory"
+                value={this.state.memory}
+                onChange={this.handleChange}
               >
                 <option value="" key="">
-                  --Select--
+                  Tuỳ chọn
                 </option>
-                <option value="" key="">
-                  4GB
-                </option>{" "}
-                <option value="" key="">
-                  8GB
-                </option>
+                {this.props.memory
+                  ? this.props.memory.map((row, index) => {
+                      return (
+                        <option value={row.memoryName} key={index}>
+                          {row.memoryName}
+                        </option>
+                      );
+                    })
+                  : ""}
               </select>
             </p>
             <p
               style={{
                 borderBottom: "1px solid",
-
                 marginBottom: "10px",
               }}
             >
@@ -252,12 +383,14 @@ class AddProduct extends Component {
                   backgroundColor: "aquamarine",
                 }}
                 type="text"
+                name="camera"
+                value={this.state.camera}
+                onChange={this.handleChange}
               />
             </p>
             <p
               style={{
                 borderBottom: "1px solid",
-
                 marginBottom: "10px",
               }}
             >
@@ -271,12 +404,14 @@ class AddProduct extends Component {
                   backgroundColor: "aquamarine",
                 }}
                 type="text"
+                name="color"
+                value={this.state.color}
+                onChange={this.handleChange}
               />
             </p>
             <p
               style={{
                 borderBottom: "1px solid",
-
                 marginBottom: "10px",
               }}
             >
@@ -290,6 +425,9 @@ class AddProduct extends Component {
                   backgroundColor: "aquamarine",
                 }}
                 type="text"
+                name="screenSize"
+                value={this.state.screenSize}
+                onChange={this.handleChange}
               />
             </p>
             <p
@@ -308,9 +446,12 @@ class AddProduct extends Component {
                   width: "100%",
                   backgroundColor: "aquamarine",
                 }}
+                name="operatingSystem"
+                value={this.state.operatingSystem}
+                onChange={this.handleChange}
               >
                 <option value="" key="">
-                  --Select--
+                  Tuỳ chọn
                 </option>
                 <option value="" key="">
                   Android
@@ -326,7 +467,7 @@ class AddProduct extends Component {
                 marginBottom: "10px",
               }}
             >
-              <span>Chip :</span>
+              <span>Chip xử lý :</span>
               <br />
               <input
                 style={{
@@ -336,6 +477,9 @@ class AddProduct extends Component {
                   backgroundColor: "aquamarine",
                 }}
                 type="text"
+                name="chip"
+                value={this.state.chip}
+                onChange={this.handleChange}
               />
             </p>
             <p
@@ -354,8 +498,10 @@ class AddProduct extends Component {
                   backgroundColor: "aquamarine",
                 }}
                 type="number"
+                name="battery"
+                value={this.state.battery}
+                onChange={this.handleChange}
               />{" "}
-              <span>mAh</span>
             </p>
             <p
               style={{
@@ -372,23 +518,39 @@ class AddProduct extends Component {
                   width: "100%",
                   backgroundColor: "aquamarine",
                 }}
+                name="sim"
+                value={this.state.sim}
+                onChange={this.handleChange}
               >
                 <option value="" key="">
-                  --Select--
+                  Tuỳ chọn
                 </option>
-                <option value="" key="">
-                  2G
+                <option value="2G,3G" key="">
+                  2G,3G
                 </option>{" "}
-                <option value="" key="">
-                  3G
+                <option value="2G,3G,4G" key="">
+                  2G,3G,4G
                 </option>
-                <option value="" key="">
-                  4G
+                <option value="3G,4G" key="">
+                  3G,4G
                 </option>
-                <option value="" key="">
-                  5G
+                <option value="3G,4G,5G" key="">
+                  3G,4G,5G
+                </option>
+                <option value="4G,5G" key="">
+                  4G,5G
                 </option>
               </select>
+            </p>
+          </div>
+          <div>
+            <p style={{ width: "300px", margin: "auto" }}>
+              <button
+                style={{ width: "300px", backgroundColor: "goldenrod" }}
+                onClick={this.saveProduct}
+              >
+                Lưu sản phẩm vào Shop
+              </button>
             </p>
           </div>
         </Modal>
@@ -396,5 +558,25 @@ class AddProduct extends Component {
     );
   }
 }
-
-export default AddProduct;
+const mapStateToProps = (state) => {
+  console.log(state);
+  return {
+    ram: state.productreducer.ram,
+    brand: state.productreducer.brand,
+    memory: state.productreducer.memory,
+  };
+};
+const mapDispatchToProps = (dispath) => {
+  return {
+    setram: (ram) => {
+      dispath(setram(ram));
+    },
+    setbrand: (brand) => {
+      dispath(setbrand(brand));
+    },
+    setmemory: (memory) => {
+      dispath(setmemory(memory));
+    },
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(AddProduct);

@@ -313,6 +313,7 @@ class Dienthoai extends Component {
   }
 }
 const mapStateToProps = (state) => {
+  console.log(state);
   return {
     totalpage: state.productreducer.totalPage,
     currenpage: state.productreducer.currenPage,
