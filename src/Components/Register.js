@@ -43,12 +43,13 @@ function Register(props) {
       })
       .catch((errors) => {
         if (errors.response) {
-          console.log(errors.response.data.status);
-          let erroralert = "";
-          errors.response.data.errors.forEach((element) => {
-            erroralert += element;
-          });
-          alert(erroralert);
+          if (errors.response.data) {
+            let erroralert = "";
+            errors.response.data.errors.forEach((element) => {
+              erroralert += element;
+            });
+            alert(erroralert);
+          }
         }
       });
   };
