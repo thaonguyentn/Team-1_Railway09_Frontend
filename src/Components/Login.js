@@ -45,7 +45,12 @@ class Login extends Component {
       .then(
         (response) => {
           this.props.setisopen(false);
-          console.log(response);
+          if (response.data.status === "Not_Active") {
+            alert(
+              "Tài khoản của bạn chưa kích hoạt ,vui lòng kiểm tra email của bạn để kích hoạt tài khoản"
+            );
+            return;
+          }
           localStorage.setItem("token", response.data.accessToken);
           localStorage.setItem("user_login", JSON.stringify(body));
           localStorage.setItem("role", JSON.stringify(response.data.role));
