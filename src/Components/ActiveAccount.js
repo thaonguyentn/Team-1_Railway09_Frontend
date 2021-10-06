@@ -9,6 +9,7 @@ class ActiveAccount extends Component {
     };
   }
   componentDidMount() {
+    console.log(this.props.location);
     setTimeout(() => {
       activeaccount(
         this.props.location.pathname + this.props.location.search
