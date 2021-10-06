@@ -177,78 +177,15 @@ class Admin extends Component {
       rows = this.props.listaccount.map((row, index) => {
         return (
           <tr key="index">
-            <td>
-              <input
-                size={row.id.toString().length}
-                style={{ border: "none", outline: "none", background: "none" }}
-                type="text"
-                defaultValue={row.id}
-              />
-            </td>
-            <td>
-              <input
-                size={row.username.toString().length}
-                style={{ border: "none", outline: "none", background: "none" }}
-                type="text"
-                defaultValue={row.username}
-              />
-            </td>
-            <td>
-              <input
-                size={row.email.toString().length}
-                style={{ border: "none", outline: "none", background: "none" }}
-                type="text"
-                defaultValue={row.email}
-              />
-            </td>
-            <td>
-              <input
-                size={row.fullname.toString().length}
-                style={{ border: "none", outline: "none", background: "none" }}
-                type="text"
-                defaultValue={row.fullname}
-              />
-            </td>
-            <td>
-              <input
-                size={row.gender.toString().length}
-                style={{ border: "none", outline: "none", background: "none" }}
-                type="text"
-                defaultValue={row.gender}
-              />
-            </td>
-            <td>
-              <input
-                size={5}
-                style={{ border: "none", outline: "none", background: "none" }}
-                type="text"
-                defaultValue={row.address}
-              />
-            </td>
-            <td>
-              <input
-                size={5}
-                style={{ border: "none", outline: "none", background: "none" }}
-                type="text"
-                defaultValue={row.avatar}
-              />
-            </td>
-            <td>
-              <input
-                size={row.phone_number.toString().length}
-                style={{ border: "none", outline: "none", background: "none" }}
-                type="text"
-                defaultValue={row.phone_number}
-              />
-            </td>
-            <td>
-              <input
-                size={row.register_date.toString().length}
-                style={{ border: "none", outline: "none", background: "none" }}
-                type="text"
-                defaultValue={row.register_date}
-              />
-            </td>
+            <td>{row.id}</td>
+            <td>{row.username}</td>
+            <td>{row.email}</td>
+            <td>{row.fullname}</td>
+            <td>{row.gender}</td>
+            <td>{row.address}</td>
+            <td>{row.avatar}</td>
+            <td>{row.phone_number}</td>
+            <td>{row.register_date}</td>
           </tr>
         );
       });
