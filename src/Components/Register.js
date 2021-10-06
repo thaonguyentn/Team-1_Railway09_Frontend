@@ -33,10 +33,12 @@ function Register(props) {
         );
       })
       .catch((errors) => {
-        console.log(errors.response.data.status);
-        errors.response.data.errors.forEach((element) => {
-          alert(element);
-        });
+        if (errors.response) {
+          console.log(errors.response.data.status);
+          errors.response.data.errors.forEach((element) => {
+            alert(element);
+          });
+        }
       });
   };
   return (
