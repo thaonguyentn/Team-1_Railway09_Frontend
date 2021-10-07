@@ -82,7 +82,6 @@ function Register(props) {
         }}
       >
         <h3>Đăng ký tài khoản</h3>
-        <div id="erroralert">error</div>
         <form className="form-horizontal">
           <div className="form-group">
             <label className="col-sm-3">Email</label>
