@@ -249,7 +249,6 @@ class Giohang extends Component {
                 )}
                 đ
               </p>
-              <p>Trạng thái : {row.status}</p>
             </div>
             <hr style={{ clear: "both" }} />
           </div>

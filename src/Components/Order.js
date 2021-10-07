@@ -31,8 +31,11 @@ class Order extends Component {
       totalPrice: totalprice,
       address:
         this.state.home +
+        "," +
         this.state.villgage +
+        "," +
         this.state.district +
+        "," +
         this.state.province,
       phone: this.state.phone,
     };

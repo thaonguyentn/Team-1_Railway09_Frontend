@@ -1,7 +1,7 @@
 import Axios from "axios";
-const baseURL = "https://thegioicamtayapi.herokuapp.com";
+// const baseURL = "https://thegioicamtayapi.herokuapp.com";
+const baseURL = "http://localhost:8080";
 export const getbrand = () => {
-  let token = localStorage.getItem("token");
   const get = Axios.get(baseURL + "/api/v1/productbrandcontrollers");
   return get;
 };
@@ -63,25 +63,31 @@ export const getram = () => {
 };
 export const addquantity = (id) => {
   let token = localStorage.getItem("token");
-  const post = Axios.put(baseURL + "/api/v4/cartdetail/" + id, {
+  const put = Axios({
+    method: "put",
+    url: baseURL + "/api/v4/cartdetail/" + id,
     headers: {
       Authorization: "Bearer " + token,
     },
   });
-  return post;
+  return put;
 };
 export const minusquantity = (id) => {
   let token = localStorage.getItem("token");
-  const post = Axios.put(baseURL + "/api/v4/cartdetail/?id=" + id, {
+  const put = Axios({
+    method: "put",
+    url: baseURL + "/api/v4/cartdetail/?id=" + id,
     headers: {
       Authorization: "Bearer " + token,
     },
   });
-  return post;
+  return put;
 };
 export const changestatuscart = (id) => {
   let token = localStorage.getItem("token");
-  const get = Axios.post(baseURL + "/api/v4/cartdetail/" + id, {
+  const get = Axios({
+    method: "post",
+    url: baseURL + "/api/v4/cartdetail/" + id,
     headers: {
       Authorization: "Bearer " + token,
     },
@@ -141,10 +147,13 @@ export const getlistproductsort = (order, page) => {
 };
 export const createproduct = (body) => {
   let token = localStorage.getItem("token");
-  const create = Axios.post(baseURL + "/api/v2/products", body, {
+  const create = Axios({
+    method: "post",
+    url: baseURL + "/api/v2/products",
     headers: {
       Authorization: "Bearer " + token,
     },
+    body: body,
   });
   return create;
 };
@@ -163,16 +172,21 @@ export const deleteproduct = (id) => {
 };
 export const cancelorder = (id, body) => {
   let token = localStorage.getItem("token");
-  const cancel = Axios.put(baseURL + "/api/v5/orders/?orderID=" + id, body, {
+  const cancel = Axios({
+    method: "put",
+    url: baseURL + "/api/v5/orders/?orderID=" + id,
     headers: {
       Authorization: "Bearer " + token,
     },
+    data: body,
   });
   return cancel;
 };
 export const updateorder = (id) => {
   let token = localStorage.getItem("token");
-  const update = Axios.put(baseURL + "/api/v5/orders/" + id, {
+  const update = Axios({
+    method: "put",
+    url: baseURL + "/api/v5/orders/" + id,
     headers: {
       Authorization: "Bearer " + token,
     },
@@ -181,18 +195,18 @@ export const updateorder = (id) => {
 };
 export const addcartdetail = (productid, accountid) => {
   let token = localStorage.getItem("token");
-  const add = Axios.post(
-    baseURL +
+  const add = Axios({
+    method: "post",
+    url:
+      baseURL +
       "/api/v4/cartdetail?productId=" +
       productid +
       "&accountId=" +
       accountid,
-    {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    }
-  );
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  });
   return add;
 };
 export const getlogin = (body) => {
@@ -218,9 +232,14 @@ export const createorder = (body) => {
       },
     }
   );
+
   return create;
 };
 export const register = (body) => {
-  const register = Axios.post(baseURL + "/api/v3/register", body);
+  const register = Axios({
+    method: "post",
+    url: baseURL + "/api/v3/register",
+    data: body,
+  });
   return register;
 };
