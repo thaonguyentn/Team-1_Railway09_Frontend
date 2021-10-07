@@ -99,7 +99,6 @@ export const getcartdetailbyid = (id) => {
 };
 export const getlistaccount = (page) => {
   let token = localStorage.getItem("token");
-  const token = localStorage.getItem("token");
   if (page === undefined || page === "") {
     page = 1;
   }
