@@ -41,16 +41,8 @@ function Register(props) {
             " , vui lòng kiểm tra email của bạn để xác nhận tài khoản"
         );
       })
-      .catch((errors) => {
-        if (errors.response) {
-          if (errors.response.data) {
-            let erroralert = "";
-            errors.response.data.errors.forEach((element) => {
-              erroralert += element;
-            });
-            alert(erroralert);
-          }
-        }
+      .catch(() => {
+        alert("Đăng ký không thành công mời bạn thử lại sau");
       });
   };
   return (
