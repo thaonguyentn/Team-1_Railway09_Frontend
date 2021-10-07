@@ -243,7 +243,11 @@ class App extends Component {
             </div>
           </div>
 
-          <nav className="navbar navbar-dark bg-primary" role="navigation">
+          <nav
+            className="navbar navbar-default bg-primary"
+            role="navigation"
+            style={{ backgroundColor: "#006eff", color: "#96a8c0" }}
+          >
             <div className="navbar-header">
               <button
                 type="button"
@@ -255,34 +259,28 @@ class App extends Component {
                 <span className="icon-bar"></span>
                 <span className="icon-bar"></span>
               </button>
-              <span className="navbar-brand">Danh mục sản phẩm</span>
+              <span style={{ color: "white" }} className="navbar-brand">
+                Danh mục sản phẩm
+              </span>
             </div>
             <div className="collapse navbar-collapse navbar-ex1-collapse">
               <ul className="nav navbar-nav" id="menusp">
                 <li>
                   <NavLink
-                    activeStyle={{
-                      backgroundColor: "brown",
-                    }}
                     exact
                     to="/dienthoai"
+                    activeStyle={{ color: "greenyellow" }}
                   >
-                    <span style={{ fontSize: "16px", color: "white" }}>
-                      Điện thoại
-                    </span>
+                    <span style={{ fontSize: "16px" }}>Điện thoại</span>
                   </NavLink>
                 </li>
                 <li>
                   <NavLink
-                    activeStyle={{
-                      backgroundColor: "brown",
-                    }}
                     exact
                     to="/phukien"
+                    activeStyle={{ color: "greenyellow" }}
                   >
-                    <span style={{ fontSize: "16px", color: "white" }}>
-                      Phụ kiện
-                    </span>
+                    <span style={{ fontSize: "16px" }}>Phụ kiện</span>
                   </NavLink>
                 </li>
               </ul>

@@ -103,11 +103,15 @@ footer {
   display: flex;
   background-color: rgb(141, 32, 13);
 }
-#menusp li :hover {
-  background: none;
+#menusp li a {
+  color: white;
 }
 #menusp li a:hover {
-  color: red;
+  color: #000000;
+}
+#menusp li a:active {
+  position: relative;
+  top: 3px;
 }
 @media only screen and (max-width: 1213px) {
   #xkm {
