@@ -15,6 +15,7 @@ import {
   updateorder,
   getorderdetail,
   getorder,
+  getorderbyid,
 } from "../Requestdata/CallAPI";
 class Orderdetailmanager extends Component {
   constructor(props) {
@@ -30,13 +31,17 @@ class Orderdetailmanager extends Component {
   }
   componentDidMount() {
     if (this.props.location.state) {
-      console.log(this.props.location.state.order);
+      console.log(this.state.order);
       let order = this.props.location.state.order;
       getorderdetail(order.orderID).then((response) => {
         console.log(response);
         this.setState({
           listorrderdetail: response.data,
         });
+      });
+      getorderbyid(order.orderID).then((response) => {
+        console.log(response);
+        this.setState({ order: response.data });
       });
     }
   }
@@ -58,6 +63,10 @@ class Orderdetailmanager extends Component {
         getallorder().then((response) => {
           this.props.setallorder(response.data);
         });
+        getorderbyid(id).then((response) => {
+          console.log(response);
+          this.setState({ order: response.data });
+        });
       });
     }
   };
@@ -71,11 +80,19 @@ class Orderdetailmanager extends Component {
       getallorder().then((response) => {
         this.props.setallorder(response.data);
         this.setState({ isopenmodaldeleteorder: false });
+        getorderbyid(id).then((response) => {
+          console.log(response);
+          this.setState({ order: response.data });
+        });
       });
     });
   };
   format2 = (n) => {
-    return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    if (n !== undefined) {
+      return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    } else {
+      return n;
+    }
   };
   render() {
     let rows;
@@ -195,26 +212,24 @@ class Orderdetailmanager extends Component {
           </thead>
           <tbody>
             <tr>
-              <td>{this.props.location.state.order.orderID}</td>
-              <td>{this.props.location.state.order.fullname}</td>
-              <td>{this.props.location.state.order.address}</td>
-              <td>{this.props.location.state.order.phone}</td>
+              <td>{this.state.order.orderID}</td>
+              <td>{this.state.order.fullname}</td>
+              <td>{this.state.order.address}</td>
+              <td>{this.state.order.phone}</td>
+              <td>{this.format2(this.state.order.totalPrice)} đ</td>
               <td>
-                {this.format2(this.props.location.state.order.totalPrice)} đ
-              </td>
-              <td>
-                {this.props.location.state.order.status === "Not_Active"
+                {this.state.order.status === "Not_Active"
                   ? "Chờ duyệt"
-                  : this.props.location.state.order.status === "Active"
+                  : this.state.order.status === "Active"
                   ? "Đang giao"
-                  : this.props.location.state.order.status === "End"
+                  : this.state.order.status === "End"
                   ? "Đã giao"
-                  : this.props.location.state.order.status === "Delete"
+                  : this.state.order.status === "Delete"
                   ? "Đã huỷ"
                   : ""}{" "}
               </td>
-              <td>{this.props.location.state.order.orderDate}</td>
-              <td>{this.props.location.state.order.description}</td>
+              <td>{this.state.order.orderDate}</td>
+              <td>{this.state.order.description}</td>
             </tr>
           </tbody>
         </table>
@@ -229,22 +244,22 @@ class Orderdetailmanager extends Component {
             class="btn btn-info"
             onClick={() =>
               this.updateorder(
-                this.props.location.state.order.orderID,
-                this.props.location.state.order.status
+                this.state.order.orderID,
+                this.state.order.status
               )
             }
             style={{
               display:
-                this.props.location.state.order.status === "End"
+                this.state.order.status === "End"
                   ? "none"
-                  : this.props.location.state.order.status === "Delete"
+                  : this.state.order.status === "Delete"
                   ? "none"
                   : "",
             }}
           >
-            {this.props.location.state.order.status === "Not_Active"
+            {this.state.order.status === "Not_Active"
               ? "Duyệt đơn hàng"
-              : this.props.location.state.order.status === "Active"
+              : this.state.order.status === "Active"
               ? "Hoàn tất đơn hàng"
               : ""}
           </button>
@@ -254,9 +269,9 @@ class Orderdetailmanager extends Component {
             onClick={() => this.setState({ isopenmodaldeleteorder: true })}
             style={{
               display:
-                this.props.location.state.order.status === "End"
+                this.state.order.status === "End"
                   ? "none"
-                  : this.props.location.state.order.status === "Delete"
+                  : this.state.order.status === "Delete"
                   ? "none"
                   : "",
             }}
@@ -295,9 +310,7 @@ class Orderdetailmanager extends Component {
           <p>
             <button
               style={{ padding: "5px", backgroundColor: "red" }}
-              onClick={() =>
-                this.cancelorder(this.props.location.state.order.orderID)
-              }
+              onClick={() => this.cancelorder(this.state.order.orderID)}
             >
               Xác nhận huỷ
             </button>

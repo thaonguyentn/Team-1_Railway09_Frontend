@@ -1,6 +1,6 @@
 import Axios from "axios";
-const baseURL = "https://thegioicamtayapi.herokuapp.com";
-// const baseURL = "http://localhost:8080";
+// const baseURL = "https://thegioicamtayapi.herokuapp.com";
+const baseURL = "http://localhost:8080";
 export const getbrand = () => {
   const get = Axios.get(baseURL + "/api/v1/productbrandcontrollers");
   return get;
@@ -42,6 +42,15 @@ export const getallorder = (page) => {
     page = 1;
   }
   const get = Axios.get(baseURL + "/api/v5/orders/all?page=" + page, {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  });
+  return get;
+};
+export const getorderbyid = (id) => {
+  let token = localStorage.getItem("token");
+  const get = Axios.get(baseURL + "/api/v5/orders/order/" + id, {
     headers: {
       Authorization: "Bearer " + token,
     },
