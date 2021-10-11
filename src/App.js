@@ -49,7 +49,7 @@ class App extends Component {
             }}
           ></Redirect>
           <Switch>
-            <Route path="/admin" component={Admin} exact />
+            <Route path="/admin" component={Admin} />
           </Switch>
         </>
       );

@@ -149,20 +149,11 @@ class Giohang extends Component {
                 float: "left",
               }}
             >
-              <Link
-                to={{
-                  pathname: "/dienthoai/" + row.id,
-                  state: {
-                    id: row.id,
-                  },
-                }}
-              >
-                <img
-                  src={row.product.image}
-                  alt=""
-                  style={{ width: "140px", height: "auto" }}
-                />
-              </Link>
+              <img
+                src={row.product.image}
+                alt=""
+                style={{ width: "140px", height: "auto" }}
+              />
             </div>
             <div
               style={{
@@ -172,9 +163,18 @@ class Giohang extends Component {
                 float: "left",
               }}
             >
-              <p>
-                {row.product.name}({row.product.ram}/{row.product.memory})
-              </p>
+              <Link
+                to={{
+                  pathname: "/dienthoai/" + row.id,
+                  state: {
+                    id: row.id,
+                  },
+                }}
+              >
+                <p>
+                  {row.product.name}({row.product.ram}/{row.product.memory})
+                </p>
+              </Link>
               <p style={{ fontSize: "small" }}>
                 <span
                   style={{

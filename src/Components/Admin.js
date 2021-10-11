@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { NavLink, Switch, Route, Redirect } from "react-router-dom";
 import {
   getlistproduct,
   getlistaccount,
@@ -21,6 +22,10 @@ import slides from "./Carousel";
 import AddProduct from "./AddProduct";
 import Addimageslide from "./AddImageSlide";
 import ReactModal from "react-modal";
+import Accountmanager from "./Accountmanager";
+import Productmanager from "./Productmanager";
+import Odermanager from "./Odermanager";
+import Orderdetailmanager from "./Orderdetailmanager";
 class Admin extends Component {
   constructor(props) {
     super(props);
@@ -517,7 +522,7 @@ class Admin extends Component {
       this.props.currenpageorder === undefined ||
       this.props.totalpageorder === 0
     ) {
-      Nextproduct = "";
+      Nextorder = "";
     } else {
       Nextorder = (
         <button className="page-link" onClick={this.Nextorder}>
@@ -577,31 +582,51 @@ class Admin extends Component {
               this.state.isavtiveclass === 1 ? "liactive" : "linoactive"
             }
           >
-            <a onClick={() => this.setState({ isavtiveclass: 1 })}>
+            <NavLink
+              exact
+              to="/admin/accounts"
+              onClick={() => this.setState({ isavtiveclass: 1 })}
+            >
               <h1>Quản lý Account</h1>
-            </a>
+            </NavLink>
           </li>
           <li
             className={
               this.state.isavtiveclass === 2 ? "liactive" : "linoactive"
             }
           >
-            <a onClick={() => this.setState({ isavtiveclass: 2 })}>
+            <NavLink
+              exact
+              to="/admin/products"
+              onClick={() => this.setState({ isavtiveclass: 2 })}
+            >
               <h1>Quản lý sản phẩm</h1>
-            </a>
+            </NavLink>
           </li>
           <li
             className={
               this.state.isavtiveclass === 3 ? "liactive" : "linoactive"
             }
           >
-            <a onClick={() => this.setState({ isavtiveclass: 3 })}>
+            <NavLink
+              exact
+              to="/admin/orders"
+              onClick={() => this.setState({ isavtiveclass: 3 })}
+            >
               <h1>Quản lý đơn hàng</h1>
-            </a>
+            </NavLink>
           </li>
         </ul>
-
-        <div
+        <Switch>
+          <Route path="/admin/accounts" component={Accountmanager} exact />
+          <Route path="/admin/products" component={Productmanager} exact />
+          <Route path="/admin/orders" component={Odermanager} exact />
+          <Route
+            path="/admin/orders/detail/:ID"
+            component={Orderdetailmanager}
+          />
+        </Switch>
+        {/* <div
           className={
             this.state.isavtiveclass === 1 ? "navactive" : "navnoactive"
           }
@@ -697,7 +722,7 @@ class Admin extends Component {
             <tbody>{rows3}</tbody>
           </table>
           <div style={{ textAlign: "center" }}>{navorder}</div>
-        </div>
+        </div> */}
       </div>
     );
   }
