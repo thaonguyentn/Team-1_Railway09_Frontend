@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Modal from "react-modal";
+import { addimageslide } from "../Requestdata/CallAPI";
 class Addimageslide extends Component {
   constructor(props) {
     super(props);
@@ -8,6 +9,13 @@ class Addimageslide extends Component {
       slide: [],
     };
   }
+  addimageslide = () => {
+    let images = this.state.slide;
+    let productID = this.props.producID;
+    addimageslide(productID, images).then(() =>
+      alert("Thêm " + images.length + " ảnh thành công")
+    );
+  };
   render() {
     let slide;
     if (this.state.slide !== []) {
@@ -69,7 +77,10 @@ class Addimageslide extends Component {
             <button
               onClick={() => {
                 let list = this.state.slide;
-                list.push(this.state.imageslide);
+                let imageslide = {
+                  pathIMG: this.state.imageslide,
+                };
+                list.push(imageslide);
                 this.setState({
                   slide: list,
                   imageslide: "",
@@ -94,6 +105,15 @@ class Addimageslide extends Component {
             </div>
             <hr />
             {slide}
+            <div style={{ textAlign: "center" }}>
+              <button
+                type="button"
+                class="btn btn-success"
+                onClick={this.addimageslide}
+              >
+                Thêm vào Sản phẩm
+              </button>
+            </div>
           </div>
         </Modal>
       </>

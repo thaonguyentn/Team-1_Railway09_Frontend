@@ -251,3 +251,15 @@ export const register = (body) => {
   });
   return register;
 };
+export const addimageslide = (productID, images) => {
+  let token = localStorage.getItem("token");
+  const create = Axios({
+    method: "post",
+    url: baseURL + "/api/v5/productimages/" + productID,
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+    data: images,
+  });
+  return create;
+};

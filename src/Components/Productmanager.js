@@ -152,6 +152,7 @@ class Productmanager extends Component {
                 setisopenmodaladdslide={(data) => {
                   this.setState({ isopenmodaladdslide: data });
                 }}
+                producID={row.id}
               />
             </td>
             <td>{row.quantity}</td>
