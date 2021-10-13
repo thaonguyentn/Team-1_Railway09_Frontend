@@ -172,9 +172,10 @@ class DienthoaiDetail extends Component {
               position: "relative",
             }}
           >
-            Dung lượng pin{" "}
+            Dung lượng pin
             <span style={{ position: "absolute", left: "170px" }}>
               : {pr.battery}
+              {" mAh"}
             </span>
           </p>
           <p

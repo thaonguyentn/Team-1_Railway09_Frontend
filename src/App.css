@@ -309,3 +309,16 @@ footer {
   position: absolute;
   right: 90%;
 }
+.description {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 50px;
+}
+.description:hover {
+  overflow: visible;
+  white-space: pre-line;
+  width: 500px;
+  position: absolute;
+  background-color: rgb(255, 255, 255);
+}

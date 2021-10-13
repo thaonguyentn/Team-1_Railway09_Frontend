@@ -100,7 +100,9 @@ class Productmanager extends Component {
             <td>{row.discount}%</td>
             <td>{row.brand}</td>
             <td>{row.category}</td>
-            <td>{row.description}</td>
+            <td>
+              <p className="description">{row.description}</p>
+            </td>
             <td>{row.ram}</td>
             <td>{row.memory}</td>
             <td>{row.camera}</td>

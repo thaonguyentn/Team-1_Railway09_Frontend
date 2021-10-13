@@ -33,6 +33,28 @@ class AddProduct extends Component {
     });
   };
   saveProduct = () => {
+    if (
+      this.state.name === "" ||
+      this.state.description === "" ||
+      this.state.price === "" ||
+      this.state.ram === "" ||
+      this.state.memory === "" ||
+      this.state.brand === "" ||
+      this.state.category === "" ||
+      this.state.quantity === "" ||
+      this.state.camera === "" ||
+      this.state.color === "" ||
+      this.state.screenSize === "" ||
+      this.state.operatingSystem === "" ||
+      this.state.chip === "" ||
+      this.state.battery === "" ||
+      this.state.sim === "" ||
+      this.state.image === "" ||
+      this.state.discount === ""
+    ) {
+      alert("Kiểm tra lại thông tin nhập vào");
+      return;
+    }
     let body = {
       name: this.state.name,
       description: this.state.description,
@@ -432,10 +454,10 @@ class AddProduct extends Component {
                 <option value="" key="">
                   Tuỳ chọn
                 </option>
-                <option value="" key="">
+                <option value="Android" key="">
                   Android
                 </option>{" "}
-                <option value="" key="">
+                <option value="iOS" key="">
                   iOS
                 </option>
               </select>
@@ -480,7 +502,8 @@ class AddProduct extends Component {
                 name="battery"
                 value={this.state.battery}
                 onChange={this.handleChange}
-              />{" "}
+              />
+              {" mAh"}
             </p>
             <p
               style={{
