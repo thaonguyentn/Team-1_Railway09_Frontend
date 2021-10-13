@@ -16,14 +16,12 @@ class Home extends Component {
     };
   }
   handleChange = (event) => {
-    console.log(event.target.value);
     this.props.setsort(event.target.value);
     getlistproductsort(event.target.value, 1).then((data) => {
       this.props.getlistproduct(data.data);
     });
   };
   Next = () => {
-    console.log(this.props.sort);
     if (this.props.totalpage !== this.props.currenpage + 1) {
       getlistproductsort(this.props.sort, this.props.currenpage + 1 + 1).then(
         (data) => {
@@ -46,7 +44,6 @@ class Home extends Component {
   };
   componentDidMount() {
     getlistproductsort(this.props.sort, 1).then((response) => {
-      console.log(response);
       this.setState({
         listpro: response.data.content,
       });
@@ -54,9 +51,7 @@ class Home extends Component {
     });
   }
   render() {
-    console.log(this.props.listpro);
     if (this.props.location.state) {
-      console.log(this.props.location.state.active);
       if (this.props.location.state.active === "activeed") {
         this.props.setisopenlogin(true);
       }
@@ -153,7 +148,6 @@ class Home extends Component {
           className="page-link"
           id={this.props.currenpage === index ? "buttonpage" : "abc"}
           onClick={() => {
-            console.log("1");
             getlistproductsort(this.props.sort, index + 1).then((data) => {
               this.props.getlistproduct(data.data);
             });

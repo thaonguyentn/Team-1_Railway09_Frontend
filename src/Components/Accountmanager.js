@@ -40,7 +40,6 @@ class Accountmanager extends Component {
     return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
   Nextaccount = () => {
-    console.log(this.props.currenpageaccount + 1);
     if (this.props.totalpageaccount !== this.props.currenpageaccount + 1) {
       getlistaccount(this.props.currenpageproduct + 1 + 1).then((data) => {
         this.props.setlistaccount(data.data);
@@ -55,16 +54,10 @@ class Accountmanager extends Component {
     }
   };
   componentDidMount() {
-    getlistaccount(1).then(
-      (response) => {
-        this.props.setlistaccount(response.data);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+    getlistaccount(1).then((response) => {
+      this.props.setlistaccount(response.data);
+    });
     getlistproduct(1, "", "", "", "").then((response) => {
-      console.log(response);
       this.props.getlistproduct(response.data);
     });
     getallorder().then((response) => {
@@ -174,7 +167,6 @@ class Accountmanager extends Component {
   }
 }
 const mapStateToProps = (state) => {
-  console.log(state);
   return {
     totalpageproduct: state.productreducer.totalPage,
     currenpageproduct: state.productreducer.currenPage,

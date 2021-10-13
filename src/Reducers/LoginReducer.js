@@ -6,7 +6,6 @@ if (localStorage.getItem("user_login")) {
   isLogin = false;
 }
 const reducer = (state = { isLogin: isLogin, isopen: false }, action) => {
-  console.log(action.type, LOGIN);
   if (action.type === LOGIN) {
     return {
       ...state,

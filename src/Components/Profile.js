@@ -33,10 +33,8 @@ class Profile extends Component {
     fileReader.readAsDataURL(file);
   };
   render() {
-    console.log(this.state.image);
     let nav;
     if (this.props.account !== null) {
-      console.log(this.props.account.avatar);
       nav = [
         <div style={{ marginLeft: "40px", borderBottom: "1px solid pink" }}>
           <div

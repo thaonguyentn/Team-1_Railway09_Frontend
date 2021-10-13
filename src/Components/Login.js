@@ -56,38 +56,29 @@ class Login extends Component {
           localStorage.setItem("role", JSON.stringify(response.data.role));
           getcart(response.data.id)
             .then((response) => {
-              console.log(response);
               this.props.setcart(response.data);
             })
             .then(() => {
               getcartdetail(response.data.id).then((response) => {
-                console.log(response);
                 this.props.setcartdetail(response.data);
               });
             });
-          getprofile(response.data.id, body).then(
-            (datalist) => {
-              localStorage.setItem(
-                "user_login_infor",
-                JSON.stringify(datalist.data)
-              );
-              this.props.setlogin(true);
-              this.props.setprofile(datalist.data);
-            },
-            (error) => {
-              console.log(error);
-            }
-          );
+          getprofile(response.data.id, body).then((datalist) => {
+            localStorage.setItem(
+              "user_login_infor",
+              JSON.stringify(datalist.data)
+            );
+            this.props.setlogin(true);
+            this.props.setprofile(datalist.data);
+          });
         },
         (error) => {
-          console.log(error);
           this.setState({ errorlogin: "Sai tài khoản hoặc mật khẩu !" });
         }
       )
       .then(() => {});
   };
   render() {
-    console.log(this.props.location);
     return (
       <div>
         <button

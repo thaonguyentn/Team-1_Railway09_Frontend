@@ -12,7 +12,6 @@ const reducer = (state = { account: account1 }, action) => {
     let list = action.data.content;
     let totalPage = action.data.totalPages;
     let currenPage = action.data.pageable.pageNumber;
-    console.log(totalPage);
     return {
       ...state,
       listaccount: list,

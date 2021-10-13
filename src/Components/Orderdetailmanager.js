@@ -31,16 +31,13 @@ class Orderdetailmanager extends Component {
   }
   componentDidMount() {
     if (this.props.location.state) {
-      console.log(this.state.order);
       let order = this.props.location.state.order;
       getorderdetail(order.orderID).then((response) => {
-        console.log(response);
         this.setState({
           listorrderdetail: response.data,
         });
       });
       getorderbyid(order.orderID).then((response) => {
-        console.log(response);
         this.setState({ order: response.data });
       });
     }
@@ -64,7 +61,6 @@ class Orderdetailmanager extends Component {
           this.props.setallorder(response.data);
         });
         getorderbyid(id).then((response) => {
-          console.log(response);
           this.setState({ order: response.data });
         });
       });
@@ -81,7 +77,6 @@ class Orderdetailmanager extends Component {
         this.props.setallorder(response.data);
         this.setState({ isopenmodaldeleteorder: false });
         getorderbyid(id).then((response) => {
-          console.log(response);
           this.setState({ order: response.data });
         });
       });
@@ -96,12 +91,9 @@ class Orderdetailmanager extends Component {
   };
   render() {
     let rows;
-    console.log(this.state.listorrderdetail.length);
     if (this.state.listorrderdetail.length === 0) {
-      console.log("ssssssssssss");
       rows = <div>Không có dữ liệu</div>;
     } else {
-      console.log("hhhhhhhhhhhh");
       rows = this.state.listorrderdetail.map((row, index) => {
         return (
           <div
@@ -321,7 +313,6 @@ class Orderdetailmanager extends Component {
   }
 }
 const mapStateToProps = (state) => {
-  console.log(state);
   return {
     totalpageproduct: state.productreducer.totalPage,
     currenpageproduct: state.productreducer.currenPage,
@@ -337,23 +328,8 @@ const mapStateToProps = (state) => {
 };
 const mapDispatchToProps = (dispath) => {
   return {
-    getlistproduct: (list) => {
-      dispath(setlistproduct(list));
-    },
     setallorder: (allorder) => {
       dispath(setallorder(allorder));
-    },
-    setlogin: (islogin) => {
-      dispath(setlogin(islogin));
-    },
-    setcart: (cart) => {
-      dispath(setcart(cart));
-    },
-    setcartdetail: (cartdetail) => {
-      dispath(setcartdetail(cartdetail));
-    },
-    setprofile: (account) => {
-      dispath(setprofile(account));
     },
   };
 };

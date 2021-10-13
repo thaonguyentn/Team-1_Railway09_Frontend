@@ -132,7 +132,6 @@ export const getlistproduct = (page, ram, brand, memory, search) => {
   const brands = brand !== "" ? "&brandName=" + brand : "";
   const memorys = memory !== "" ? "&memoryName=" + memory : "";
   const searchs = search !== "" ? "&search=" + search : "";
-  console.log(rams, searchs, brands, memorys);
   const get = Axios.get(
     baseURL +
       "/api/v2/products?page=" +
@@ -162,7 +161,7 @@ export const createproduct = (body) => {
     headers: {
       Authorization: "Bearer " + token,
     },
-    body: body,
+    data: body,
   });
   return create;
 };

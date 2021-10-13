@@ -51,7 +51,6 @@ class Order extends Component {
       return;
     }
     createorder(body).then((response) => {
-      console.log(response);
       alert(response.data);
     });
   };

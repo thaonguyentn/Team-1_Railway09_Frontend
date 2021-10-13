@@ -21,7 +21,6 @@ class DienthoaiDetail extends Component {
       let productid = this.state.product.id;
       let accountid = user_login_infor.id;
       addcartdetail(productid, accountid).then((response) => {
-        console.log(response);
         getcart(accountid).then((response) =>
           this.props.setcart(response.data)
         );
@@ -31,7 +30,6 @@ class DienthoaiDetail extends Component {
   componentDidMount() {
     const id = this.props.location.state.id;
     getproductbyid(id).then((response) => {
-      console.log(response);
       this.setState({
         product: response.data,
       });
@@ -39,11 +37,9 @@ class DienthoaiDetail extends Component {
     });
   }
   render() {
-    console.log(this.props.images);
     let slideshow;
     if (this.props.images) {
       slideshow = slides(this.props.images, "800px");
-      console.log(slideshow);
     } else {
       slideshow = "";
     }

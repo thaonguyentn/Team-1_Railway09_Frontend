@@ -31,7 +31,6 @@ function Register(props) {
     if (password === "") {
       seterrorpassword("* Không được để trống");
     }
-    console.log(body);
     register(body)
       .then((response) => {
         setisopen(false);

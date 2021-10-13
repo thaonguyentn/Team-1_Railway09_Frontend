@@ -9,13 +9,10 @@ class ActiveAccount extends Component {
     };
   }
   componentDidMount() {
-    console.log(this.props.location);
     setTimeout(() => {
       activeaccount(
         this.props.location.pathname + this.props.location.search
-      ).then((response) => {
-        console.log(response);
-      });
+      ).then((response) => {});
       this.setState({
         a: 5,
       });
@@ -31,7 +28,6 @@ class ActiveAccount extends Component {
     }, 1000);
   }
   render() {
-    // console.log(this.props.location, this.state.a);
     if (this.state.a === 0) {
       return (
         <div>

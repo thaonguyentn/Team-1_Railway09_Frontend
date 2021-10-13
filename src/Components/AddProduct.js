@@ -52,10 +52,7 @@ class AddProduct extends Component {
       image: this.state.image,
       discount: this.state.discount,
     };
-    console.log(body);
-    createproduct(body).then((response) => {
-      console.log(response);
-    });
+    createproduct(body).then((response) => {});
   };
   componentDidMount() {
     getbrand().then((response) => {
@@ -555,7 +552,6 @@ class AddProduct extends Component {
   }
 }
 const mapStateToProps = (state) => {
-  console.log(state);
   return {
     ram: state.productreducer.ram,
     brand: state.productreducer.brand,

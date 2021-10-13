@@ -18,7 +18,6 @@ import {
 } from "../Actions/index";
 class Dienthoai extends Component {
   Next = () => {
-    console.log(this.props.currenpage + 1);
     if (this.props.totalpage !== this.props.currenpage + 1) {
       getlistproduct(
         this.props.currenpage + 1 + 1,
@@ -48,7 +47,6 @@ class Dienthoai extends Component {
     return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
   handleChange = (event) => {
-    console.log(event.target.value);
     switch (event.target.name) {
       case "brand":
         this.props.setbrandfilter(event.target.value);
@@ -205,7 +203,6 @@ class Dienthoai extends Component {
           className="page-link"
           id={this.props.currenpage === index ? "buttonpage" : "abc"}
           onClick={() => {
-            console.log("1");
             getlistproduct(
               index + 1,
               this.props.ramfilter,
@@ -315,7 +312,6 @@ class Dienthoai extends Component {
   }
 }
 const mapStateToProps = (state) => {
-  console.log(state);
   return {
     totalpage: state.productreducer.totalPage,
     currenpage: state.productreducer.currenPage,

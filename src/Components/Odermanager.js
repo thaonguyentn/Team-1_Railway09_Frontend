@@ -55,16 +55,10 @@ class Odermanager extends Component {
     }
   };
   componentDidMount() {
-    getlistaccount(1).then(
-      (response) => {
-        this.props.setlistaccount(response.data);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+    getlistaccount(1).then((response) => {
+      this.props.setlistaccount(response.data);
+    });
     getlistproduct(1, "", "", "", "").then((response) => {
-      console.log(response);
       this.props.getlistproduct(response.data);
     });
     getallorder().then((response) => {
@@ -123,7 +117,6 @@ class Odermanager extends Component {
         </button>
       );
     }
-    console.log(this.props.totalpageorder);
     if (
       this.props.totalpageorder === this.props.currenpageorder + 1 ||
       this.props.currenpageorder === undefined ||
@@ -193,7 +186,6 @@ class Odermanager extends Component {
   }
 }
 const mapStateToProps = (state) => {
-  console.log(state);
   return {
     totalpageproduct: state.productreducer.totalPage,
     currenpageproduct: state.productreducer.currenPage,

@@ -41,7 +41,6 @@ class Productmanager extends Component {
     return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
   Nextproduct = () => {
-    console.log(this.props.currenpageproduct + 1);
     if (this.props.totalpageproduct !== this.props.currenpageproduct + 1) {
       getlistproduct(this.props.currenpageproduct + 1 + 1, "", "", "", "").then(
         (data) => {
@@ -62,7 +61,6 @@ class Productmanager extends Component {
   DeleteProduct = (id) => {
     deleteproduct(id).then(() => {
       getlistproduct(1, "", "", "", "").then((response) => {
-        console.log(response);
         this.props.getlistproduct(response.data);
       });
     });
@@ -79,16 +77,10 @@ class Productmanager extends Component {
     }
   };
   componentDidMount() {
-    getlistaccount(1).then(
-      (response) => {
-        this.props.setlistaccount(response.data);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+    getlistaccount(1).then((response) => {
+      this.props.setlistaccount(response.data);
+    });
     getlistproduct(1, "", "", "", "").then((response) => {
-      console.log(response);
       this.props.getlistproduct(response.data);
     });
     getallorder().then((response) => {
@@ -212,7 +204,6 @@ class Productmanager extends Component {
           className="page-link"
           id={this.props.currenpageproduct === index ? "buttonpage" : "abc"}
           onClick={() => {
-            console.log("1");
             getlistproduct(index + 1, "", "", "", "").then((data) => {
               this.props.getlistproduct(data.data);
             });
@@ -291,7 +282,6 @@ class Productmanager extends Component {
   }
 }
 const mapStateToProps = (state) => {
-  console.log(state);
   return {
     totalpageproduct: state.productreducer.totalPage,
     currenpageproduct: state.productreducer.currenPage,

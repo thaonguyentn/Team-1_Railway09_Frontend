@@ -41,7 +41,6 @@ class Admin extends Component {
     };
   }
   logout = () => {
-    console.log("kkkkkk");
     localStorage.removeItem("role");
     localStorage.removeItem("token");
     localStorage.removeItem("user_login");
@@ -52,7 +51,6 @@ class Admin extends Component {
     this.props.setlogin(false);
   };
   Nextproduct = () => {
-    console.log(this.props.currenpageproduct + 1);
     if (this.props.totalpageproduct !== this.props.currenpageproduct + 1) {
       getlistproduct(this.props.currenpageproduct + 1 + 1, "", "", "", "").then(
         (data) => {
@@ -71,7 +69,6 @@ class Admin extends Component {
     }
   };
   Nextaccount = () => {
-    console.log(this.props.currenpageaccount + 1);
     if (this.props.totalpageaccount !== this.props.currenpageaccount + 1) {
       getlistaccount(this.props.currenpageproduct + 1 + 1).then((data) => {
         this.props.setlistaccount(data.data);
@@ -102,7 +99,6 @@ class Admin extends Component {
   DeleteProduct = (id) => {
     deleteproduct(id).then(() => {
       getlistproduct(1, "", "", "", "").then((response) => {
-        console.log(response);
         this.props.getlistproduct(response.data);
       });
     });
@@ -156,16 +152,10 @@ class Admin extends Component {
     return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
   componentDidMount() {
-    getlistaccount(1).then(
-      (response) => {
-        this.props.setlistaccount(response.data);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+    getlistaccount(1).then((response) => {
+      this.props.setlistaccount(response.data);
+    });
     getlistproduct(1, "", "", "", "").then((response) => {
-      console.log(response);
       this.props.getlistproduct(response.data);
     });
     getallorder().then((response) => {
@@ -173,7 +163,6 @@ class Admin extends Component {
     });
   }
   componentWillUnmount() {
-    console.log(this.props);
     this.props.history.replace("/");
   }
   render() {
@@ -365,7 +354,6 @@ class Admin extends Component {
           className="page-link"
           id={this.props.currenpageproduct === index ? "buttonpage" : "abc"}
           onClick={() => {
-            console.log("1");
             getlistproduct(index + 1, "", "", "", "").then((data) => {
               this.props.getlistproduct(data.data);
             });
@@ -448,19 +436,6 @@ class Admin extends Component {
             <td>
               {row.description}
 
-              {/* <button
-                onClick={() => this.setState({ isopenmodaldeleteorder: true })}
-                style={{
-                  display:
-                    row.status === "End"
-                      ? "none"
-                      : row.status === "Delete"
-                      ? "none"
-                      : "",
-                }}
-              >
-                Huỷ đơn hàng
-              </button> */}
               <ReactModal
                 isOpen={this.state.isopenmodaldeleteorder}
                 onRequestClose={() =>
@@ -516,7 +491,6 @@ class Admin extends Component {
         </button>
       );
     }
-    console.log(this.props.totalpageorder);
     if (
       this.props.totalpageorder === this.props.currenpageorder + 1 ||
       this.props.currenpageorder === undefined ||
@@ -626,109 +600,11 @@ class Admin extends Component {
             component={Orderdetailmanager}
           />
         </Switch>
-        {/* <div
-          className={
-            this.state.isavtiveclass === 1 ? "navactive" : "navnoactive"
-          }
-        >
-          <table className="table table-bordered table-hover">
-            <thead>
-              <tr>
-                <th>Id</th>
-                <th>Username</th>
-                <th>Email</th>
-                <th>Họ Tên</th>
-                <th>Giới tính</th>
-                <th>Địa chỉ</th>
-                <th>Avatar</th>
-                <th>SĐT</th>
-                <th>Ngày đăng Ký</th>
-                <th>Xoá</th>
-              </tr>
-            </thead>
-            <tbody>{rows}</tbody>
-          </table>
-          <div style={{ textAlign: "center" }}>{navaccount}</div>
-        </div>
-        <div
-          className={
-            this.state.isavtiveclass === 2 ? "navactive" : "navnoactive"
-          }
-        >
-          <div style={{ fontSize: "30px" }}>
-            <button
-              onClick={() => {
-                this.setState({ isopenmodaladd: true });
-              }}
-              style={{ backgroundColor: "aqua" }}
-            >
-              <span className="glyphicon glyphicon-plus"></span>{" "}
-              <span>Thêm Sản Phẩm Mới</span>
-            </button>
-            <AddProduct
-              isopen={this.state.isopenmodaladd}
-              setisopenmodaladd={(data) =>
-                this.setState({ isopenmodaladd: data })
-              }
-            />
-          </div>
-          <table className="table table-bordered table-hover">
-            <thead>
-              <tr>
-                <th>Id</th>
-                <th>Tên sp</th>
-                <th>Giá</th>
-                <th>KM</th>
-                <th>Hãng</th>
-                <th>Loại</th>
-                <th>Mô tả</th>
-                <th>Ram</th>
-                <th>Bộ nhớ trong</th>
-                <th>Camera</th>
-                <th>Màu</th>
-                <th>KT màn hình</th>
-                <th>HĐH</th>
-                <th>Chip</th>
-                <th>Pin</th>
-                <th>Loại sim hỗ trợ</th>
-                <th>Avatar</th>
-                <th>SlideShow</th>
-                <th>Hàng trong kho</th>
-                <th>Ngày nhập hàng</th>
-              </tr>
-            </thead>
-            <tbody>{rows2}</tbody>
-          </table>{" "}
-          <div style={{ textAlign: "center" }}>{nav}</div>
-        </div>
-        <div
-          className={
-            this.state.isavtiveclass === 3 ? "navactive" : "navnoactive"
-          }
-        >
-          <table className="table table-bordered table-hover">
-            <thead>
-              <tr>
-                <th>Id</th>
-                <th>Tên người nhận</th>
-                <th>Địa chỉ người nhận</th>
-                <th>SĐT người nhận</th>
-                <th>Tổng giá</th>
-                <th>Trạng thái</th>
-                <th>Ngày đặt hàng</th>
-                <th>Ghi chú</th>
-              </tr>
-            </thead>
-            <tbody>{rows3}</tbody>
-          </table>
-          <div style={{ textAlign: "center" }}>{navorder}</div>
-        </div> */}
       </div>
     );
   }
 }
 const mapStateToProps = (state) => {
-  console.log(state);
   return {
     totalpageproduct: state.productreducer.totalPage,
     currenpageproduct: state.productreducer.currenPage,

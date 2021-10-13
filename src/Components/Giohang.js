@@ -18,13 +18,9 @@ class Giohang extends Component {
     return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
   handleChange = (event) => {
-    console.log(JSON.parse(event.target.value).id);
     let id = JSON.parse(event.target.value).id;
-    console.log(event.target.checked);
-    changestatuscart(id).then((response) => {
-      console.log(response);
+    changestatuscart(id).then(() => {
       getcartdetail(this.props.accountid).then((response) => {
-        console.log("gggggg", response);
         this.props.setcartdetail(response.data);
       });
     });
@@ -37,7 +33,6 @@ class Giohang extends Component {
         })
         .then(() => {
           getcartdetail(this.props.accountid).then((response) => {
-            console.log("gggggg", response);
             this.props.setcartdetail(response.data);
           });
         });
@@ -51,7 +46,6 @@ class Giohang extends Component {
         return;
       } else {
         getcartdetailbyid(id).then((response) => {
-          console.log("hhahaha", response);
           if (ischeck === true) {
             this.props.setorder(response.data, "remove");
           }
@@ -67,7 +61,6 @@ class Giohang extends Component {
       })
       .then(() => {
         getcartdetail(this.props.accountid).then((response) => {
-          console.log(response);
           this.props.setcartdetail(response.data);
         });
       });
@@ -79,12 +72,10 @@ class Giohang extends Component {
     if (user_login_infor !== null) {
       getcart(user_login_infor.id)
         .then((response) => {
-          console.log(response);
           this.props.setcart(response.data);
         })
         .then(() => {
           getcartdetail(user_login_infor.id).then((response) => {
-            console.log(response);
             this.props.setcartdetail(response.data);
           });
         });
@@ -301,7 +292,6 @@ class Giohang extends Component {
   }
 }
 const mapStateToProps = (state) => {
-  console.log(state);
   return {
     accountid: state.accountreducer.account
       ? state.accountreducer.account.id

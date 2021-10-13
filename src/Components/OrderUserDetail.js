@@ -9,10 +9,8 @@ class Orderuserdetail extends Component {
   }
   componentDidMount() {
     if (this.props.location.state) {
-      console.log(this.props.location.state.order);
       let order = this.props.location.state.order;
       getorderdetail(order.orderID).then((response) => {
-        console.log(response);
         this.setState({
           listorrderdetail: response.data,
         });
@@ -24,12 +22,9 @@ class Orderuserdetail extends Component {
   };
   render() {
     let rows;
-    console.log(this.state.listorrderdetail.length);
     if (this.state.listorrderdetail.length === 0) {
-      console.log("ssssssssssss");
       rows = <div>Không có dữ liệu</div>;
     } else {
-      console.log("hhhhhhhhhhhh");
       rows = this.state.listorrderdetail.map((row, index) => {
         return (
           <div

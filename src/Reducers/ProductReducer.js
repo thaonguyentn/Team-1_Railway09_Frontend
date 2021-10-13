@@ -28,7 +28,6 @@ const reducer = (
       let list = action.data.content;
       let totalPage = action.data.totalPages;
       let currenPage = action.data.pageable.pageNumber;
-      console.log(totalPage);
       return {
         ...state,
         listproduct: list,

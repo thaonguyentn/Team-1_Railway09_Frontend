@@ -5,7 +5,6 @@ const reducer = (state = { order: order }, action) => {
     let list = action.data.content;
     let totalPage = action.data.totalPages;
     let currenPage = action.data.pageable.pageNumber;
-    console.log(totalPage);
     return {
       ...state,
       allorder: list,

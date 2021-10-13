@@ -18,7 +18,6 @@ class Orderuser extends Component {
     );
     if (user_login_infor !== null) {
       getorder(user_login_infor.id).then((response) => {
-        console.log(response);
         this.setState({ listorder: response.data.content });
       });
     }

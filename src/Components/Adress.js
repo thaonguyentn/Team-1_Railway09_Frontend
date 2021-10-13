@@ -5,7 +5,6 @@ class Adress extends Component {
     let adress;
     let name;
     let phone;
-    console.log(this.props.location.state);
     let state = this.props.location.state;
     if (state !== null && state !== undefined) {
       adress = state.adress;
