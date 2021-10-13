@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import Modal from "react-modal";
-import { addimageslide } from "../Requestdata/CallAPI";
+import { connect } from "react-redux";
+import { setlistproduct } from "../Actions";
+import { addimageslide, getlistproduct } from "../Requestdata/CallAPI";
 class Addimageslide extends Component {
   constructor(props) {
     super(props);
@@ -10,11 +12,20 @@ class Addimageslide extends Component {
     };
   }
   addimageslide = () => {
-    let images = this.state.slide;
+    let images = JSON.stringify(this.state.slide);
+    console.log(images);
     let productID = this.props.producID;
-    addimageslide(productID, images).then(() =>
-      alert("Thêm " + images.length + " ảnh thành công")
-    );
+    addimageslide(productID, images).then(() => {
+      this.props.setisopenmodaladdslide(false);
+
+      getlistproduct(this.props.currenpageproduct + 1, "", "", "", "").then(
+        (response) => {
+          this.props.getlistproduct(response.data);
+        }
+      );
+      alert("Thêm " + this.state.slide.length + " ảnh thành công");
+      this.setState({ imageslide: "", slide: [] });
+    });
   };
   render() {
     let slide;
@@ -23,7 +34,7 @@ class Addimageslide extends Component {
         return (
           <span style={{ display: "inline-block" }}>
             <img
-              src={element}
+              src={element.pathIMG}
               alt="Ảnh không tồn tại"
               style={{ width: "200px", margin: "3px" }}
             />
@@ -120,5 +131,19 @@ class Addimageslide extends Component {
     );
   }
 }
-
-export default Addimageslide;
+const mapStateToProps = (state) => {
+  return {
+    totalpageproduct: state.productreducer.totalPage,
+    currenpageproduct: state.productreducer.currenPage,
+    listpro: state.productreducer.listproduct,
+    islogin: state.loginreducer.isLogin,
+  };
+};
+const mapDispatchToProps = (dispath) => {
+  return {
+    getlistproduct: (list) => {
+      dispath(setlistproduct(list));
+    },
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Addimageslide);

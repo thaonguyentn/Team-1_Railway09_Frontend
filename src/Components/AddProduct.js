@@ -1,8 +1,8 @@
-import { createproduct } from "../Requestdata/CallAPI";
+import { createproduct, getlistproduct } from "../Requestdata/CallAPI";
 import React, { Component } from "react";
 import Modal from "react-modal";
 import { connect } from "react-redux";
-import { setbrand, setmemory, setram } from "../Actions";
+import { setbrand, setlistproduct, setmemory, setram } from "../Actions";
 import { getbrand, getmemory, getram } from "../Requestdata/CallAPI";
 class AddProduct extends Component {
   constructor(props) {
@@ -52,7 +52,15 @@ class AddProduct extends Component {
       image: this.state.image,
       discount: this.state.discount,
     };
-    createproduct(body).then((response) => {});
+    createproduct(body).then((response) => {
+      this.props.setisopenmodaladd(false);
+      getlistproduct(this.props.totalpageproduct, "", "", "", "").then(
+        (response) => {
+          this.props.getlistproduct(response.data);
+        }
+      );
+      alert("Tạo sản phẩm thành công");
+    });
   };
   componentDidMount() {
     getbrand().then((response) => {
@@ -246,27 +254,6 @@ class AddProduct extends Component {
                 onChange={this.handleChange}
               />
             </p>
-            {/* <p
-              style={{
-                borderBottom: "1px solid",
-
-                marginBottom: "10px",
-              }}
-            >
-              <span>Giá bán sau khuyến mãi :</span>
-              <br />
-              <input
-                style={{
-                  border: "none",
-                  outline: "none",
-                  width: "100%",
-                  backgroundColor: "aquamarine",
-                }}
-                type="number"
-                name=""
-                value={this.state.}
-                onChange={this.handleChange}/>
-            </p> */}
             <p
               style={{
                 borderBottom: "1px solid",
@@ -321,7 +308,6 @@ class AddProduct extends Component {
                     })
                   : ""}
               </select>
-              {/* <input style={{ border: "none", outline: "none" }} type="text" /> */}
             </p>
           </div>
 
@@ -556,6 +542,9 @@ const mapStateToProps = (state) => {
     ram: state.productreducer.ram,
     brand: state.productreducer.brand,
     memory: state.productreducer.memory,
+    totalpageproduct: state.productreducer.totalPage,
+    currenpageproduct: state.productreducer.currenPage,
+    listpro: state.productreducer.listproduct,
   };
 };
 const mapDispatchToProps = (dispath) => {
@@ -568,6 +557,9 @@ const mapDispatchToProps = (dispath) => {
     },
     setmemory: (memory) => {
       dispath(setmemory(memory));
+    },
+    getlistproduct: (list) => {
+      dispath(setlistproduct(list));
     },
   };
 };

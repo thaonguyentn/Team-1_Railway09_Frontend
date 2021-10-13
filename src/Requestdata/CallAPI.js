@@ -258,6 +258,7 @@ export const addimageslide = (productID, images) => {
     url: baseURL + "/api/v5/productimages/" + productID,
     headers: {
       Authorization: "Bearer " + token,
+      "Content-Type": "application/json",
     },
     data: images,
   });
