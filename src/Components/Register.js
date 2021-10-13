@@ -43,7 +43,11 @@ function Register(props) {
       .catch((errors) => {
         if (errors.response) {
           if (errors.response.data) {
-            alert(errors.response.data.errors);
+            if (errors.response.data.errors === undefined) {
+              alert("Email của bạn không đúng!");
+            } else {
+              alert(errors.response.data.errors);
+            }
           }
         }
       });
