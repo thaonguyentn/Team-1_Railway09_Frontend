@@ -316,6 +316,7 @@ footer {
   width: 50px;
 }
 .description:hover {
+  border: 1px solid #cc0000;
   overflow: visible;
   white-space: pre-line;
   width: 500px;
