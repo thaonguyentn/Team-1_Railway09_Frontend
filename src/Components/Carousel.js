@@ -4,8 +4,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 const slides = (images, width) => {
   const arrowStyles = {
     position: "absolute",
-    zIndex: 2,
-    top: "calc(50% - 15px)",
+    top: "45%",
     width: 60,
     height: 60,
     cursor: "pointer",
@@ -26,13 +25,11 @@ const slides = (images, width) => {
     <div style={{ width: width, float: "left", marginLeft: "2px" }}>
       <Carousel
         emulateTouch={true}
-        // showThumbs={false}
         showStatus={false}
         swipeable={true}
         infiniteLoop={true}
         showArrows={true}
         autoPlay={false}
-        useKeyboardArrows={true}
         renderArrowPrev={(onClickHandler, hasPrev, label) =>
           hasPrev && (
             <button
@@ -41,6 +38,7 @@ const slides = (images, width) => {
               title={label}
               style={{
                 ...arrowStyles,
+                zIndex: "2",
                 left: 15,
                 background: "none",
                 outline: "none",
@@ -73,7 +71,6 @@ const slides = (images, width) => {
                 style={{
                   fontSize: "50px",
                   color: "gray",
-                  position: "absolute",
                 }}
               ></span>
             </button>
