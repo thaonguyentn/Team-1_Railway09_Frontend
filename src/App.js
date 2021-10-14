@@ -17,6 +17,7 @@ import Profile from "./Components/Profile";
 import React from "react";
 import ActiveAccount from "./Components/ActiveAccount";
 import Order from "./Components/Order";
+import avatar from "../src/Images/avatar.jpg";
 class App extends Component {
   constructor(props) {
     super(props);
@@ -24,7 +25,6 @@ class App extends Component {
   }
   Logout = () => {
     this.props.setlogin(false);
-    console.log("kkkkkk");
     localStorage.removeItem("role");
     localStorage.removeItem("token");
     localStorage.removeItem("user_login");
@@ -37,8 +37,6 @@ class App extends Component {
     const user_login_infor = JSON.parse(
       localStorage.getItem("user_login_infor")
     );
-    const user_login = JSON.parse(localStorage.getItem("user_login"));
-
     const role = JSON.parse(localStorage.getItem("role"));
     if (role === "Admin") {
       return (
@@ -54,7 +52,6 @@ class App extends Component {
         </>
       );
     }
-    console.log(this.props.isLogin);
     let loginelement;
     let registerelement;
     if (this.props.isLogin === true) {
@@ -92,8 +89,12 @@ class App extends Component {
                     borderRadius: "50%",
                     marginLeft: "5px",
                   }}
-                  src="https://scontent.fhan14-1.fna.fbcdn.net/v/t1.6435-9/211057898_3056832151205713_8380822449352218766_n.jpg?_nc_cat=107&_nc_rgb565=1&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=4mazPvoWXFoAX9YC86v&_nc_ht=scontent.fhan14-1.fna&oh=29fe316e4f1150d9e88b73626ad8b436&oe=616D398E"
-                  alt="https://scontent.fhan14-1.fna.fbcdn.net/v/t1.6435-9/211057898_3056832151205713_8380822449352218766_n.jpg?_nc_cat=107&_nc_rgb565=1&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=4mazPvoWXFoAX9YC86v&_nc_ht=scontent.fhan14-1.fna&oh=29fe316e4f1150d9e88b73626ad8b436&oe=616D398E"
+                  src={
+                    user_login_infor.avatar !== null
+                      ? user_login_infor.avatar
+                      : avatar
+                  }
+                  alt={avatar}
                 />
               </button>
               <ul className="dropdown-menu">
@@ -307,7 +308,6 @@ class App extends Component {
   }
 }
 const mapStateToProps = (state) => {
-  console.log("accountUpdate", state);
   return {
     isLogin: state.loginreducer.isLogin,
     cart: state.cart.cart,

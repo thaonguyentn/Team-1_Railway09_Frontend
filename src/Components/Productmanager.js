@@ -1,13 +1,6 @@
 import React, { Component } from "react";
 import { NavLink, Switch, Route, Redirect } from "react-router-dom";
-import {
-  getlistproduct,
-  getlistaccount,
-  getallorder,
-  deleteproduct,
-  cancelorder,
-  updateorder,
-} from "../Requestdata/CallAPI";
+import { getlistproduct, deleteproduct } from "../Requestdata/CallAPI";
 import { connect } from "react-redux";
 import {
   setlistproduct,
@@ -31,10 +24,7 @@ class Productmanager extends Component {
       isopenmodaladd: false,
       isopenmodaladdslide: false,
       isopenid: null,
-      isopenmodaldeleteorder: false,
       isavtiveclass: false,
-      why: "",
-      whyalert: "",
     };
   }
   format2 = (n) => {
@@ -77,15 +67,10 @@ class Productmanager extends Component {
     }
   };
   componentDidMount() {
-    getlistaccount(1).then((response) => {
-      this.props.setlistaccount(response.data);
-    });
     getlistproduct(1, "", "", "", "").then((response) => {
       this.props.getlistproduct(response.data);
     });
-    getallorder().then((response) => {
-      this.props.setallorder(response.data);
-    });
+
     this.setState({ isavtiveclass: true });
   }
   render() {
@@ -289,37 +274,12 @@ const mapStateToProps = (state) => {
     totalpageproduct: state.productreducer.totalPage,
     currenpageproduct: state.productreducer.currenPage,
     listpro: state.productreducer.listproduct,
-    totalpageorder: state.orderreducer.totalPage,
-    currenpageorder: state.orderreducer.currenPage,
-    allorder: state.orderreducer.allorder,
-    islogin: state.loginreducer.isLogin,
-    totalpageaccount: state.accountreducer.totalPage,
-    currenpageaccount: state.accountreducer.currenPage,
-    listaccount: state.accountreducer.listaccount,
   };
 };
 const mapDispatchToProps = (dispath) => {
   return {
     getlistproduct: (list) => {
       dispath(setlistproduct(list));
-    },
-    setallorder: (allorder) => {
-      dispath(setallorder(allorder));
-    },
-    setlogin: (islogin) => {
-      dispath(setlogin(islogin));
-    },
-    setcart: (cart) => {
-      dispath(setcart(cart));
-    },
-    setcartdetail: (cartdetail) => {
-      dispath(setcartdetail(cartdetail));
-    },
-    setprofile: (account) => {
-      dispath(setprofile(account));
-    },
-    setlistaccount: (data) => {
-      dispath(setlistaccount(data));
     },
   };
 };

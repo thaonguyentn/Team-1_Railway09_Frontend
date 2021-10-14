@@ -1,36 +1,13 @@
 import React, { Component } from "react";
 import { NavLink, Switch, Route, Redirect } from "react-router-dom";
-import {
-  getlistproduct,
-  getlistaccount,
-  getallorder,
-  deleteproduct,
-  cancelorder,
-  updateorder,
-} from "../Requestdata/CallAPI";
+import { getallorder } from "../Requestdata/CallAPI";
 import { connect } from "react-redux";
-import {
-  setlistproduct,
-  setallorder,
-  setlogin,
-  setcart,
-  setcartdetail,
-  setprofile,
-  setlistaccount,
-} from "../Actions/index";
-import slides from "./Carousel";
-import AddProduct from "./AddProduct";
-import Addimageslide from "./AddImageSlide";
-import ReactModal from "react-modal";
+import { setallorder } from "../Actions/index";
 
 class Odermanager extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      prid: 0,
-      isopenmodaladd: false,
-      isopenmodaladdslide: false,
-      isopenid: null,
       isopenmodaldeleteorder: false,
       isavtiveclass: false,
       why: "",
@@ -55,12 +32,6 @@ class Odermanager extends Component {
     }
   };
   componentDidMount() {
-    getlistaccount(1).then((response) => {
-      this.props.setlistaccount(response.data);
-    });
-    getlistproduct(1, "", "", "", "").then((response) => {
-      this.props.getlistproduct(response.data);
-    });
     getallorder().then((response) => {
       this.props.setallorder(response.data);
     });
@@ -187,40 +158,15 @@ class Odermanager extends Component {
 }
 const mapStateToProps = (state) => {
   return {
-    totalpageproduct: state.productreducer.totalPage,
-    currenpageproduct: state.productreducer.currenPage,
-    listpro: state.productreducer.listproduct,
     totalpageorder: state.orderreducer.totalPage,
     currenpageorder: state.orderreducer.currenPage,
     allorder: state.orderreducer.allorder,
-    islogin: state.loginreducer.isLogin,
-    totalpageaccount: state.accountreducer.totalPage,
-    currenpageaccount: state.accountreducer.currenPage,
-    listaccount: state.accountreducer.listaccount,
   };
 };
 const mapDispatchToProps = (dispath) => {
   return {
-    getlistproduct: (list) => {
-      dispath(setlistproduct(list));
-    },
     setallorder: (allorder) => {
       dispath(setallorder(allorder));
-    },
-    setlogin: (islogin) => {
-      dispath(setlogin(islogin));
-    },
-    setcart: (cart) => {
-      dispath(setcart(cart));
-    },
-    setcartdetail: (cartdetail) => {
-      dispath(setcartdetail(cartdetail));
-    },
-    setprofile: (account) => {
-      dispath(setprofile(account));
-    },
-    setlistaccount: (data) => {
-      dispath(setlistaccount(data));
     },
   };
 };
