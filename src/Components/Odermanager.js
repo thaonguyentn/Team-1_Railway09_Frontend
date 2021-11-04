@@ -156,10 +156,7 @@ class Odermanager extends Component {
                   onChange={(e) => {
                     this.setState({ status: e.target.value });
                     console.log(e.target.value);
-                    getallorder(
-                      this.props.currenpageorder + 1,
-                      e.target.value
-                    ).then((response) => {
+                    getallorder(1, e.target.value).then((response) => {
                       this.props.setallorder(response.data);
                     });
                   }}
