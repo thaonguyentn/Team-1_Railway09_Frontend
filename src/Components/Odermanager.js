@@ -12,6 +12,7 @@ class Odermanager extends Component {
       isavtiveclass: false,
       why: "",
       whyalert: "",
+      status: "",
     };
   }
   format2 = (n) => {
@@ -19,16 +20,20 @@ class Odermanager extends Component {
   };
   Nextorder = () => {
     if (this.props.totalpageorder !== this.props.currenpageorder + 1) {
-      getallorder(this.props.currenpageorder + 1 + 1).then((data) => {
-        this.props.setallorder(data.data);
-      });
+      getallorder(this.props.currenpageorder + 1 + 1, this.state.status).then(
+        (data) => {
+          this.props.setallorder(data.data);
+        }
+      );
     }
   };
   Previosorder = () => {
     if (this.props.totalpageorder !== 0) {
-      getallorder(this.props.currenpageorder).then((data) => {
-        this.props.setallorder(data.data);
-      });
+      getallorder(this.props.currenpageorder, this.state.status).then(
+        (data) => {
+          this.props.setallorder(data.data);
+        }
+      );
     }
   };
   componentDidMount() {
@@ -144,7 +149,38 @@ class Odermanager extends Component {
               <th>Địa chỉ người nhận</th>
               <th>SĐT người nhận</th>
               <th>Tổng giá</th>
-              <th>Trạng thái</th>
+              <th>
+                Trạng thái{" "}
+                <select
+                  value={this.state.status}
+                  onChange={(e) => {
+                    this.setState({ status: e.target.value });
+                    console.log(e.target.value);
+                    getallorder(
+                      this.props.currenpageorder + 1,
+                      e.target.value
+                    ).then((response) => {
+                      this.props.setallorder(response.data);
+                    });
+                  }}
+                >
+                  <option value="" key="">
+                    Tất cả
+                  </option>
+                  <option value="Not_Active" key="">
+                    Chờ duyệt
+                  </option>
+                  <option value="Active" key="">
+                    Đang giao
+                  </option>
+                  <option value="End" key="">
+                    Đã giao
+                  </option>
+                  <option value="Delete" key="">
+                    Đã huỷ
+                  </option>
+                </select>
+              </th>
               <th>Ngày đặt hàng</th>
               <th>Ghi chú</th>
             </tr>
