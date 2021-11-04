@@ -3,7 +3,7 @@ import thunk from "redux-thunk";
 import { createStore, applyMiddleware, compose } from "redux";
 import RootReducer from "./Reducers/IndexReducer";
 import * as actionCreators from "./Actions/index";
-import invariant from "redux-immutable-state-invariant";
+// import invariant from "redux-immutable-state-invariant";
 export default function configureStore(preloadedState) {
   const composeEnhancers = composeWithDevTools({
     actionCreators,
@@ -12,8 +12,8 @@ export default function configureStore(preloadedState) {
   });
   const store = createStore(
     RootReducer,
-    preloadedState,
-    composeEnhancers(applyMiddleware(invariant(), thunk))
+    preloadedState
+    // composeEnhancers(applyMiddleware(invariant(), thunk))
   );
 
   if (module.hot) {
