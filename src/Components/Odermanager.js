@@ -113,7 +113,7 @@ class Odermanager extends Component {
           className="page-link"
           id={this.props.currenpageorder === index ? "buttonpage" : "abc"}
           onClick={() => {
-            getallorder(index + 1).then((data) => {
+            getallorder(index + 1, this.state.status).then((data) => {
               this.props.setallorder(data.data);
             });
           }}
