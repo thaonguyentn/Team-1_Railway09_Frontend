@@ -264,3 +264,9 @@ export const addimageslide = (productID, images) => {
   });
   return create;
 };
+export const resetpassword = (email) => {
+  const reset = Axios({
+    method: "post",
+    url: baseURL + "/api/v3/resetpassword?email=" + email,
+  });
+};

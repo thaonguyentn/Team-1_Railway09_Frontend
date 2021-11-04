@@ -144,17 +144,6 @@ class Productmanager extends Component {
             </td>
             <td>{row.quantity}</td>
             <td>{row.enter_date}</td>
-            <td>
-              <button
-                type="button"
-                className="btn btn-danger"
-                onClick={() => {
-                  this.DeleteProduct(row.id);
-                }}
-              >
-                delete
-              </button>
-            </td>
           </tr>
         );
       });

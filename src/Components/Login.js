@@ -20,6 +20,7 @@ class Login extends Component {
       errorlogin: "",
       user: "",
       password: "",
+      openforgetpassword: false,
     };
   }
 
@@ -163,6 +164,20 @@ class Login extends Component {
             </div>
             <div className="form-group">
               <div className="col-sm-12">
+                {""}
+                <a
+                  style={{ cursor: "pointer" }}
+                  onClick={() => {
+                    this.props.setisopen(false);
+                    this.setState({ openforgetpassword: true });
+                  }}
+                >
+                  Quên mật khẩu
+                </a>
+              </div>
+            </div>
+            <div className="form-group">
+              <div className="col-sm-12">
                 <button
                   style={{ width: "100%" }}
                   type="button"
@@ -187,6 +202,65 @@ class Login extends Component {
             </span>
             <a href=""> Đăng nhập bằng facebook</a>
           </div> */}
+        </Modal>
+        <Modal
+          isOpen={this.state.openforgetpassword}
+          onRequestClose={() => this.setState({ openforgetpassword: false })}
+          style={{
+            overlay: { backgroundColor: "rgba(1,1,1,0)" },
+            content: {
+              backgroundColor: "white",
+              width: "270px",
+              margin: "auto",
+              height: "70%",
+              color: "blue",
+            },
+          }}
+        >
+          <h2>Quên mật khẩu</h2>
+          <form className="form-horizontal">
+            <div className="form-group">
+              <label className="col-sm-10" for="email">
+                Tên đăng nhập:
+              </label>
+              <div className="col-sm-12">
+                <input
+                  required={true}
+                  type="text"
+                  className="form-control"
+                  id="lemail"
+                  placeholder="Nhập tên đăng nhập"
+                  name="setuser"
+                  value={this.state.user}
+                  onChange={(event) => {
+                    if (event.target.value !== "") {
+                      this.setState({ erroruser: "" });
+                    }
+                    this.setState({ user: event.target.value });
+                  }}
+                />
+                <p style={{ color: "red", position: "fixed" }}>
+                  {this.state.erroruser}
+                </p>
+              </div>
+            </div>
+            <div className="form-group">
+              <div style={{ color: "red" }} className="col-sm-10"></div>
+            </div>
+
+            <div className="form-group">
+              <div className="col-sm-12">
+                <button
+                  style={{ width: "100%" }}
+                  type="button"
+                  className="btn btn-success"
+                  onClick={this.Login}
+                >
+                  Xác nhận
+                </button>
+              </div>
+            </div>
+          </form>
         </Modal>
       </div>
     );

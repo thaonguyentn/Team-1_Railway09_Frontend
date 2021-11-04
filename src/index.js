@@ -3,11 +3,15 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import { BrowserRouter } from "react-router-dom";
-import { createStore } from "redux";
+import { createStore, applyMiddleware, compose } from "redux";
 import { Provider } from "react-redux";
 import RootReducer from "./Reducers/IndexReducer";
-
-const store = createStore(RootReducer);
+import configureStore from "./configureStore";
+// const store = createStore(
+//   RootReducer /* preloadedState, */,
+//   +window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+// );
+const store = configureStore();
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
