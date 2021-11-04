@@ -55,14 +55,7 @@ class DienthoaiDetail extends Component {
         </div>
       );
       row = [
-        <div
-          style={{
-            marginLeft: "30px",
-            backgroundColor: "white",
-            width: "500px",
-            float: "left",
-          }}
-        >
+        <div id="phonedetail">
           <h3>Thông tin chi tiết sản phẩm :</h3>
           <p
             style={{
@@ -235,7 +228,12 @@ class DienthoaiDetail extends Component {
           <button
             type="button"
             class="btn btn-warning"
-            style={{ marginRight: "20px" }}
+            style={{
+              marginRight: "4%",
+              width: "48%",
+              fontSize: "medium",
+              height: "40px",
+            }}
           >
             Mua ngay
           </button>
@@ -243,6 +241,7 @@ class DienthoaiDetail extends Component {
             onClick={this.addCartdetail}
             type="button"
             class="btn btn-success"
+            style={{ width: "48%", fontSize: "medium", height: "40px" }}
           >
             Thêm vào giỏ hàng
           </button>
@@ -252,7 +251,7 @@ class DienthoaiDetail extends Component {
     return (
       <div>
         {prname}
-        {slideshow}
+        <div id="phoneslide">{slideshow}</div>
         {row}
         <hr style={{ clear: "both" }} />
       </div>

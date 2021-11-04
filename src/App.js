@@ -121,7 +121,7 @@ class App extends Component {
         <header>
           <Banner />
           <div id="loginlogout">
-            <div id="lienketcontainer">
+            {/* <div id="lienketcontainer" style={{ display: "none" }}>
               <div id="lienhe">
                 Liên hệ với chúng tôi: <span>Hà nội: 0964385217</span>|{" "}
                 <span>TP.Hồ Chí Minh: 0705818277</span>
@@ -161,8 +161,8 @@ class App extends Component {
                   </li>
                 </ul>
               </div>
-            </div>
-            <div style={{ float: "right" }}>
+            </div> */}
+            <div id="useraction">
               {loginelement}
               {registerelement}
             </div>
@@ -187,7 +187,7 @@ class App extends Component {
                       borderRadius: "5px",
                       padding: "3px",
                     }}
-                    src={require("./Images/logonew.jpg").default}
+                    src={require("./Images/logo.jpg").default}
                     alt=""
                   />
                 </span>
@@ -195,7 +195,7 @@ class App extends Component {
             </div>
             <div id="search">
               <div id="searchinput">
-                <input placeholder="Bạn muốn tìm gì" />
+                <input placeholder="Bạn muốn tìm gì ?" />
               </div>
               <div
                 style={{

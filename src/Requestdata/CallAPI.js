@@ -1,6 +1,6 @@
 import Axios from "axios";
-const baseURL = "https://thegioicamtayapi.herokuapp.com";
-// const baseURL = "http://localhost:8080";
+// const baseURL = "https://thegioicamtayapi.herokuapp.com";
+const baseURL = "http://localhost:8080";
 export const getbrand = () => {
   const get = Axios.get(baseURL + "/api/v1/productbrandcontrollers");
   return get;

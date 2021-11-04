@@ -127,7 +127,11 @@ class Productmanager extends Component {
                 isOpen={this.state.prid === row.id}
                 onRequestClose={() => this.setState({ prid: 0 })}
               >
-                {slides(row.listResponse, "600px")}
+                <div
+                  style={{ width: "600px", float: "left", marginLeft: "2px" }}
+                >
+                  {slides(row.listResponse, "600px")}
+                </div>
               </ReactModal>
               <button
                 onClick={() => this.setState({ isopenmodaladdslide: true })}

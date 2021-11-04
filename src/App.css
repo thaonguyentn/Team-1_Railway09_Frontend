@@ -1,6 +1,76 @@
+@media only screen and (max-width: 600px) {
+  .App {
+    margin: 0;
+    border: none;
+    width: 100%;
+  }
+  #sp {
+    width: 33.33333333333333333333333333333333%;
+    float: left;
+    font-size: 15px;
+  }
+  #sp img {
+    width: 100%;
+  }
+  div#lienketcontainer {
+    display: none;
+  }
+}
+@media only screen and (min-width: 1200px) {
+  #phoneslide {
+    width: 50%;
+    float: left;
+    margin-left: 2px;
+  }
+  #phonedetail {
+    margin-left: 30px;
+    background-color: white;
+    width: 45%;
+    float: left;
+  }
+}
+@media only screen and (max-width: 1200px) {
+  #phoneslide {
+    width: 100%;
+  }
+  #phonedetail {
+    width: 100%;
+  }
+}
+@media only screen and (min-width: 600px) {
+  .App {
+    margin-inline: 10%;
+    border-inline: 2px solid black;
+  }
+  #sp img {
+    width: 100%;
+  }
+  #sp {
+    float: left;
+    width: 25%;
+  }
+  div#lienketcontainer {
+    display: none;
+  }
+}
+#sp:hover {
+  opacity: 0.7;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+}
+#loginlogout {
+  background-color: rgb(141, 32, 13);
+}
+#loginlogout div {
+  display: inline-flex;
+  color: white;
+  font-size: 15px;
+  margin-right: 6px;
+}
+#useraction {
+  float: right;
+}
 #lienketcontainer {
   background-color: rgb(141, 32, 13);
-  /* width: 100%; */
   float: left;
   margin-top: 6px;
   border: 0;
@@ -29,20 +99,6 @@
 }
 #ketnoi ul li a i {
   color: chartreuse;
-}
-#loginlogout {
-  background-color: rgb(141, 32, 13);
-  /* text-align: right; */
-}
-#loginlogout div {
-  display: inline-flex;
-  color: white;
-  font-size: 15px;
-  /* float: left; */
-}
-#loginlogout div div {
-  margin-right: 6px;
-  /* padding: 5px; */
 }
 
 .image {
@@ -135,10 +191,7 @@ footer {
     display: block;
   }
 }
-#sp:hover {
-  opacity: 0.7;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-}
+
 #user li a:hover {
   background-color: rgba(0, 0, 0, 0);
 }

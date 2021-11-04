@@ -22,64 +22,62 @@ const slides = (images, width) => {
     rows = "";
   }
   return (
-    <div style={{ width: width, float: "left", marginLeft: "2px" }}>
-      <Carousel
-        emulateTouch={true}
-        showStatus={false}
-        swipeable={true}
-        infiniteLoop={true}
-        showArrows={true}
-        autoPlay={false}
-        renderArrowPrev={(onClickHandler, hasPrev, label) =>
-          hasPrev && (
-            <button
-              type="button"
-              onClick={onClickHandler}
-              title={label}
+    <Carousel
+      emulateTouch={true}
+      showStatus={false}
+      swipeable={true}
+      infiniteLoop={true}
+      showArrows={true}
+      autoPlay={false}
+      renderArrowPrev={(onClickHandler, hasPrev, label) =>
+        hasPrev && (
+          <button
+            type="button"
+            onClick={onClickHandler}
+            title={label}
+            style={{
+              ...arrowStyles,
+              zIndex: "2",
+              left: 15,
+              background: "none",
+              outline: "none",
+              border: "none",
+            }}
+          >
+            <span
+              class="glyphicon  glyphicon-menu-left "
+              style={{ fontSize: "50px", color: "gray" }}
+            ></span>
+          </button>
+        )
+      }
+      renderArrowNext={(onClickHandler, hasNext, label) =>
+        hasNext && (
+          <button
+            type="button"
+            onClick={onClickHandler}
+            title={label}
+            style={{
+              ...arrowStyles,
+              right: 40,
+              background: "none",
+              outline: "none",
+              border: "none",
+            }}
+          >
+            <span
+              class="glyphicon  glyphicon-menu-right "
               style={{
-                ...arrowStyles,
-                zIndex: "2",
-                left: 15,
-                background: "none",
-                outline: "none",
-                border: "none",
+                fontSize: "50px",
+                color: "gray",
               }}
-            >
-              <span
-                class="glyphicon  glyphicon-menu-left "
-                style={{ fontSize: "50px", color: "gray" }}
-              ></span>
-            </button>
-          )
-        }
-        renderArrowNext={(onClickHandler, hasNext, label) =>
-          hasNext && (
-            <button
-              type="button"
-              onClick={onClickHandler}
-              title={label}
-              style={{
-                ...arrowStyles,
-                right: 40,
-                background: "none",
-                outline: "none",
-                border: "none",
-              }}
-            >
-              <span
-                class="glyphicon  glyphicon-menu-right "
-                style={{
-                  fontSize: "50px",
-                  color: "gray",
-                }}
-              ></span>
-            </button>
-          )
-        }
-      >
-        {rows}
-      </Carousel>
-    </div>
+            ></span>
+          </button>
+        )
+      }
+    >
+      {rows}
+    </Carousel>
   );
 };
 export default slides;

@@ -1,31 +1,11 @@
 import React, { Component } from "react";
 import { NavLink, Switch, Route, Redirect } from "react-router-dom";
-import {
-  getlistproduct,
-  getlistaccount,
-  getallorder,
-  deleteproduct,
-  cancelorder,
-  updateorder,
-} from "../Requestdata/CallAPI";
 import { connect } from "react-redux";
-import {
-  setlistproduct,
-  setallorder,
-  setlogin,
-  setcart,
-  setcartdetail,
-  setprofile,
-  setlistaccount,
-} from "../Actions/index";
-import slides from "./Carousel";
-import AddProduct from "./AddProduct";
-import Addimageslide from "./AddImageSlide";
-import ReactModal from "react-modal";
 import Accountmanager from "./Accountmanager";
 import Productmanager from "./Productmanager";
 import Odermanager from "./Odermanager";
 import Orderdetailmanager from "./Orderdetailmanager";
+import { setcart, setcartdetail, setlogin, setprofile } from "../Actions";
 class Admin extends Component {
   constructor(props) {
     super(props);
@@ -50,117 +30,8 @@ class Admin extends Component {
     this.props.setprofile(null);
     this.props.setlogin(false);
   };
-  Nextproduct = () => {
-    if (this.props.totalpageproduct !== this.props.currenpageproduct + 1) {
-      getlistproduct(this.props.currenpageproduct + 1 + 1, "", "", "", "").then(
-        (data) => {
-          this.props.getlistproduct(data.data);
-        }
-      );
-    }
-  };
-  Previosproduct = () => {
-    if (this.props.currenpageproduct !== 0) {
-      getlistproduct(this.props.currenpageproduct, "", "", "", "").then(
-        (data) => {
-          this.props.getlistproduct(data.data);
-        }
-      );
-    }
-  };
-  Nextaccount = () => {
-    if (this.props.totalpageaccount !== this.props.currenpageaccount + 1) {
-      getlistaccount(this.props.currenpageproduct + 1 + 1).then((data) => {
-        this.props.setlistaccount(data.data);
-      });
-    }
-  };
-  Previosaccount = () => {
-    if (this.props.currenpageaccount !== 0) {
-      getlistaccount(this.props.currenpageaccount).then((data) => {
-        this.props.setlistaccount(data.data);
-      });
-    }
-  };
-  Nextorder = () => {
-    if (this.props.totalpageorder !== this.props.currenpageorder + 1) {
-      getallorder(this.props.currenpageorder + 1 + 1).then((data) => {
-        this.props.setallorder(data.data);
-      });
-    }
-  };
-  Previosorder = () => {
-    if (this.props.totalpageorder !== 0) {
-      getallorder(this.props.currenpageorder).then((data) => {
-        this.props.setallorder(data.data);
-      });
-    }
-  };
-  DeleteProduct = (id) => {
-    deleteproduct(id).then(() => {
-      getlistproduct(1, "", "", "", "").then((response) => {
-        this.props.getlistproduct(response.data);
-      });
-    });
-  };
-  showimageslide = (id) => {
-    if (id === this.state.prid) {
-      this.setState({
-        prid: 0,
-      });
-    } else {
-      this.setState({
-        prid: id,
-      });
-    }
-  };
-  updateorder = (id, status) => {
-    if (
-      window.confirm(
-        status === "Not_Active"
-          ? "Xác nhận duyệt đơn hàng"
-          : status === "Active"
-          ? "Xác nhận đã giao hàng"
-          : status === "End"
-          ? "Đã giao"
-          : status === "Delete"
-          ? "Đã huỷ"
-          : ""
-      )
-    ) {
-      updateorder(id).then(() => {
-        getallorder().then((response) => {
-          this.props.setallorder(response.data);
-        });
-      });
-    }
-  };
-  cancelorder = (id) => {
-    if (this.state.why === "") {
-      this.setState({ whyalert: "* bạn chưa nhập lý do" });
-      return;
-    }
-    let body = { description: "Huỷ : " + this.state.why };
-    cancelorder(id, body).then(() => {
-      getallorder().then((response) => {
-        this.props.setallorder(response.data);
-        this.setState({ isopenmodaldeleteorder: false });
-      });
-    });
-  };
-  format2 = (n) => {
-    return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  };
   componentDidMount() {
-    getlistaccount(1).then((response) => {
-      this.props.setlistaccount(response.data);
-    });
-    getlistproduct(1, "", "", "", "").then((response) => {
-      this.props.getlistproduct(response.data);
-    });
-    getallorder().then((response) => {
-      this.props.setallorder(response.data);
-    });
+    this.props.history.replace("/admin/accounts");
   }
   componentWillUnmount() {
     this.props.history.replace("/");
@@ -239,6 +110,11 @@ const mapStateToProps = (state) => {
   };
 };
 const mapDispatchToProps = (dispath) => {
-  return {};
+  return {
+    setcart: (cart) => dispath(setcart(cart)),
+    setcartdetail: (cartdetail) => dispath(setcartdetail(cartdetail)),
+    setprofile: (profile) => dispath(setprofile(profile)),
+    setlogin: (login) => dispath(setlogin(login)),
+  };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Admin);

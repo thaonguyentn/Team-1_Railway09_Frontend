@@ -61,14 +61,7 @@ class Home extends Component {
       rows = this.props.listpro.map((row, index) => {
         const rowid = row.id;
         return (
-          <div
-            id="sp"
-            style={{
-              backgroundColor: "white",
-              width: "260px",
-              float: "left",
-            }}
-          >
+          <div id="sp">
             <NavLink
               to={{
                 pathname: "/dienthoai/" + row.id,
@@ -77,15 +70,11 @@ class Home extends Component {
                 },
               }}
             >
-              <img
-                src={row.image}
-                alt=""
-                style={{ width: "260px", height: "auto" }}
-              />
-              <p style={{ textAlign: "center" }}>
+              <img src={row.image} alt="" />
+              <p style={{ textAlign: "center", fontSize: "1.5rem" }}>
                 {row.name}({row.ram}/{row.memory})
               </p>
-              <p style={{ textAlign: "center", fontSize: "small" }}>
+              <p style={{ textAlign: "center", fontSize: "1rem" }}>
                 <span
                   style={{
                     textDecoration: "line-through",
@@ -97,7 +86,7 @@ class Home extends Component {
 
                 <span> -{row.discount}%</span>
               </p>
-              <p style={{ textAlign: "center", fontSize: "larger" }}>
+              <p style={{ textAlign: "center", fontSize: "1.5rem" }}>
                 {this.format2(
                   Number(row.price) -
                     (Number(row.price) * Number(row.discount)) / 100
