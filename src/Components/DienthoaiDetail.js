@@ -260,6 +260,7 @@ class DienthoaiDetail extends Component {
             type="button"
             class="btn btn-success"
             style={{ width: "48%", fontSize: "medium", height: "40px" }}
+            disabled={this.props.loading}
           >
             Thêm vào giỏ hàng
           </button>
