@@ -1,10 +1,11 @@
 .App {
   min-height: 100vh;
+  padding: 0;
 }
 @media only screen and (max-width: 600px) {
   .App {
     margin: 0;
-    border: none;
+    border: 0;
     width: 100%;
   }
   #sp {
@@ -42,8 +43,10 @@
 }
 @media only screen and (min-width: 600px) {
   .App {
-    margin-inline: 10%;
+    /* margin-inline: 10%; */
     border-inline: 2px solid black;
+    width: 80%;
+    margin: auto;
   }
   #sp img {
     width: 100%;
@@ -378,4 +381,43 @@ footer {
   width: 500px;
   position: absolute;
   background-color: rgb(255, 255, 255);
+}
+.loader {
+  width: 100%;
+  position: absolute;
+  padding: 1px;
+}
+.loaderBar {
+  position: absolute;
+  top: 0;
+  right: 100%;
+  bottom: 0;
+  border-radius: 50%;
+  left: 0;
+  background: rgb(0, 0, 0);
+  width: 0;
+  animation: borealisBar 1.5s linear infinite;
+}
+
+@keyframes borealisBar {
+  0% {
+    left: 0%;
+    right: 100%;
+    width: 0%;
+  }
+  10% {
+    left: 0%;
+    right: 75%;
+    width: 25%;
+  }
+  90% {
+    right: 0%;
+    left: 75%;
+    width: 25%;
+  }
+  100% {
+    left: 100%;
+    right: 0%;
+    width: 0%;
+  }
 }

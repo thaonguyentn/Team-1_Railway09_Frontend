@@ -192,7 +192,7 @@ class Giohang extends Component {
               style={{
                 // margin: "30px",
                 backgroundColor: "white",
-                width: "260px",
+                width: "180px",
                 float: "left",
               }}
             >
@@ -247,7 +247,7 @@ class Giohang extends Component {
       });
     }
     return (
-      <div style={{ marginLeft: "100px" }}>
+      <div style={{}}>
         <h1>
           Giỏ hàng của bạn ({this.props.cart ? this.props.cart.quantity : "0"}{" "}
           sản phẩm)

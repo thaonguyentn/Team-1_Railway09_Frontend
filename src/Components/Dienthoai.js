@@ -15,9 +15,11 @@ import {
   setramfilter,
   setbrandfilter,
   setmemoryfilter,
+  setloading,
 } from "../Actions/index";
 class Dienthoai extends Component {
   Next = () => {
+    this.props.setloading(true);
     if (this.props.totalpage !== this.props.currenpage + 1) {
       getlistproduct(
         this.props.currenpage + 1 + 1,
@@ -25,12 +27,15 @@ class Dienthoai extends Component {
         this.props.brandfilter,
         this.props.memoryfilter,
         this.props.searchfilter
-      ).then((data) => {
-        this.props.getlistproduct(data.data);
-      });
+      )
+        .then((data) => {
+          this.props.getlistproduct(data.data);
+        })
+        .finally(() => this.props.setloading(false));
     }
   };
   Previos = () => {
+    this.props.setloading(true);
     if (this.props.currenpage !== 0) {
       getlistproduct(
         this.props.currenpage,
@@ -38,15 +43,18 @@ class Dienthoai extends Component {
         this.props.brandfilter,
         this.props.memoryfilter,
         this.props.searchfilter
-      ).then((data) => {
-        this.props.getlistproduct(data.data);
-      });
+      )
+        .then((data) => {
+          this.props.getlistproduct(data.data);
+        })
+        .finally(() => this.props.setloading(false));
     }
   };
   format2 = (n) => {
     return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
   handleChange = (event) => {
+    this.props.setloading(true);
     switch (event.target.name) {
       case "brand":
         this.props.setbrandfilter(event.target.value);
@@ -56,9 +64,11 @@ class Dienthoai extends Component {
           event.target.value,
           this.props.memoryfilter,
           this.props.searchfilter
-        ).then((data) => {
-          this.props.getlistproduct(data.data);
-        });
+        )
+          .then((data) => {
+            this.props.getlistproduct(data.data);
+          })
+          .finally(() => this.props.setloading(false));
         break;
       case "memory":
         this.props.setmemoryfilter(event.target.value);
@@ -68,9 +78,11 @@ class Dienthoai extends Component {
           this.props.brandfilter,
           event.target.value,
           this.props.searchfilter
-        ).then((data) => {
-          this.props.getlistproduct(data.data);
-        });
+        )
+          .then((data) => {
+            this.props.getlistproduct(data.data);
+          })
+          .finally(() => this.props.setloading(false));
         break;
       case "ram":
         this.props.setramfilter(event.target.value);
@@ -80,30 +92,35 @@ class Dienthoai extends Component {
           this.props.brandfilter,
           this.props.memoryfilter,
           this.props.searchfilter
-        ).then((data) => {
-          this.props.getlistproduct(data.data);
-        });
+        )
+          .then((data) => {
+            this.props.getlistproduct(data.data);
+          })
+          .finally(() => this.props.setloading(false));
         break;
       default:
         break;
     }
   };
   componentDidMount() {
+    this.props.setloading(true);
     getlistproduct(
       1,
       this.props.ramfilter,
       this.props.brandfilter,
       this.props.memoryfilter,
       this.props.searchfilter
-    ).then((response) => {
-      let listphone = [];
-      response.data.content.forEach((element) => {
-        if (element.category === "Phone") {
-          listphone.push(element);
-        }
-      });
-      this.props.getlistproduct(response.data);
-    });
+    )
+      .then((response) => {
+        let listphone = [];
+        response.data.content.forEach((element) => {
+          if (element.category === "Phone") {
+            listphone.push(element);
+          }
+        });
+        this.props.getlistproduct(response.data);
+      })
+      .finally(() => this.props.setloading(false));
     getbrand().then((response) => {
       this.props.setbrand(response.data);
     });
@@ -121,7 +138,7 @@ class Dienthoai extends Component {
   }
   render() {
     let rows;
-    if (this.props.listpro) {
+    if (this.props.listpro && this.props.loading === false) {
       rows = this.props.listpro.map((row, index) => {
         const rowid = row.id;
         return (
@@ -192,15 +209,18 @@ class Dienthoai extends Component {
           className="page-link"
           id={this.props.currenpage === index ? "buttonpage" : "abc"}
           onClick={() => {
+            this.props.setloading(true);
             getlistproduct(
               index + 1,
               this.props.ramfilter,
               this.props.brandfilter,
               this.props.memoryfilter,
               this.props.searchfilter
-            ).then((data) => {
-              this.props.getlistproduct(data.data);
-            });
+            )
+              .then((data) => {
+                this.props.getlistproduct(data.data);
+              })
+              .finally(() => this.props.setloading(false));
           }}
         >
           {index + 1}
@@ -312,6 +332,7 @@ const mapStateToProps = (state) => {
     brandfilter: state.productreducer.brandfilter,
     memoryfilter: state.productreducer.memoryfilter,
     searchfilter: state.productreducer.searchfilter,
+    loading: state.productreducer.loading,
   };
 };
 const mapDispatchToProps = (dispath) => {
@@ -336,6 +357,9 @@ const mapDispatchToProps = (dispath) => {
     },
     setmemoryfilter: (memory) => {
       dispath(setmemoryfilter(memory));
+    },
+    setloading: (loading) => {
+      dispath(setloading(loading));
     },
   };
 };

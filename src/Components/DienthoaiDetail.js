@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { setcart, setproductimages } from "../Actions";
+import { setcart, setloading, setproductimages } from "../Actions";
 import { connect } from "react-redux";
 import slides from "./Carousel";
 import { getcart, getproductbyid, addcartdetail } from "../Requestdata/CallAPI";
@@ -17,24 +17,35 @@ class DienthoaiDetail extends Component {
     const user_login_infor = JSON.parse(
       localStorage.getItem("user_login_infor")
     );
-    if (user_login_infor && this.state.product !== null && user_login_infor) {
+    if (user_login_infor && this.state.product !== null) {
+      this.props.setloading(true);
       let productid = this.state.product.id;
       let accountid = user_login_infor.id;
-      addcartdetail(productid, accountid).then((response) => {
-        getcart(accountid).then((response) =>
-          this.props.setcart(response.data)
-        );
-      });
+      addcartdetail(productid, accountid)
+        .then(() => {
+          getcart(accountid).then((response) =>
+            this.props.setcart(response.data)
+          );
+        })
+        .catch((error) => {
+          alert(error);
+        })
+        .finally(() => this.props.setloading(false));
+    } else {
+      alert("bạn chưa đăng nhập");
     }
   };
   componentDidMount() {
+    this.props.setloading(true);
     const id = this.props.location.state.id;
-    getproductbyid(id).then((response) => {
-      this.setState({
-        product: response.data,
-      });
-      this.props.setproductimages(response.data.listResponse);
-    });
+    getproductbyid(id)
+      .then((response) => {
+        this.setState({
+          product: response.data,
+        });
+        this.props.setproductimages(response.data.listResponse);
+      })
+      .finally(() => this.props.setloading(false));
   }
   render() {
     let slideshow;
@@ -268,6 +279,7 @@ class DienthoaiDetail extends Component {
 const mapStateToProps = (state) => {
   return {
     images: state.productreducer.images,
+    loading: state.productreducer.loading,
   };
 };
 const mapDispatchToProps = (dispatch) => {
@@ -277,6 +289,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     setcart: (cart) => {
       dispatch(setcart(cart));
+    },
+    setloading: (loading) => {
+      dispatch(setloading(loading));
     },
   };
 };

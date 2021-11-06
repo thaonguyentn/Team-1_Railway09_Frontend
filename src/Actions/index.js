@@ -1,3 +1,5 @@
+import { createAction, createSlice } from "@reduxjs/toolkit";
+import * as CallAPI from "../Requestdata/CallAPI";
 export const LOGIN = "LOGIN";
 export const ADD_PRODUCT_TO_CART = "ADD_PRODUCT_TO_CART";
 export const REMOVE_PRODUCT_FROM_CART = "REMOVE_PRODUCT_FROM_CART";
@@ -19,6 +21,7 @@ export const SETPRODUCT_IMAGE = "SETPRODUCT_IMAGE";
 export const SET_SORT = "SET_SORT";
 export const SET_ALL_ORDER = "SET_ALL_ORDER";
 export const SET_LIST_ACCOUNT = "SET_LIST_ACCOUNT";
+export const LOADING = "LOADING";
 export const setlistaccount = (data) => {
   return {
     type: SET_LIST_ACCOUNT,
@@ -63,6 +66,9 @@ export const setcartdetail = (data) => {
     type: SET_CARTDETAIL,
     data: data,
   };
+};
+export const setloading = (loading) => {
+  return { type: LOADING, loading: loading };
 };
 export const setlistproduct = (data) => {
   return {

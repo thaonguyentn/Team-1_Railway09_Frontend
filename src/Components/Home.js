@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import {
   setlistproduct,
+  setloading,
   setlogin,
   setopenlogin,
   setsort,
@@ -16,39 +17,47 @@ class Home extends Component {
     };
   }
   handleChange = (event) => {
+    this.props.setloading(true);
     this.props.setsort(event.target.value);
-    getlistproductsort(event.target.value, 1).then((data) => {
-      this.props.getlistproduct(data.data);
-    });
+    getlistproductsort(event.target.value, 1)
+      .then((data) => {
+        this.props.getlistproduct(data.data);
+      })
+      .finally(() => this.props.setloading(false));
   };
   Next = () => {
+    this.props.setloading(true);
     if (this.props.totalpage !== this.props.currenpage + 1) {
-      getlistproductsort(this.props.sort, this.props.currenpage + 1 + 1).then(
-        (data) => {
+      getlistproductsort(this.props.sort, this.props.currenpage + 1 + 1)
+        .then((data) => {
           this.props.getlistproduct(data.data);
-        }
-      );
+        })
+        .finally(() => this.props.setloading(false));
     }
   };
   Previos = () => {
+    this.props.setloading(true);
     if (this.props.currenpage !== 0) {
-      getlistproductsort(this.props.sort, this.props.currenpage).then(
-        (data) => {
+      getlistproductsort(this.props.sort, this.props.currenpage)
+        .then((data) => {
           this.props.getlistproduct(data.data);
-        }
-      );
+        })
+        .finally(() => this.props.setloading(false));
     }
   };
   format2 = (n) => {
     return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
   componentDidMount() {
-    getlistproductsort(this.props.sort, 1).then((response) => {
-      this.setState({
-        listpro: response.data.content,
-      });
-      this.props.getlistproduct(response.data);
-    });
+    this.props.setloading(true);
+    getlistproductsort(this.props.sort, 1)
+      .then((response) => {
+        this.setState({
+          listpro: response.data.content,
+        });
+        this.props.getlistproduct(response.data);
+      })
+      .finally(() => this.props.setloading(false));
   }
   render() {
     if (this.props.location.state) {
@@ -57,7 +66,7 @@ class Home extends Component {
       }
     }
     let rows;
-    if (this.props.listpro) {
+    if (this.props.listpro && this.props.loading === false) {
       rows = this.props.listpro.map((row, index) => {
         const rowid = row.id;
         return (
@@ -137,9 +146,12 @@ class Home extends Component {
           className="page-link"
           id={this.props.currenpage === index ? "buttonpage" : "abc"}
           onClick={() => {
-            getlistproductsort(this.props.sort, index + 1).then((data) => {
-              this.props.getlistproduct(data.data);
-            });
+            this.props.setloading(true);
+            getlistproductsort(this.props.sort, index + 1)
+              .then((data) => {
+                this.props.getlistproduct(data.data);
+              })
+              .finally(() => this.props.setloading(false));
           }}
         >
           {index + 1}
@@ -206,6 +218,7 @@ const mapStateToProps = (state) => {
     memoryfilter: state.productreducer.memoryfilter,
     searchfilter: state.productreducer.searchfilter,
     sort: state.productreducer.sort,
+    loading: state.productreducer.loading,
   };
 };
 const mapDispatchToProps = (dispath) => {
@@ -221,6 +234,9 @@ const mapDispatchToProps = (dispath) => {
     },
     setisopenlogin: (data) => {
       dispath(setopenlogin(data));
+    },
+    setloading: (loading) => {
+      dispath(setloading(loading));
     },
   };
 };

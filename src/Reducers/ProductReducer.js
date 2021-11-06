@@ -8,6 +8,7 @@ import {
   SETMEMORYFILTER,
   SETPRODUCT_IMAGE,
   SET_SORT,
+  LOADING,
 } from "../Actions";
 let ramfilter = "";
 let brandfilter = "";
@@ -20,6 +21,7 @@ const reducer = (
     memoryfilter: memoryfilter,
     searchfilter: searchfilter,
     sort: "",
+    loading: false,
   },
   action
 ) => {
@@ -81,6 +83,11 @@ const reducer = (
       return {
         ...state,
         sort: sort,
+      };
+    case LOADING:
+      return {
+        ...state,
+        loading: action.loading,
       };
     default:
       return { ...state };

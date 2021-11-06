@@ -18,6 +18,7 @@ import React from "react";
 import ActiveAccount from "./Components/ActiveAccount";
 import Order from "./Components/Order";
 import avatar from "../src/Images/avatar.jpg";
+import Loading from "./Components/Loading";
 class App extends Component {
   constructor(props) {
     super(props);
@@ -247,7 +248,11 @@ class App extends Component {
           <nav
             className="navbar navbar-default bg-primary"
             role="navigation"
-            style={{ backgroundColor: "#006eff", color: "#96a8c0" }}
+            style={{
+              backgroundColor: "#006eff",
+              color: "#96a8c0",
+              position: "relative",
+            }}
           >
             <div className="navbar-header">
               <button
@@ -286,7 +291,9 @@ class App extends Component {
                 </li>
               </ul>
             </div>
+            {this.props.loading ? <Loading /> : ""}
           </nav>
+
           <Switch>
             <Route path="/" component={Home} exact />
 
@@ -311,6 +318,7 @@ const mapStateToProps = (state) => {
   return {
     isLogin: state.loginreducer.isLogin,
     cart: state.cart.cart,
+    loading: state.productreducer.loading,
   };
 };
 const mapDispatchToProps = (dispatch) => {
