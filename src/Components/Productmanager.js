@@ -77,6 +77,7 @@ class Productmanager extends Component {
     let rows2;
     if (this.props.listpro) {
       rows2 = this.props.listpro.map((row, index) => {
+        let date = new Date(row.enter_date);
         return (
           <tr key={index}>
             <td>{row.id}</td>
@@ -147,7 +148,7 @@ class Productmanager extends Component {
               />
             </td>
             <td>{row.quantity}</td>
-            <td>{row.enter_date}</td>
+            <td>{date.toDateString()}</td>
           </tr>
         );
       });

@@ -56,10 +56,12 @@ class DienthoaiDetail extends Component {
       );
       row = [
         <div id="phonedetail">
-          <h3>Thông tin chi tiết sản phẩm :</h3>
+          <span style={{ fontSize: "3rem" }}>
+            Thông tin chi tiết sản phẩm :
+          </span>
           <p
             style={{
-              fontSize: "20px",
+              fontSize: "1.5rem",
               backgroundColor: "bisque",
               paddingBlock: "5px",
               margin: 0,
@@ -73,7 +75,7 @@ class DienthoaiDetail extends Component {
           </p>
           <p
             style={{
-              fontSize: "20px",
+              fontSize: "1.5rem",
               paddingBlock: "5px",
               margin: 0,
               position: "relative",
@@ -86,7 +88,7 @@ class DienthoaiDetail extends Component {
           </p>
           <p
             style={{
-              fontSize: "20px",
+              fontSize: "1.5rem",
               backgroundColor: "bisque",
               paddingBlock: "5px",
               margin: 0,
@@ -105,7 +107,7 @@ class DienthoaiDetail extends Component {
           </p>
           <p
             style={{
-              fontSize: "20px",
+              fontSize: "1.5rem",
               paddingBlock: "5px",
               margin: 0,
               position: "relative",
@@ -118,7 +120,7 @@ class DienthoaiDetail extends Component {
           </p>
           <p
             style={{
-              fontSize: "20px",
+              fontSize: "1.5rem",
               backgroundColor: "bisque",
               paddingBlock: "5px",
               margin: 0,
@@ -132,7 +134,7 @@ class DienthoaiDetail extends Component {
           </p>
           <p
             style={{
-              fontSize: "20px",
+              fontSize: "1.5rem",
               paddingBlock: "5px",
               margin: 0,
               position: "relative",
@@ -145,7 +147,7 @@ class DienthoaiDetail extends Component {
           </p>
           <p
             style={{
-              fontSize: "20px",
+              fontSize: "1.5rem",
               backgroundColor: "bisque",
               paddingBlock: "5px",
               margin: 0,
@@ -159,7 +161,7 @@ class DienthoaiDetail extends Component {
           </p>
           <p
             style={{
-              fontSize: "20px",
+              fontSize: "1.5rem",
               paddingBlock: "5px",
               margin: 0,
               position: "relative",
@@ -168,12 +170,11 @@ class DienthoaiDetail extends Component {
             Dung lượng pin
             <span style={{ position: "absolute", left: "170px" }}>
               : {pr.battery}
-              {" mAh"}
             </span>
           </p>
           <p
             style={{
-              fontSize: "20px",
+              fontSize: "1.5rem",
               backgroundColor: "bisque",
               paddingBlock: "5px",
               margin: 0,
@@ -187,7 +188,7 @@ class DienthoaiDetail extends Component {
           </p>
           <p
             style={{
-              fontSize: "20px",
+              fontSize: "1.5rem",
               paddingBlock: "5px",
               margin: 0,
               position: "relative",
@@ -199,14 +200,20 @@ class DienthoaiDetail extends Component {
             </span>
           </p>
 
-          <p style={{ fontSize: "25px", position: "relative" }}>
+          <p
+            style={{
+              fontSize: "1.7rem",
+              position: "relative",
+              marginTop: "3px",
+            }}
+          >
             Giá khuyến mãi :{" "}
             <span
               style={{
                 color: "red",
                 position: "absolute",
-                bottom: "25px",
-                fontSize: "12px",
+                bottom: "1.5rem",
+                fontSize: "1rem",
               }}
             >
               <span

@@ -118,7 +118,7 @@ class App extends Component {
 
     return (
       <div className="App">
-        <header>
+        <header style={{ minHeight: "100vh" }}>
           <Banner />
           <div id="loginlogout">
             {/* <div id="lienketcontainer" style={{ display: "none" }}>

@@ -46,6 +46,7 @@ class Odermanager extends Component {
     let rows3;
     if (this.props.allorder) {
       rows3 = this.props.allorder.map((row, index) => {
+        let date = new Date(row.orderDate);
         return (
           <tr key={index}>
             <td>{row.orderID}</td>
@@ -71,7 +72,7 @@ class Odermanager extends Component {
                   state: { order: row },
                 }}
               >
-                {row.orderDate}
+                {date.toDateString()}
               </NavLink>
             </td>
             <td>{row.description}</td>
