@@ -124,164 +124,163 @@ class Order extends Component {
     });
 
     return (
-      <div>
-        <section class="order-form my-4 mx-4">
-          <div class="container pt-4">
-            <div class="row">
-              <div class="col-12">
-                <h2>Vui lòng nhập thông tin</h2>
-                <hr class="mt-1" />
-              </div>
-              <br />
-              <div class="col-12">
-                <div class="row mt-3 mx-4">
-                  <div
-                    class="col-12"
-                    style={{ position: "relative", fontSize: "15px" }}
+      <div style={{ marginLeft: "5px", fontSize: "1.5rem" }}>
+        <h2>Vui lòng nhập thông tin</h2>
+        <hr class="mt-1" />
+        <div style={{ display: "table" }}>
+          <tr key="">
+            <td>
+              <label>Họ và Tên người nhận hàng :</label>{" "}
+            </td>
+            <td>
+              <span style={{}}>
+                <input
+                  class="order-form-input"
+                  name="fullname"
+                  value={this.state.fullname}
+                  onChange={this.handleChange}
+                />
+                <span
+                  style={{
+                    position: "relative",
+                    bottom: "5px",
+                    color: "red",
+                  }}
+                >
+                  {" "}
+                  *
+                </span>
+              </span>
+            </td>
+          </tr>
+          <tr key="">
+            <td>
+              <label>Số điện thoại nhận hàng :</label>{" "}
+            </td>
+
+            <td>
+              <span style={{}}>
+                <input
+                  class="order-form-input"
+                  placeholder="0123456789"
+                  name="phone"
+                  value={this.state.phone}
+                  onChange={this.handleChange}
+                />
+                <span
+                  style={{
+                    position: "relative",
+                    bottom: "5px",
+                    color: "red",
+                  }}
+                >
+                  {" "}
+                  *
+                </span>
+              </span>
+            </td>
+          </tr>
+          <tr key="">
+            <td>
+              <label>Địa chỉ nhận hàng :</label>{" "}
+            </td>
+            <td>
+              <span style={{}}>
+                <span>
+                  <input
+                    class="order-form-input"
+                    placeholder="Tỉnh / Thành phố"
+                    name="province"
+                    value={this.state.province}
+                    onChange={this.handleChange}
+                  />
+                  <span
+                    style={{
+                      position: "relative",
+                      bottom: "5px",
+                      color: "red",
+                    }}
                   >
-                    <label class="order-form-label">
-                      Họ và Tên người nhận hàng :
-                    </label>
-                    <span style={{ position: "absolute", left: "300px" }}>
-                      <input
-                        class="order-form-input"
-                        name="fullname"
-                        value={this.state.fullname}
-                        onChange={this.handleChange}
-                      />
-                      <span
-                        style={{
-                          position: "relative",
-                          bottom: "5px",
-                          color: "red",
-                        }}
-                      >
-                        {" "}
-                        *
-                      </span>
-                    </span>
-                  </div>
-                  <br />
-                  <div
-                    class="col-12"
-                    style={{ position: "relative", fontSize: "15px" }}
+                    {" "}
+                    *
+                  </span>
+                </span>
+                <span>
+                  {" "}
+                  <input
+                    class="order-form-input"
+                    placeholder="Huyện"
+                    name="district"
+                    value={this.state.district}
+                    style={{}}
+                    onChange={this.handleChange}
+                  />
+                  <span
+                    style={{
+                      position: "relative",
+                      bottom: "5px",
+                      color: "red",
+                    }}
                   >
-                    <label class="order-form-label">
-                      Số điện thoại nhận hàng :
-                    </label>
-                    <span style={{ position: "absolute", left: "300px" }}>
-                      <input
-                        class="order-form-input"
-                        placeholder="0123456789"
-                        name="phone"
-                        value={this.state.phone}
-                        onChange={this.handleChange}
-                      />
-                      <span
-                        style={{
-                          position: "relative",
-                          bottom: "5px",
-                          color: "red",
-                        }}
-                      >
-                        {" "}
-                        *
-                      </span>
-                    </span>
-                  </div>
-                  <br />
-                  <div
-                    class="col-12"
-                    style={{ position: "relative", fontSize: "15px" }}
+                    {" "}
+                    *
+                  </span>
+                </span>
+                <span>
+                  {" "}
+                  <input
+                    class="order-form-input"
+                    placeholder="Xã"
+                    name="villgage"
+                    value={this.state.villgage}
+                    style={{}}
+                    onChange={this.handleChange}
+                  />
+                  <span
+                    style={{
+                      position: "relative",
+                      bottom: "5px",
+                      color: "red",
+                    }}
                   >
-                    <label class="order-form-label">Địa chỉ nhận hàng : </label>
-                    <span style={{ position: "absolute", left: "300px" }}>
-                      <input
-                        class="order-form-input"
-                        placeholder="Tỉnh / Thành phố"
-                        name="province"
-                        value={this.state.province}
-                        onChange={this.handleChange}
-                      />
-                      <span
-                        style={{
-                          position: "relative",
-                          bottom: "5px",
-                          color: "red",
-                        }}
-                      >
-                        {" "}
-                        *
-                      </span>
-                      <input
-                        class="order-form-input"
-                        placeholder="Huyện"
-                        name="district"
-                        value={this.state.district}
-                        style={{ marginLeft: "20px" }}
-                        onChange={this.handleChange}
-                      />
-                      <span
-                        style={{
-                          position: "relative",
-                          bottom: "5px",
-                          color: "red",
-                        }}
-                      >
-                        {" "}
-                        *
-                      </span>
-                      <input
-                        class="order-form-input"
-                        placeholder="Xã"
-                        name="villgage"
-                        value={this.state.villgage}
-                        style={{ marginLeft: "20px" }}
-                        onChange={this.handleChange}
-                      />
-                      <span
-                        style={{
-                          position: "relative",
-                          bottom: "5px",
-                          color: "red",
-                        }}
-                      >
-                        {" "}
-                        *
-                      </span>
-                      <input
-                        class="order-form-input"
-                        placeholder="Tên đường / Thôn / Xóm"
-                        name="home"
-                        value={this.state.home}
-                        style={{ marginLeft: "20px" }}
-                        onChange={this.handleChange}
-                      />
-                      <span
-                        style={{
-                          position: "relative",
-                          bottom: "5px",
-                          color: "red",
-                        }}
-                      >
-                        {" "}
-                        *
-                      </span>
-                    </span>
-                  </div>
-                </div>
-                <hr />
-              </div>
-            </div>
-          </div>
-        </section>
-        <div style={{ marginLeft: "50px", fontSize: "17px" }}>
+                    {" "}
+                    *
+                  </span>
+                </span>
+                <span>
+                  {" "}
+                  <input
+                    class="order-form-input"
+                    placeholder="Tên đường / Thôn / Xóm"
+                    name="home"
+                    value={this.state.home}
+                    style={{}}
+                    onChange={this.handleChange}
+                  />
+                  <span
+                    style={{
+                      position: "relative",
+                      bottom: "5px",
+                      color: "red",
+                    }}
+                  >
+                    {" "}
+                    *
+                  </span>
+                </span>
+              </span>
+            </td>
+            <td></td>
+          </tr>
+        </div>
+        <hr />
+        <div>
           <h2>Sản phẩm ({quantity} sản phẩm)</h2>
 
           <div class="table-responsive">
             <table class="table table-hover">
               <thead>
-                <tr>
+                <tr style={{ fontSize: "2rem" }}>
                   <th>Thông tin sản phẩm</th>
                   <th>Đơn giá</th>
                   <th>Số lượng</th>
@@ -294,65 +293,58 @@ class Order extends Component {
         </div>
 
         <hr style={{ clear: "both" }} />
-        <div
-          style={{ marginLeft: "50px", fontSize: "20px", position: "relative" }}
-        >
-          <p>
-            Phương thức thanh toán :
-            <span style={{ position: "absolute", left: "350px" }}>
-              Thanh toán khi nhận hàng
-            </span>
-          </p>
-          <p>
-            Tổng tiền :{" "}
-            <span style={{ position: "absolute", left: "350px" }}>
-              {this.format2(totalprice)} đ
-            </span>
-          </p>
-          <p>
-            Phí vận chuyển :{" "}
-            <span style={{ position: "absolute", left: "350px" }}>
-              30,000 đ
-            </span>
-          </p>
-          <p>
-            Tổng thanh toán :{" "}
-            <span style={{ position: "absolute", left: "350px" }}>
-              {this.format2(totalprice + 30000)} đ
-            </span>
-          </p>
-          <p>
-            {" "}
-            <span style={{ position: "relative", left: "350px" }}>
+        <div style={{ display: "table-row" }}>
+          <ReactModal
+            isOpen={this.state.isopenmodalalert}
+            onRequestClose={() => this.setState({ isopenmodalalert: false })}
+            style={{
+              overlay: { background: "none" },
+              content: {
+                width: "80vw",
+                height: "80px",
+                backgroundColor: "red",
+                color: "white",
+                fontSize: "17px",
+              },
+            }}
+          >
+            Bạn vui lòng kiểm tra lại thông tin nhận hàng !
+          </ReactModal>
+          <tr key="">
+            <td>
+              <label>Phương thức thanh toán :</label>
+            </td>
+            <td>Thanh toán khi nhận hàng</td>
+          </tr>
+          <tr key="">
+            <td>
+              <label>Tổng tiền :</label>
+            </td>
+            <td>{this.format2(totalprice)} đ</td>
+          </tr>
+          <tr key="">
+            <td>
+              <label>Phí vận chuyển :</label>
+            </td>
+            <td>30,000 đ</td>
+          </tr>
+          <tr key="">
+            <td></td>
+            <td>
               <button
                 style={{
                   width: "230px",
                   paddingBlock: "5px",
                   backgroundColor: "aquamarine",
+                  border: "none",
+                  boxShadow: "-2px 1px 9px 0px  red",
                 }}
                 onClick={() => this.buy(quantity, totalprice)}
               >
                 Đặt hàng
               </button>
-            </span>
-            <ReactModal
-              isOpen={this.state.isopenmodalalert}
-              onRequestClose={() => this.setState({ isopenmodalalert: false })}
-              style={{
-                overlay: { background: "none" },
-                content: {
-                  width: "400px",
-                  height: "80px",
-                  margin: "auto",
-                  backgroundColor: "red",
-                  color: "white",
-                  fontSize: "17px",
-                },
-              }}
-            >
-              Bạn vui lòng kiểm tra lại thông tin nhận hàng !
-            </ReactModal>
-          </p>
+            </td>
+          </tr>
         </div>
       </div>
     );
