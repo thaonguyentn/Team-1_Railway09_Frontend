@@ -174,71 +174,71 @@ class DienthoaiDetail extends Component {
             Thêm vào giỏ hàng
           </button>
         </div>,
-        <div>
-          <span style={{ fontSize: "3rem" }}>
-            Thông tin chi tiết sản phẩm :
-          </span>
-          <tr key="">
-            <td style={{ width: "300px" }}>
-              <label>Dung lượng Ram </label>
-            </td>
-            <td>: {pr.ram}</td>
-          </tr>
-          <tr key="">
-            <td>
-              <label></label>
-            </td>
-            <td></td>
-          </tr>
-          <tr key="">
-            <td>
-              <label></label>
-            </td>
-            <td></td>
-          </tr>
-          <tr key="">
-            <td>
-              <label></label>
-            </td>
-            <td></td>
-          </tr>
-          <tr key="">
-            <td>
-              <label></label>
-            </td>
-            <td></td>
-          </tr>
-          <tr key="">
-            <td>
-              <label></label>
-            </td>
-            <td></td>
-          </tr>
-          <tr key="">
-            <td>
-              <label></label>
-            </td>
-            <td></td>
-          </tr>
-          <tr key="">
-            <td>
-              <label></label>
-            </td>
-            <td></td>
-          </tr>
-          <tr key="">
-            <td>
-              <label></label>
-            </td>
-            <td></td>
-          </tr>
-          <tr key="">
-            <td>
-              <label></label>
-            </td>
-            <td></td>
-          </tr>
-        </div>,
+        // <div>
+        //   <span style={{ fontSize: "3rem" }}>
+        //     Thông tin chi tiết sản phẩm :
+        //   </span>
+        //   <tr key="">
+        //     <td style={{ width: "300px" }}>
+        //       <label>Dung lượng Ram </label>
+        //     </td>
+        //     <td>: {pr.ram}</td>
+        //   </tr>
+        //   <tr key="">
+        //     <td>
+        //       <label></label>
+        //     </td>
+        //     <td></td>
+        //   </tr>
+        //   <tr key="">
+        //     <td>
+        //       <label></label>
+        //     </td>
+        //     <td></td>
+        //   </tr>
+        //   <tr key="">
+        //     <td>
+        //       <label></label>
+        //     </td>
+        //     <td></td>
+        //   </tr>
+        //   <tr key="">
+        //     <td>
+        //       <label></label>
+        //     </td>
+        //     <td></td>
+        //   </tr>
+        //   <tr key="">
+        //     <td>
+        //       <label></label>
+        //     </td>
+        //     <td></td>
+        //   </tr>
+        //   <tr key="">
+        //     <td>
+        //       <label></label>
+        //     </td>
+        //     <td></td>
+        //   </tr>
+        //   <tr key="">
+        //     <td>
+        //       <label></label>
+        //     </td>
+        //     <td></td>
+        //   </tr>
+        //   <tr key="">
+        //     <td>
+        //       <label></label>
+        //     </td>
+        //     <td></td>
+        //   </tr>
+        //   <tr key="">
+        //     <td>
+        //       <label></label>
+        //     </td>
+        //     <td></td>
+        //   </tr>
+        // </div>,
       ];
     }
     return (
