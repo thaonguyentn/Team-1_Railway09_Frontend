@@ -22,6 +22,7 @@ class Dienthoai extends Component {
     this.props.setloading(true);
     if (this.props.totalpage !== this.props.currenpage + 1) {
       getlistproduct(
+        "Phone",
         this.props.currenpage + 1 + 1,
         this.props.ramfilter,
         this.props.brandfilter,
@@ -29,7 +30,7 @@ class Dienthoai extends Component {
         this.props.searchfilter
       )
         .then((data) => {
-          this.props.getlistproduct(data.data);
+          this.props.setlistproduct(data.data);
         })
         .finally(() => this.props.setloading(false));
     }
@@ -38,6 +39,7 @@ class Dienthoai extends Component {
     this.props.setloading(true);
     if (this.props.currenpage !== 0) {
       getlistproduct(
+        "Phone",
         this.props.currenpage,
         this.props.ramfilter,
         this.props.brandfilter,
@@ -45,7 +47,7 @@ class Dienthoai extends Component {
         this.props.searchfilter
       )
         .then((data) => {
-          this.props.getlistproduct(data.data);
+          this.props.setlistproduct(data.data);
         })
         .finally(() => this.props.setloading(false));
     }
@@ -59,6 +61,7 @@ class Dienthoai extends Component {
       case "brand":
         this.props.setbrandfilter(event.target.value);
         getlistproduct(
+          "Phone",
           this.props.currenpage,
           this.props.ramfilter,
           event.target.value,
@@ -66,13 +69,14 @@ class Dienthoai extends Component {
           this.props.searchfilter
         )
           .then((data) => {
-            this.props.getlistproduct(data.data);
+            this.props.setlistproduct(data.data);
           })
           .finally(() => this.props.setloading(false));
         break;
       case "memory":
         this.props.setmemoryfilter(event.target.value);
         getlistproduct(
+          "Phone",
           this.props.currenpage,
           this.props.ramfilter,
           this.props.brandfilter,
@@ -80,13 +84,14 @@ class Dienthoai extends Component {
           this.props.searchfilter
         )
           .then((data) => {
-            this.props.getlistproduct(data.data);
+            this.props.setlistproduct(data.data);
           })
           .finally(() => this.props.setloading(false));
         break;
       case "ram":
         this.props.setramfilter(event.target.value);
         getlistproduct(
+          "Phone",
           this.props.currenpage,
           event.target.value,
           this.props.brandfilter,
@@ -94,7 +99,7 @@ class Dienthoai extends Component {
           this.props.searchfilter
         )
           .then((data) => {
-            this.props.getlistproduct(data.data);
+            this.props.setlistproduct(data.data);
           })
           .finally(() => this.props.setloading(false));
         break;
@@ -105,6 +110,7 @@ class Dienthoai extends Component {
   componentDidMount() {
     this.props.setloading(true);
     getlistproduct(
+      "Phone",
       1,
       this.props.ramfilter,
       this.props.brandfilter,
@@ -112,13 +118,7 @@ class Dienthoai extends Component {
       this.props.searchfilter
     )
       .then((response) => {
-        let listphone = [];
-        response.data.content.forEach((element) => {
-          if (element.category === "Phone") {
-            listphone.push(element);
-          }
-        });
-        this.props.getlistproduct(response.data);
+        this.props.setlistproduct(response.data);
       })
       .finally(() => this.props.setloading(false));
     getbrand().then((response) => {
@@ -211,6 +211,7 @@ class Dienthoai extends Component {
           onClick={() => {
             this.props.setloading(true);
             getlistproduct(
+              "Phone",
               index + 1,
               this.props.ramfilter,
               this.props.brandfilter,
@@ -218,7 +219,7 @@ class Dienthoai extends Component {
               this.props.searchfilter
             )
               .then((data) => {
-                this.props.getlistproduct(data.data);
+                this.props.setlistproduct(data.data);
               })
               .finally(() => this.props.setloading(false));
           }}
@@ -321,6 +322,7 @@ class Dienthoai extends Component {
   }
 }
 const mapStateToProps = (state) => {
+  console.log(state);
   return {
     totalpage: state.productreducer.totalPage,
     currenpage: state.productreducer.currenPage,
@@ -337,7 +339,7 @@ const mapStateToProps = (state) => {
 };
 const mapDispatchToProps = (dispath) => {
   return {
-    getlistproduct: (list) => {
+    setlistproduct: (list) => {
       dispath(setlistproduct(list));
     },
     setram: (ram) => {

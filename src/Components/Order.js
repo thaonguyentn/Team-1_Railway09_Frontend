@@ -300,7 +300,8 @@ class Order extends Component {
             style={{
               overlay: { background: "none" },
               content: {
-                width: "80vw",
+                display: "inline-block",
+                margin: "auto",
                 height: "80px",
                 backgroundColor: "red",
                 color: "white",

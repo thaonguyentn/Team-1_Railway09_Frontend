@@ -19,6 +19,7 @@ import ActiveAccount from "./Components/ActiveAccount";
 import Order from "./Components/Order";
 import avatar from "../src/Images/avatar.jpg";
 import Loading from "./Components/Loading";
+import PhukienDetail from "./Components/PhukienDetail";
 class App extends Component {
   constructor(props) {
     super(props);
@@ -300,6 +301,7 @@ class App extends Component {
             <Route path="/dienthoai" component={Dienthoai} exact />
             <Route path="/phukien" component={Phukien} exact />
             <Route path="/dienthoai/:ID" component={DienthoaiDetail} exact />
+            <Route path="/phukien/:ID" component={PhukienDetail} exact />
             <Route path="/giohang/" component={Giohang} />
             <Route path="/profile/" component={Profile} />
             <Route path="/activeUser" component={ActiveAccount} />

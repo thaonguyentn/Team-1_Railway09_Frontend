@@ -145,11 +145,12 @@ export const getlistaccount = (page) => {
   });
   return get;
 };
-export const getlistproduct = (page, ram, brand, memory, search) => {
+export const getlistproduct = (category, page, ram, brand, memory, search) => {
   if (page === undefined) {
     page = 1;
   }
   const rams = ram !== "" ? "&ramName=" + ram : "";
+  const categorys = category !== "" ? "&category=" + category : "";
   const brands = brand !== "" ? "&brandName=" + brand : "";
   const memorys = memory !== "" ? "&memoryName=" + memory : "";
   const searchs = search !== "" ? "&search=" + search : "";
@@ -157,6 +158,7 @@ export const getlistproduct = (page, ram, brand, memory, search) => {
     baseURL +
       "/api/v2/products?page=" +
       page +
+      categorys +
       rams +
       brands +
       memorys +

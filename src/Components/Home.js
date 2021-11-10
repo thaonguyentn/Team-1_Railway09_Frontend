@@ -69,42 +69,81 @@ class Home extends Component {
     if (this.props.listpro && this.props.loading === false) {
       rows = this.props.listpro.map((row, index) => {
         const rowid = row.id;
-        return (
-          <div id="sp">
-            <NavLink
-              to={{
-                pathname: "/dienthoai/" + row.id,
-                state: {
-                  id: rowid,
-                },
-              }}
-            >
-              <img src={row.image} alt="" />
-              <p style={{ textAlign: "center", fontSize: "1.5rem" }}>
-                {row.name}({row.ram}/{row.memory})
-              </p>
-              <p style={{ textAlign: "center", fontSize: "1rem" }}>
-                <span
-                  style={{
-                    textDecoration: "line-through",
-                    paddingRight: "5px",
-                  }}
-                >
-                  {this.format2(row.price)} đ{" "}
-                </span>
+        if (row.category === "Phone") {
+          return (
+            <div id="sp">
+              <NavLink
+                to={{
+                  pathname: "/dienthoai/" + row.id,
+                  state: {
+                    id: rowid,
+                  },
+                }}
+              >
+                <img src={row.image} alt="" />
+                <p style={{ textAlign: "center", fontSize: "1.5rem" }}>
+                  {row.name}({row.ram}/{row.memory})
+                </p>
+                <p style={{ textAlign: "center", fontSize: "1rem" }}>
+                  <span
+                    style={{
+                      textDecoration: "line-through",
+                      paddingRight: "5px",
+                    }}
+                  >
+                    {this.format2(row.price)} đ{" "}
+                  </span>
 
-                <span> -{row.discount}%</span>
-              </p>
-              <p style={{ textAlign: "center", fontSize: "1.5rem" }}>
-                {this.format2(
-                  Number(row.price) -
-                    (Number(row.price) * Number(row.discount)) / 100
-                )}{" "}
-                đ
-              </p>
-            </NavLink>
-          </div>
-        );
+                  <span> -{row.discount}%</span>
+                </p>
+                <p style={{ textAlign: "center", fontSize: "1.5rem" }}>
+                  {this.format2(
+                    Number(row.price) -
+                      (Number(row.price) * Number(row.discount)) / 100
+                  )}{" "}
+                  đ
+                </p>
+              </NavLink>
+            </div>
+          );
+        } else if (row.category === "PK") {
+          return (
+            <div id="sp">
+              <NavLink
+                to={{
+                  pathname: "/phukien/" + row.id,
+                  state: {
+                    id: rowid,
+                  },
+                }}
+              >
+                <img src={row.image} alt="" />
+                <p style={{ textAlign: "center", fontSize: "1.5rem" }}>
+                  {row.name}({row.ram}/{row.memory})
+                </p>
+                <p style={{ textAlign: "center", fontSize: "1rem" }}>
+                  <span
+                    style={{
+                      textDecoration: "line-through",
+                      paddingRight: "5px",
+                    }}
+                  >
+                    {this.format2(row.price)} đ{" "}
+                  </span>
+
+                  <span> -{row.discount}%</span>
+                </p>
+                <p style={{ textAlign: "center", fontSize: "1.5rem" }}>
+                  {this.format2(
+                    Number(row.price) -
+                      (Number(row.price) * Number(row.discount)) / 100
+                  )}{" "}
+                  đ
+                </p>
+              </NavLink>
+            </div>
+          );
+        }
       });
     }
     let Previos;
@@ -205,6 +244,7 @@ class Home extends Component {
   }
 }
 const mapStateToProps = (state) => {
+  console.log(state);
   return {
     totalpage: state.productreducer.totalPage,
     currenpage: state.productreducer.currenPage,
