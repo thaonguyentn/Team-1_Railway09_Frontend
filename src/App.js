@@ -297,7 +297,6 @@ class App extends Component {
 
           <Switch>
             <Route path="/" component={Home} exact />
-
             <Route path="/dienthoai" component={Dienthoai} exact />
             <Route path="/phukien" component={Phukien} exact />
             <Route path="/dienthoai/:ID" component={DienthoaiDetail} exact />

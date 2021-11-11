@@ -1,15 +1,19 @@
 import React, { Component } from "react";
+import ReactDOM from "react-dom";
 import { connect } from "react-redux";
 import { NavLink, Switch, Route, Redirect } from "react-router-dom";
 import Adress from "./Adress";
 import Changeprofile from "./ChangeProfile";
 import Orderuser from "./OrderUser";
 import Orderuserdetail from "./OrderUserDetail";
+import "../Asses/css/profile.css";
 class Profile extends Component {
   constructor(props) {
     super(props);
     this.state = {
       image: null,
+      shownav: false,
+      hidenav: false,
     };
   }
   uploadImage = (e) => {
@@ -32,11 +36,28 @@ class Profile extends Component {
     };
     fileReader.readAsDataURL(file);
   };
+  componentDidMount() {
+    document.addEventListener("click", this.handleClickOutside, true);
+  }
+  handleClickOutside = (event) => {
+    console.log(event.target);
+    if (!document.getElementById("buttonshownav")) {
+      return;
+    }
+    if (!document.getElementById("buttonshownav").contains(event.target)) {
+      this.setState({
+        shownav: false,
+      });
+      setTimeout(() => {
+        this.setState({ hidenav: false });
+      }, 200);
+    }
+  };
   render() {
     let nav;
     if (this.props.account !== null) {
-      nav = [
-        <div style={{ marginLeft: "40px", borderBottom: "1px solid pink" }}>
+      nav = (
+        <div style={{ borderBottom: "1px solid pink" }}>
           <div
             style={{
               width: "50px",
@@ -78,60 +99,108 @@ class Profile extends Component {
               </NavLink>
             </span>
           </div>
-        </div>,
-        <div style={{ marginLeft: "40px" }}>
-          <div style={{ marginBlock: "10px" }}>
-            <span class="glyphicon glyphicon-user"></span>
-            <span>Tài khoản của tôi</span>
-          </div>
+          <div style={{ display: "inline-block" }}>
+            <a
+              id="buttonshownav"
+              style={{ cursor: "pointer", fontSize: "20px" }}
+              onClick={() => {
+                this.setState({
+                  shownav: !this.state.shownav,
+                });
+                setTimeout(() => {
+                  this.setState({ hidenav: !this.state.hidenav });
+                }, 200);
+              }}
+            >
+              <span
+                class="glyphicon glyphicon-user"
+                style={{ fontSize: "30px" }}
+              ></span>
+              <span
+                class="glyphicon glyphicon-chevron-down"
+                style={{
+                  display: this.state.shownav === true ? "none" : "",
+                  fontSize: "30px",
+                }}
+              ></span>
+              <span
+                class="glyphicon glyphicon-chevron-up"
+                style={{
+                  display: this.state.shownav === false ? "none" : "",
+                  fontSize: "30px",
+                }}
+              ></span>
+            </a>
 
-          <div style={{ marginBlock: "10px" }}>
-            <NavLink
-              activeStyle={{ color: "red" }}
-              exact
-              to={{
-                pathname: "/profile/change",
-                state: {
-                  account: this.props.account,
-                },
+            <div
+              className={
+                this.state.shownav === true
+                  ? "navtonge"
+                  : this.state.hidenav === true
+                  ? "visuallyhidden"
+                  : "hiden"
+              }
+              style={{
+                position: "absolute",
+                padding: "10px",
+                backgroundColor: "whitesmoke",
+                zIndex: "3",
               }}
             >
-              <span>Hồ sơ</span>
-            </NavLink>
+              <div
+                style={{ marginBlock: "10px", borderBottom: "1px solid black" }}
+              >
+                <NavLink
+                  activeStyle={{ color: "red" }}
+                  exact
+                  to={{
+                    pathname: "/profile/change",
+                    state: {
+                      account: this.props.account,
+                    },
+                  }}
+                >
+                  <span>Hồ sơ</span>
+                </NavLink>
+              </div>
+              <div
+                style={{ marginBlock: "10px", borderBottom: "1px solid black" }}
+              >
+                <NavLink
+                  activeStyle={{ color: "red" }}
+                  exact
+                  to={{
+                    pathname: "/profile/adress",
+                    state: {
+                      name: this.props.account.fullname,
+                      adress: this.props.account.address,
+                      phone: this.props.account.phone_number,
+                    },
+                  }}
+                >
+                  <span>Địa chỉ</span>
+                </NavLink>
+              </div>
+              <div
+                style={{ marginBlock: "10px", borderBottom: "1px solid black" }}
+              >
+                <NavLink
+                  activeStyle={{ color: "red" }}
+                  exact
+                  to={{
+                    pathname: "/profile/orderuser",
+                    state: {
+                      account: this.props.account,
+                    },
+                  }}
+                >
+                  <span>Đơn mua</span>
+                </NavLink>
+              </div>
+            </div>
           </div>
-          <div style={{ marginBlock: "10px" }}>
-            <NavLink
-              activeStyle={{ color: "red" }}
-              exact
-              to={{
-                pathname: "/profile/adress",
-                state: {
-                  name: this.props.account.fullname,
-                  adress: this.props.account.address,
-                  phone: this.props.account.phone_number,
-                },
-              }}
-            >
-              <span>Địa chỉ</span>
-            </NavLink>
-          </div>
-
-          <div style={{ marginBlock: "10px" }}>
-            <NavLink
-              activeStyle={{ color: "red" }}
-              exact
-              to={{
-                pathname: "/profile/orderuser",
-                state: {
-                  account: this.props.account,
-                },
-              }}
-            >
-              <span>Đơn mua</span>
-            </NavLink>
-          </div>
-        </div>,
-      ];
+        </div>
+      );
     }
     return (
       <>
@@ -144,15 +213,9 @@ class Profile extends Component {
           }}
         />
         <div style={{ fontFamily: "Helvetica Neue", fontSize: "20px" }}>
-          <div class="row">
-            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">{nav}</div>
-            <div
-              class="col-xs-8 col-sm-8 col-md-8 col-lg-8"
-              style={{
-                backgroundColor: "#e8e8e8",
-                minHeight: "500px",
-              }}
-            >
+          <div class="">
+            <div class="navprofile">{nav}</div>
+            <div class="bodyprofile">
               <Switch>
                 <Route path="/profile/change" component={Changeprofile} exact />
                 <Route path="/profile/adress" component={Adress} exact />

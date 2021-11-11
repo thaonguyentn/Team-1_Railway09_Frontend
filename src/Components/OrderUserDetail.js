@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { setloading } from "../Actions";
 import { getorderdetail } from "../Requestdata/CallAPI";
 class Orderuserdetail extends Component {
   constructor(props) {
@@ -8,13 +10,16 @@ class Orderuserdetail extends Component {
     };
   }
   componentDidMount() {
+    this.props.setloading(true);
     if (this.props.location.state) {
       let order = this.props.location.state.order;
-      getorderdetail(order.orderID).then((response) => {
-        this.setState({
-          listorrderdetail: response.data,
-        });
-      });
+      getorderdetail(order.orderID)
+        .then((response) => {
+          this.setState({
+            listorrderdetail: response.data,
+          });
+        })
+        .finally(() => this.props.setloading(false));
     }
   }
   format2 = (n) => {
@@ -22,8 +27,8 @@ class Orderuserdetail extends Component {
   };
   render() {
     let rows;
-    if (this.state.listorrderdetail.length === 0) {
-      rows = <div>Không có dữ liệu</div>;
+    if (this.state.listorrderdetail.length === 0 || this.props.loading) {
+      rows = "";
     } else {
       rows = this.state.listorrderdetail.map((row, index) => {
         return (
@@ -127,5 +132,16 @@ class Orderuserdetail extends Component {
     );
   }
 }
-
-export default Orderuserdetail;
+const mapStateToProps = (state) => {
+  return {
+    loading: state.productreducer.loading,
+  };
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setloading: (loading) => {
+      dispatch(setloading(loading));
+    },
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Orderuserdetail);

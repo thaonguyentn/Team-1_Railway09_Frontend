@@ -1,6 +1,7 @@
 .App {
   min-height: 100vh;
   padding: 0;
+  background-color: #ffffff;
 }
 @media only screen and (max-width: 600px) {
   .App {
@@ -44,7 +45,7 @@
 @media only screen and (min-width: 600px) {
   .App {
     /* margin-inline: 10%; */
-    border-inline: 2px solid black;
+    border-inline: 1px solid black;
     width: 80%;
     margin: auto;
   }

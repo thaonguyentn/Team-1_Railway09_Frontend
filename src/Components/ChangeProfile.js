@@ -1,6 +1,20 @@
 import React, { Component } from "react";
+import ReactModal from "react-modal";
 
 class Changeprofile extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      gender: "",
+      isOpen: false,
+      name: "",
+      username: "",
+      email: "",
+      phone: "",
+      password: "",
+      address: "",
+    };
+  }
   uploadImage = (e) => {
     const { files } = e.target;
     if (files.length === 0) {
@@ -21,142 +35,153 @@ class Changeprofile extends Component {
     };
     fileReader.readAsDataURL(file);
   };
+  handleChange = (e) => {
+    this.setState({
+      [e.target.name]: e.target.value,
+    });
+  };
+  updateaccount = () => {
+    const account = {
+      fullname: this.state.name,
+      email: this.state.email,
+      phoneNumber: this.state.phone,
+      address: this.state.address,
+      password: this.state.password,
+    };
+  };
+  componentDidMount() {
+    let state = this.props.location.state;
+    if (state.account !== null && state.account !== undefined) {
+      this.setState({
+        gender: state.account.gender,
+        name: state.account.fullname,
+        username: state.account.username,
+        email: state.account.email,
+        phone: state.account.phone_number,
+        address: state.account.address,
+      });
+    }
+  }
   render() {
     let row;
     let avatar;
     let state = this.props.location.state;
     if (state.account !== null && state.account !== undefined) {
-      row = [
-        <div style={{ marginBlock: "20px" }}>
-          <div
-            style={{
-              width: "160px",
-              display: "inline-block",
-              textAlign: "right",
-              marginRight: "25px",
-            }}
-          >
-            <span>Tên Đăng Nhập</span>
-          </div>
-          {state.account.username}
-        </div>,
-        <div style={{ marginBottom: "20px" }}>
-          <div
-            style={{
-              width: "160px",
-              display: "inline-block",
-              textAlign: "right",
-              marginRight: "25px",
-            }}
-          >
-            <span>Tên</span>
-          </div>
-          <div
-            style={{
-              width: "160px",
-              display: "inline-block",
-              textAlign: "right",
-              marginRight: "25px",
-            }}
-          >
-            <input type="text" defaultValue={state.account.fullname} />
-          </div>
-        </div>,
-        <div style={{ marginBottom: "20px" }}>
-          <div
-            style={{
-              width: "160px",
-              display: "inline-block",
-              textAlign: "right",
-              marginRight: "25px",
-            }}
-          >
-            <span>Email</span>
-          </div>
-          {state.account.email} <a style={{ cursor: "pointer" }}>Thay đổi</a>
-        </div>,
-        <div style={{ marginBottom: "20px" }}>
-          <div
-            style={{
-              width: "160px",
-              display: "inline-block",
-              textAlign: "right",
-              marginRight: "25px",
-            }}
-          >
-            <span>Địa chỉ</span>
-          </div>
-          {state.account.address} <a style={{ cursor: "pointer" }}>Thay đổi</a>
-        </div>,
-        <div style={{ marginBottom: "20px" }}>
-          <div
-            style={{
-              width: "160px",
-              display: "inline-block",
-              textAlign: "right",
-              marginRight: "25px",
-            }}
-          >
-            <span>Giới tính</span>
-          </div>
-
-          <div
-            style={{
-              display: "inline-block",
-              marginRight: "25px",
-            }}
-          >
-            <input type="radio" />
-            Nam
-          </div>
-          <div
-            style={{
-              display: "inline-block",
-              marginRight: "25px",
-            }}
-          >
-            <input type="radio" />
-            Nữ
-          </div>
-          <div
-            style={{
-              display: "inline-block",
-              marginRight: "25px",
-            }}
-          >
-            <input type="radio" />
-            Khác
-          </div>
-
-          {/* {state.account.gender} */}
-        </div>,
-        <div style={{ marginBottom: "20px" }}>
-          <div
-            style={{
-              width: "160px",
-              display: "inline-block",
-              textAlign: "right",
-              marginRight: "25px",
-            }}
-          >
-            <span>Số điện thoại</span>
-          </div>
-
-          {state.account.phone_number}
-        </div>,
-        <div style={{ marginBottom: "20px" }}>
-          <div
-            style={{
-              width: "100px",
-              margin: "auto",
-            }}
-          >
-            <button type="button" class="btn btn-primary">
-              Lưu
-            </button>
-          </div>
-        </div>,
-      ];
+      row = (
+        <div className="profileinfor">
+          <tr key="1">
+            <td className="rightcollum">Tên Đăng Nhập</td>
+            <td>{state.account.username}</td>
+          </tr>
+          <tr key="2">
+            <td className="rightcollum">Tên</td>
+            <td>
+              <input
+                size={17}
+                type="text"
+                name="name"
+                value={this.state.name}
+                onChange={this.handleChange}
+              />
+            </td>
+          </tr>
+          <tr key="3">
+            <td className="rightcollum">Email</td>
+            <td>
+              <input
+                size={17}
+                type="text"
+                name="email"
+                value={this.state.email}
+                onChange={this.handleChange}
+              />
+            </td>
+          </tr>
+          <tr key="4">
+            <td className="rightcollum">Địa chỉ</td>
+            <td>
+              <input
+                size={17}
+                type="text"
+                name="address"
+                value={this.state.address}
+                onChange={this.handleChange}
+              />
+            </td>
+          </tr>
+          <tr key="5">
+            <td className="rightcollum">Giới tính</td>
+            <td>
+              <label
+                onClick={() => this.setState({ gender: "Male" })}
+                style={{
+                  display: "inline-block",
+                  marginRight: "25px",
+                }}
+              >
+                <input
+                  style={{ height: "15px", width: "15px" }}
+                  type="radio"
+                  name="gender"
+                  value="Male"
+                  checked={this.state.gender === "Male"}
+                />
+                Nam
+              </label>
+              <label
+                onClick={() => this.setState({ gender: "Female" })}
+                style={{
+                  display: "inline-block",
+                  marginRight: "25px",
+                }}
+              >
+                <input
+                  style={{ height: "15px", width: "15px" }}
+                  type="radio"
+                  name="gender"
+                  value="Female"
+                  checked={this.state.gender === "Female"}
+                />
+                Nữ
+              </label>
+              <label
+                onClick={() => this.setState({ gender: "Unknow" })}
+                style={{
+                  display: "inline-block",
+                  marginRight: "25px",
+                }}
+              >
+                <input
+                  style={{ height: "15px", width: "15px" }}
+                  type="radio"
+                  name="gender"
+                  value="Unknow"
+                  checked={this.state.gender === "Unknow"}
+                />
+                Khác
+              </label>
+            </td>
+          </tr>
+          <tr key="6">
+            <td className="rightcollum">Số điện thoại</td>
+            <td>
+              <input
+                type="text"
+                size={17}
+                name="phone"
+                value={this.state.phone}
+                onChange={this.handleChange}
+              />
+            </td>
+          </tr>
+          <tr key="7">
+            <td></td>
+            <td>
+              <button>Lưu</button>
+            </td>
+          </tr>
+        </div>
+      );
       avatar = (
         <>
           <div style={{ width: "130px", margin: "auto" }}>
@@ -203,15 +228,15 @@ class Changeprofile extends Component {
           <h3>Hồ Sơ Của Tôi</h3>
           <p>Quản lý thông tin hồ sơ để bảo mật tài khoản</p>
         </div>
-        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-          <form>{row}</form>
+        <div>
+          <div>{row}</div>
         </div>
-        <div
-          class="col-xs-4 col-sm-4 col-md-4 col-lg-4"
-          style={{ borderLeft: "1px solid gray" }}
+        <ReactModal
+          isOpen={this.state.isOpen}
+          onRequestClose={() => this.setState({ isOpen: false })}
         >
-          {avatar}
-        </div>
+          <div>{avatar}</div>
+        </ReactModal>
       </>
     );
   }
