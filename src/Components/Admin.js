@@ -6,6 +6,7 @@ import Productmanager from "./Productmanager";
 import Odermanager from "./Odermanager";
 import Orderdetailmanager from "./Orderdetailmanager";
 import { setcart, setcartdetail, setlogin, setprofile } from "../Actions";
+import "../Asses/css/Admin.css";
 class Admin extends Component {
   constructor(props) {
     super(props);
@@ -18,6 +19,7 @@ class Admin extends Component {
       isavtiveclass: 1,
       why: "",
       whyalert: "",
+      animation: "",
     };
   }
   logout = () => {
@@ -37,8 +39,9 @@ class Admin extends Component {
     this.props.history.replace("/");
   }
   render() {
+    console.log(this.state.animation);
     return (
-      <div>
+      <div style={{}}>
         <div style={{}}>
           <button
             style={{ width: "100%" }}
@@ -49,45 +52,125 @@ class Admin extends Component {
             Đăng xuất
           </button>
         </div>
-
         <ul className="navadmin">
           <li
-            className={
-              this.state.isavtiveclass === 1 ? "liactive" : "linoactive"
+            className="linoactive"
+            id={
+              this.state.animation === "right"
+                ? "right"
+                : this.state.animation === "left"
+                ? "leftnoactive"
+                : ""
             }
           >
             <NavLink
               exact
-              to="/admin/accounts"
-              onClick={() => this.setState({ isavtiveclass: 1 })}
+              to={{
+                pathname:
+                  this.state.isavtiveclass === 1
+                    ? "/admin/orders"
+                    : this.state.isavtiveclass === 2
+                    ? "/admin/accounts"
+                    : this.state.isavtiveclass === 3
+                    ? "/admin/products"
+                    : "",
+                state: { animation: this.state.animation },
+              }}
+              onClick={() => {
+                this.setState({ animation: "right" });
+                if (this.state.isavtiveclass === 1) {
+                  this.setState({ isavtiveclass: 3 });
+                }
+                if (this.state.isavtiveclass === 2) {
+                  this.setState({ isavtiveclass: 1 });
+                }
+                if (this.state.isavtiveclass === 3) {
+                  this.setState({ isavtiveclass: 2 });
+                }
+                setTimeout(() => {
+                  this.setState({ animation: "" });
+                }, 500);
+              }}
             >
-              <h1>Quản lý Account</h1>
+              <p>
+                {this.state.isavtiveclass === 1
+                  ? "Quản lý đơn hàng"
+                  : this.state.isavtiveclass === 2
+                  ? "Quản lý Account"
+                  : this.state.isavtiveclass === 3
+                  ? "Quản lý sản phẩm"
+                  : ""}
+              </p>
             </NavLink>
           </li>
           <li
-            className={
-              this.state.isavtiveclass === 2 ? "liactive" : "linoactive"
+            className="liactive"
+            id={
+              this.state.animation === "right"
+                ? "rightactive1"
+                : this.state.animation === "left"
+                ? "leftactive"
+                : ""
             }
           >
-            <NavLink
-              exact
-              to="/admin/products"
-              onClick={() => this.setState({ isavtiveclass: 2 })}
-            >
-              <h1>Quản lý sản phẩm</h1>
-            </NavLink>
+            <a>
+              <p>
+                {this.state.isavtiveclass === 1
+                  ? "Quản lý Account"
+                  : this.state.isavtiveclass === 2
+                  ? "Quản lý sản phẩm"
+                  : this.state.isavtiveclass === 3
+                  ? "Quản lý đơn hàng"
+                  : ""}
+              </p>
+            </a>
           </li>
           <li
-            className={
-              this.state.isavtiveclass === 3 ? "liactive" : "linoactive"
+            className="linoactive"
+            id={
+              this.state.animation === "right"
+                ? "righnoactive"
+                : this.state.animation === "left"
+                ? "left"
+                : ""
             }
           >
             <NavLink
               exact
-              to="/admin/orders"
-              onClick={() => this.setState({ isavtiveclass: 3 })}
+              to={
+                this.state.isavtiveclass === 1
+                  ? "/admin/products"
+                  : this.state.isavtiveclass === 2
+                  ? "/admin/orders"
+                  : this.state.isavtiveclass === 3
+                  ? "/admin/accounts"
+                  : ""
+              }
+              onClick={() => {
+                this.setState({ animation: "left" });
+                if (this.state.isavtiveclass === 1) {
+                  this.setState({ isavtiveclass: 2 });
+                }
+                if (this.state.isavtiveclass === 2) {
+                  this.setState({ isavtiveclass: 3 });
+                }
+                if (this.state.isavtiveclass === 3) {
+                  this.setState({ isavtiveclass: 1 });
+                }
+                setTimeout(() => {
+                  this.setState({ animation: "" });
+                }, 500);
+              }}
             >
-              <h1>Quản lý đơn hàng</h1>
+              <p>
+                {this.state.isavtiveclass === 1
+                  ? "Quản lý sản phẩm"
+                  : this.state.isavtiveclass === 2
+                  ? "Quản lý đơn hàng"
+                  : this.state.isavtiveclass === 3
+                  ? "Quản lý Account"
+                  : ""}
+              </p>
             </NavLink>
           </li>
         </ul>

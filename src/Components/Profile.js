@@ -40,7 +40,6 @@ class Profile extends Component {
     document.addEventListener("click", this.handleClickOutside, true);
   }
   handleClickOutside = (event) => {
-    console.log(event.target);
     if (!document.getElementById("buttonshownav")) {
       return;
     }

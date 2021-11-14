@@ -32,16 +32,21 @@ class Productmanager extends Component {
   };
   Nextproduct = () => {
     if (this.props.totalpageproduct !== this.props.currenpageproduct + 1) {
-      getlistproduct(this.props.currenpageproduct + 1 + 1, "", "", "", "").then(
-        (data) => {
-          this.props.getlistproduct(data.data);
-        }
-      );
+      getlistproduct(
+        "",
+        this.props.currenpageproduct + 1 + 1,
+        "",
+        "",
+        "",
+        ""
+      ).then((data) => {
+        this.props.getlistproduct(data.data);
+      });
     }
   };
   Previosproduct = () => {
     if (this.props.currenpageproduct !== 0) {
-      getlistproduct(this.props.currenpageproduct, "", "", "", "").then(
+      getlistproduct("", this.props.currenpageproduct, "", "", "", "").then(
         (data) => {
           this.props.getlistproduct(data.data);
         }
@@ -50,7 +55,7 @@ class Productmanager extends Component {
   };
   DeleteProduct = (id) => {
     deleteproduct(id).then(() => {
-      getlistproduct(1, "", "", "", "").then((response) => {
+      getlistproduct("", 1, "", "", "", "").then((response) => {
         this.props.getlistproduct(response.data);
       });
     });
@@ -67,7 +72,7 @@ class Productmanager extends Component {
     }
   };
   componentDidMount() {
-    getlistproduct(1, "", "", "", "").then((response) => {
+    getlistproduct("", 1, "", "", "", "").then((response) => {
       this.props.getlistproduct(response.data);
     });
 
@@ -186,7 +191,7 @@ class Productmanager extends Component {
           className="page-link"
           id={this.props.currenpageproduct === index ? "buttonpage" : "abc"}
           onClick={() => {
-            getlistproduct(index + 1, "", "", "", "").then((data) => {
+            getlistproduct("", index + 1, "", "", "", "").then((data) => {
               this.props.getlistproduct(data.data);
             });
           }}

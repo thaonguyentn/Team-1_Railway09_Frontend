@@ -103,10 +103,14 @@ class Accountmanager extends Component {
         <ul className="pagination" id="pagination"></ul>
       </nav>
     );
+    let animation = this.props.location.state
+      ? this.props.location.state.animation
+      : "";
+    console.log(this.props);
     return (
       <div
-        className={
-          this.state.isavtiveclass === true ? "navactive" : "navnoactive"
+        id={
+          animation === "right" ? "right" : animation === "left" ? "left" : ""
         }
       >
         <table className="table table-bordered table-hover">

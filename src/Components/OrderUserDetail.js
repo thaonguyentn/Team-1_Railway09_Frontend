@@ -34,23 +34,24 @@ class Orderuserdetail extends Component {
         return (
           <div
             style={{
-              backgroundColor: "white",
+              borderTop: "1px solid black",
+
               float: "left",
               width: "100%",
               marginBlock: "5px",
-              borderRadius: "10px",
+              // borderRadius: "10px",
             }}
           >
             <div
               style={{
-                backgroundColor: "white",
+                backgroundColor: "#e8e8e8",
                 width: "20px",
               }}
             ></div>
             <div
               style={{
                 // margin: "30px",
-                backgroundColor: "white",
+                backgroundColor: "#e8e8e8",
                 width: "150px",
                 float: "left",
               }}
@@ -64,7 +65,7 @@ class Orderuserdetail extends Component {
             <div
               style={{
                 // margin: "30px",
-                backgroundColor: "white",
+                backgroundColor: "#e8e8e8",
                 width: "200px",
                 float: "left",
               }}
@@ -97,7 +98,7 @@ class Orderuserdetail extends Component {
             <div
               style={{
                 // margin: "30px",
-                backgroundColor: "white",
+                backgroundColor: "#e8e8e8",
                 width: "260px",
                 float: "left",
                 marginLeft: "100px",

@@ -56,6 +56,8 @@ class Orderuser extends Component {
               style={{
                 backgroundColor: "#e8e8e8",
                 borderBottom: "1px solid red",
+                width: "350px",
+                margin: "auto",
               }}
             >
               <div style={{ marginBlock: "20px" }}>

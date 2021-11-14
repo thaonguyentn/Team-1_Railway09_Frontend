@@ -1,0 +1,144 @@
+.navadmin {
+  display: inline-flex;
+  list-style: none;
+  width: 100%;
+  padding-block: 10px;
+  background-color: rgb(255, 255, 255);
+}
+.navadmin li {
+  width: 33%;
+  text-align: center;
+}
+.navadmin li a {
+  text-decoration: none;
+  cursor: pointer;
+}
+.navadmin li:hover {
+  color: rgb(0, 255, 0);
+}
+.navadmin li a:active {
+  color: red;
+}
+.navactive {
+  animation-name: translateup;
+  animation-duration: 0.5s;
+}
+.navnoactive {
+  display: none;
+}
+@keyframes translateup {
+  0% {
+    transform: scale(0%);
+  }
+  100% {
+    transform: scale(100%);
+  }
+}
+@keyframes translateleft {
+  0% {
+    transform: translate(100%, 0%);
+  }
+  100% {
+    transform: translate(0%, 0%);
+  }
+}
+@keyframes translateright {
+  0% {
+    transform: translate(100%, 0%);
+  }
+  100% {
+    transform: translate(0%, 0%);
+  }
+}
+.liactive {
+  font-size: 40px;
+}
+.linoactive {
+  opacity: 0.1;
+  /* animation: translateright 1s; */
+  font-size: 30px;
+}
+.linoactive:hover {
+  opacity: 1;
+}
+#rightactive1 {
+  animation: rightactive 0.5s;
+}
+#righnoactive {
+  animation: righnoactive 0.5s;
+}
+#left {
+  animation: left 0.5s;
+}
+#leftactive {
+  animation: leftactive 0.5s;
+}
+#leftnoactive {
+  animation: leftnoactive 0.5s;
+}
+#right {
+  animation: right 0.5s;
+}
+@keyframes rightactive {
+  0% {
+    font-size: 30px;
+    transform: translate(-100%, 0);
+  }
+  100% {
+    font-size: 40px;
+    transform: translate(0, 0);
+  }
+}
+@keyframes righnoactive {
+  0% {
+    font-size: 40px;
+    transform: translate(-100%, 0);
+    opacity: 1;
+  }
+  100% {
+    font-size: 30px;
+    transform: translate(0, 0);
+    opacity: 0, 1;
+  }
+}
+@keyframes right {
+  0% {
+    transform: translate(-100%, 0);
+    opacity: 0, 1;
+  }
+  100% {
+    transform: translate(0, 0);
+    opacity: 0, 1;
+  }
+}
+
+@keyframes leftactive {
+  0% {
+    font-size: 30px;
+    transform: translate(100%, 0);
+  }
+  100% {
+    font-size: 40px;
+    transform: translate(0, 0);
+  }
+}
+@keyframes leftnoactive {
+  0% {
+    font-size: 40px;
+    transform: translate(100%, 0);
+    opacity: 1;
+  }
+  100% {
+    font-size: 30px;
+    transform: translate(0, 0);
+    opacity: 0, 1;
+  }
+}
+@keyframes left {
+  0% {
+    transform: translate(100%, 0);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
