@@ -28,10 +28,10 @@
 }
 @keyframes translateup {
   0% {
-    transform: scale(0%);
+    opacity: 0;
   }
   100% {
-    transform: scale(100%);
+    opacity: 1;
   }
 }
 @keyframes translateleft {

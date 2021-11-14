@@ -109,8 +109,8 @@ class Accountmanager extends Component {
     console.log(this.props);
     return (
       <div
-        id={
-          animation === "right" ? "right" : animation === "left" ? "left" : ""
+        className={
+          this.state.isavtiveclass === true ? "navactive" : "navnoactive"
         }
       >
         <table className="table table-bordered table-hover">
