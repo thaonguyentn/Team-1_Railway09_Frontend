@@ -151,6 +151,11 @@ class Login extends Component {
                     }
                     this.setState({ password: event.target.value });
                   }}
+                  onKeyDown={(e) => {
+                    if (e.keyCode === 13) {
+                      this.Login();
+                    }
+                  }}
                 />
                 <p style={{ color: "red", position: "fixed" }}>
                   {this.state.errorpassword}
